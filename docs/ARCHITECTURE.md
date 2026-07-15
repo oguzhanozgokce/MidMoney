@@ -34,6 +34,7 @@ build-logic:convention   Gradle convention plugins (shared build config)
 :library:designsystem    Theme, typography, shared Composables
 :library:navigation      Nav3 keys + Navigator abstraction
 :library:mvi             MVI contract (StateFlow state, actions, effects) + delegate
+:library:websocket       Generic OkHttp WebSocket transport (provider-agnostic)
 
 :plugin:user             Session/token + profile + login/logout (cross-cutting)
 :plugin:market           Market + watchlist domain & data
