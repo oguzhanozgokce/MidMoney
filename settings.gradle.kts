@@ -30,4 +30,5 @@ include(":library:designsystem")
 include(":library:logger")
 include(":library:network")
 include(":library:datastore")
+include(":library:navigation")
  
