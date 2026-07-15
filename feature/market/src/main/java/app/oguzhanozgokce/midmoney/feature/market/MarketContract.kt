@@ -1,9 +1,7 @@
 package app.oguzhanozgokce.midmoney.feature.market
 
-import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
-
 data class MarketUiState(
-    val quotes: List<Quote> = emptyList(),
+    val quotes: List<QuoteUi> = emptyList(),
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
 )

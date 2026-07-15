@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 
 @Composable
 fun DetailRoute(
@@ -52,9 +51,9 @@ private fun DetailScreen(
         ) {
             Text(text = uiState.symbol, style = MaterialTheme.typography.headlineLarge)
 
-            uiState.livePrice?.let { price ->
+            uiState.livePriceText?.let { livePrice ->
                 Text(
-                    text = "Live: %.2f".format(price),
+                    text = "Live: $livePrice",
                     style = MaterialTheme.typography.headlineSmall,
                     color = MaterialTheme.colorScheme.primary,
                 )
@@ -87,11 +86,11 @@ private fun DetailScreen(
 }
 
 @Composable
-private fun QuoteDetails(quote: Quote) {
+private fun QuoteDetails(quote: QuoteDetailUi) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         DetailRow(label = "Current", value = quote.current)
         DetailRow(label = "Change", value = quote.change)
-        DetailRow(label = "Change %", value = quote.percentChange)
+        DetailRow(label = "Change %", value = quote.changePercent)
         HorizontalDivider()
         DetailRow(label = "Open", value = quote.open)
         DetailRow(label = "High", value = quote.high)
@@ -101,12 +100,12 @@ private fun QuoteDetails(quote: Quote) {
 }
 
 @Composable
-private fun DetailRow(label: String, value: Double) {
+private fun DetailRow(label: String, value: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(text = label, style = MaterialTheme.typography.bodyLarge)
-        Text(text = "%.2f".format(value), style = MaterialTheme.typography.bodyLarge)
+        Text(text = value, style = MaterialTheme.typography.bodyLarge)
     }
 }

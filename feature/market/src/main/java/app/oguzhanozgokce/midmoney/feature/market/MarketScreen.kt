@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -21,15 +23,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
-
-private val PositiveColor = Color(0xFF2E7D32)
-private val NegativeColor = Color(0xFFC62828)
+import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 
 @Composable
 fun MarketRoute(viewModel: MarketViewModel = hiltViewModel()) {
@@ -69,7 +67,7 @@ private fun MarketScreen(
                 )
                 else -> LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
+                    contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     items(uiState.quotes, key = { it.symbol }) { quote ->
@@ -82,11 +80,12 @@ private fun MarketScreen(
 }
 
 @Composable
-private fun QuoteRow(quote: Quote, onClick: () -> Unit) {
+private fun QuoteRow(quote: QuoteUi, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
     ) {
         Row(
             modifier = Modifier
@@ -102,13 +101,17 @@ private fun QuoteRow(quote: Quote, onClick: () -> Unit) {
             )
             Column(horizontalAlignment = Alignment.End) {
                 Text(
-                    text = "%.2f".format(quote.current),
+                    text = quote.priceText,
                     style = MaterialTheme.typography.titleMedium,
                 )
                 Text(
-                    text = "%+.2f%%".format(quote.percentChange),
+                    text = quote.changePercentText,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = if (quote.percentChange >= 0) PositiveColor else NegativeColor,
+                    color = if (quote.isPositive) {
+                        MidMoneyTheme.extendedColors.priceUp
+                    } else {
+                        MidMoneyTheme.extendedColors.priceDown
+                    },
                 )
             }
         }

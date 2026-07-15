@@ -2,6 +2,7 @@ package app.oguzhanozgokce.midmoney.feature.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.oguzhanozgokce.midmoney.common.extensions.formatPrice
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Navigator
@@ -30,7 +31,7 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             marketClient.getQuote(symbol)
                 .onSuccess { quote ->
-                    updateUiState { copy(quote = quote, isLoading = false) }
+                    updateUiState { copy(quote = quote.toDetailUi(), isLoading = false) }
                 }
                 .onFailure { throwable ->
                     updateUiState {
@@ -45,7 +46,7 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             marketClient.observePrice(symbol)
                 .catch { /* Ignore stream errors; the REST quote stays on screen. */ }
-                .collect { price -> updateUiState { copy(livePrice = price) } }
+                .collect { price -> updateUiState { copy(livePriceText = price.formatPrice()) } }
         }
     }
 }

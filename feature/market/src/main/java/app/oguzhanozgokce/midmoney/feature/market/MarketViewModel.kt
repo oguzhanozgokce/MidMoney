@@ -35,7 +35,7 @@ class MarketViewModel @Inject constructor(
         viewModelScope.launch {
             marketClient.getQuotes()
                 .onSuccess { quotes ->
-                    updateUiState { copy(quotes = quotes, isLoading = false) }
+                    updateUiState { copy(quotes = quotes.map { it.toUi() }, isLoading = false) }
                 }
                 .onFailure { throwable ->
                     updateUiState {
