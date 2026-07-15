@@ -61,6 +61,7 @@ private fun MarketScreen(
                 item {
                     HomeBannerPager(
                         banners = HomeBannerUi.defaults,
+                        onActionClick = { onAction(MarketUiAction.OpenWatchlist) },
                         modifier = Modifier.padding(vertical = 8.dp),
                     )
                 }

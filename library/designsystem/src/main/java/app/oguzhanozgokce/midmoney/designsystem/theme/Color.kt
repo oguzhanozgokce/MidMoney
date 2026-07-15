@@ -19,10 +19,11 @@ val LightOnBackground = Color(0xFF1A1B20)
 val LightSurfaceVariant = Color(0xFFE2E1EC)
 val LightOnSurfaceVariant = Color(0xFF45464F)
 
-val DarkBackground = Color(0xFF1A1B20)
+val DarkBackground = Color(0xFF08090C)
 val DarkOnBackground = Color(0xFFE3E1E9)
-val DarkSurfaceVariant = Color(0xFF45464F)
-val DarkOnSurfaceVariant = Color(0xFFC6C5D0)
+val DarkSurface = Color(0xFF121317)
+val DarkSurfaceVariant = Color(0xFF1E1F25)
+val DarkOnSurfaceVariant = Color(0xFF9DA0AC)
 
 val PriceUpLight = Color(0xFF1B8E3D)
 val PriceUpDark = Color(0xFF5CD98A)
@@ -47,7 +48,7 @@ val DarkColorScheme = darkColorScheme(
     secondary = BlueGrey80,
     background = DarkBackground,
     onBackground = DarkOnBackground,
-    surface = DarkBackground,
+    surface = DarkSurface,
     onSurface = DarkOnBackground,
     surfaceVariant = DarkSurfaceVariant,
     onSurfaceVariant = DarkOnSurfaceVariant,
