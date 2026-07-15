@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.ui.theme
+package app.oguzhanozgokce.midmoney.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
