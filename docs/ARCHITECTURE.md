@@ -28,7 +28,7 @@ another feature; no library depends on a plugin.
 build-logic:convention   Gradle convention plugins (shared build config)
 
 :library:common          Dispatchers, null-safety extensions
-:library:logger          Debug-gated logging facade (AppLogger)
+:library:logger          Debug-gated logging facade (MidMoneyLogger)
 :library:network         Retrofit + OkHttp + Finnhub client infrastructure
 :library:datastore       DataStore (session token, preferences)
 :library:designsystem    Theme, typography, shared Composables

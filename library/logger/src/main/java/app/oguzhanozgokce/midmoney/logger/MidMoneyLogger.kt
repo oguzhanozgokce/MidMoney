@@ -3,7 +3,7 @@ package app.oguzhanozgokce.midmoney.logger
 import android.util.Log
 
 
-object AppLogger {
+object MidMoneyLogger {
     private const val DEFAULT_TAG = "MidMoney"
 
     fun d(message: String, tag: String = DEFAULT_TAG) {

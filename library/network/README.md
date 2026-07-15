@@ -20,6 +20,6 @@ environment variable (CI), and exposed via `BuildConfig.FINNHUB_API_KEY`. It is 
 ## Notes
 - JSON via kotlinx-serialization (Retrofit official converter).
 - HTTP body logging is enabled only in debug builds and routed through `:library:logger`
-  (`AppLogger`, "Network" tag) so all requests/responses show in Logcat.
+  (`MidMoneyLogger`, "Network" tag) so all requests/responses show in Logcat.
 - The app targets a single provider, so the Finnhub base URL lives here. If multiple APIs were added,
   the base URL / converter setup would be generalized and per-API config moved to the consumer.

@@ -1,6 +1,6 @@
 package app.oguzhanozgokce.midmoney.network.di
 
-import app.oguzhanozgokce.midmoney.logger.AppLogger
+import app.oguzhanozgokce.midmoney.logger.MidMoneyLogger
 import app.oguzhanozgokce.midmoney.network.BuildConfig
 import app.oguzhanozgokce.midmoney.network.interceptor.ApiKeyInterceptor
 import dagger.Module
@@ -34,7 +34,7 @@ object NetworkModule {
         .apply {
             if (BuildConfig.DEBUG) {
                 val loggingInterceptor = HttpLoggingInterceptor { message ->
-                    AppLogger.d(message, tag = "Network")
+                    MidMoneyLogger.d(message, tag = "Network")
                 }.apply {
                     level = HttpLoggingInterceptor.Level.BODY
                 }
