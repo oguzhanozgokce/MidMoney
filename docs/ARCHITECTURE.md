@@ -35,6 +35,7 @@ build-logic:convention   Gradle convention plugins (shared build config)
 :library:navigation      Nav3 keys + Navigator abstraction
 :library:mvi             MVI contract (StateFlow state, actions, effects) + delegate
 :library:websocket       Generic OkHttp WebSocket transport (provider-agnostic)
+:library:event           Analytics/event tracking (Firebase Analytics)
 
 :plugin:user             Auth/session via Firebase (login/logout, isLoggedIn) — cross-cutting
 :plugin:market           Market + watchlist domain & data
