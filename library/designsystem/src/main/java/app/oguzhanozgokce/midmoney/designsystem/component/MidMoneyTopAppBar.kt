@@ -2,6 +2,7 @@ package app.oguzhanozgokce.midmoney.designsystem.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -11,6 +12,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,4 +52,17 @@ fun MidMoneyTopAppBar(
             }
         },
     )
+}
+
+@PreviewLightDark
+@Composable
+private fun MidMoneyTopAppBarPreview() {
+    MidMoneyTheme {
+        MidMoneyTopAppBar(
+            title = "Detail",
+            onNavigationClick = {},
+            actionIcon = Icons.Outlined.Star,
+            onActionClick = {},
+        )
+    }
 }

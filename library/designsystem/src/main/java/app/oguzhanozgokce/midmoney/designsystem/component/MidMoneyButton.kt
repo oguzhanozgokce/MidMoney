@@ -1,19 +1,26 @@
 package app.oguzhanozgokce.midmoney.designsystem.component
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 
 enum class MidMoneyButtonStyle { Filled, Outlined }
 
@@ -64,5 +71,34 @@ fun MidMoneyButton(
             modifier = modifier.heightIn(min = minHeight),
             content = content,
         )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun MidMoneyButtonPreview() {
+    MidMoneyTheme {
+        Surface {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                MidMoneyButton(text = "Filled medium", onClick = {}, modifier = Modifier.fillMaxWidth())
+                MidMoneyButton(
+                    text = "Outlined",
+                    onClick = {},
+                    style = MidMoneyButtonStyle.Outlined,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                MidMoneyButton(text = "Small", onClick = {}, size = MidMoneyButtonSize.Small)
+                MidMoneyButton(text = "Large", onClick = {}, size = MidMoneyButtonSize.Large)
+                MidMoneyButton(
+                    text = "Loading",
+                    onClick = {},
+                    loading = true,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+        }
     }
 }

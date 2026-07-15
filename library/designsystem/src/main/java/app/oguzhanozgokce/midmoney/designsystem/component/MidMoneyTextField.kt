@@ -8,13 +8,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 
 @Composable
 fun MidMoneyTextField(
@@ -62,5 +65,22 @@ fun MidMoneyTextField(
                 innerTextField()
             },
         )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun MidMoneyTextFieldPreview() {
+    MidMoneyTheme {
+        Surface {
+            MidMoneyTextField(
+                value = "user@midmoney.app",
+                onValueChange = {},
+                label = "Email",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+            )
+        }
     }
 }
