@@ -3,6 +3,7 @@ agp = "9.2.1"
 kotlin = "2.4.10"
 ksp = "2.3.10"
 hilt = "2.60.1"
+hiltNavigationCompose = "1.2.0"
 coroutines = "1.10.2"
 retrofit = "3.0.0"
 okhttp = "5.1.0"
@@ -25,6 +26,9 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -77,3 +81,4 @@ midmoney-android-application = { id = "midmoney.android.application" }
 midmoney-android-library = { id = "midmoney.android.library" }
 midmoney-android-compose = { id = "midmoney.android.compose" }
 midmoney-android-hilt = { id = "midmoney.android.hilt" }
+midmoney-android-feature = { id = "midmoney.android.feature" }

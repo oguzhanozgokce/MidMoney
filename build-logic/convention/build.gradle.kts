@@ -28,5 +28,9 @@ gradlePlugin {
             id = "midmoney.android.hilt"
             implementationClass = "app.oguzhanozgokce.midmoney.convention.AndroidHiltConventionPlugin"
         }
+        register("androidFeature") {
+            id = "midmoney.android.feature"
+            implementationClass = "app.oguzhanozgokce.midmoney.convention.AndroidFeatureConventionPlugin"
+        }
     }
 }

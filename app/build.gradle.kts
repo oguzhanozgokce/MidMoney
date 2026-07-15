@@ -32,6 +32,11 @@ dependencies {
     implementation(project(":library:datastore"))
     implementation(project(":library:navigation"))
 
+    implementation(project(":feature:login"))
+    implementation(project(":feature:market"))
+    implementation(project(":feature:detail"))
+    implementation(project(":feature:watchlist"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
