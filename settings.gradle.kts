@@ -32,6 +32,7 @@ include(":library:network")
 include(":library:datastore")
 include(":library:navigation")
 include(":library:mvi")
+include(":library:websocket")
 include(":plugin:market")
 
 include(":feature:login")

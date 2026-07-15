@@ -11,6 +11,7 @@ android {
 dependencies {
     implementation(project(":library:network"))
     implementation(project(":library:common"))
+    implementation(project(":library:websocket"))
 
     implementation(libs.retrofit.core)
     implementation(libs.kotlinx.serialization.json)
