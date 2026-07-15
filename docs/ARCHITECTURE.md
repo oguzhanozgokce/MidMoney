@@ -76,8 +76,16 @@ AGP 9 ships Kotlin support built in, so the convention plugins deliberately do *
 (JVM 17) are configured via the `KotlinJvmCompile` tasks.
 
 ### 5. Navigation 3
-Nav3's `NavDisplay` + typed keys replace the older `NavHost`/string-route model, giving a type-safe back
-stack that a `Navigator` abstraction can drive from ViewModels (no `NavController` leaking into the UI).
+Nav3's `NavDisplay` + typed `@Serializable` keys replace the older `NavHost`/string-route model, giving
+a type-safe back stack. Two multi-module choices:
+
+- **Shared keys** — all `Destination` keys live in `:library:navigation`, so any feature can target any
+  destination without depending on another feature's implementation (avoids feature→feature coupling).
+- **`Navigator` abstraction** — ViewModels inject `Navigator` and emit commands; the app owns the back
+  stack and applies them. No `NavController`/Compose types leak into ViewModels.
+- **Entry assembly via Hilt** — each feature contributes an `EntryProviderInstaller` into a `@IntoSet`
+  multibinding; the app installs the whole set into one `entryProvider`. Adding a feature to navigation
+  is just providing its installer — the app never references features directly.
 
 ## Convention plugins
 
