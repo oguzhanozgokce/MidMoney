@@ -52,6 +52,14 @@ private fun DetailScreen(
         ) {
             Text(text = uiState.symbol, style = MaterialTheme.typography.headlineLarge)
 
+            uiState.livePrice?.let { price ->
+                Text(
+                    text = "Live: %.2f".format(price),
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+            }
+
             when {
                 uiState.isLoading -> Box(
                     modifier = Modifier.fillMaxWidth().padding(top = 32.dp),

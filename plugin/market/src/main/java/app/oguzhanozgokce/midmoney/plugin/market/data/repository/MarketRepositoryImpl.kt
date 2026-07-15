@@ -2,17 +2,22 @@ package app.oguzhanozgokce.midmoney.plugin.market.data.repository
 
 import app.oguzhanozgokce.midmoney.common.coroutines.DispatcherProvider
 import app.oguzhanozgokce.midmoney.plugin.market.data.remote.FinnhubApi
+import app.oguzhanozgokce.midmoney.plugin.market.data.remote.FinnhubTradeStream
 import app.oguzhanozgokce.midmoney.plugin.market.data.remote.toDomain
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.MarketRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MarketRepositoryImpl @Inject constructor(
     private val api: FinnhubApi,
+    private val tradeStream: FinnhubTradeStream,
     private val dispatchers: DispatcherProvider,
 ) : MarketRepository {
 
@@ -30,4 +35,9 @@ class MarketRepositoryImpl @Inject constructor(
                 }
             }
         }
+
+    override fun observePrice(symbol: String): Flow<Double> =
+        tradeStream.observePrices(listOf(symbol))
+            .filter { it.symbol == symbol }
+            .map { it.price }
 }

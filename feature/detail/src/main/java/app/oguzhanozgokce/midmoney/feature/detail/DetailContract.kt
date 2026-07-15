@@ -5,6 +5,7 @@ import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 data class DetailUiState(
     val symbol: String = "",
     val quote: Quote? = null,
+    val livePrice: Double? = null,
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
 )

@@ -6,13 +6,16 @@ import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Navigator
 import app.oguzhanozgokce.midmoney.plugin.market.domain.usecase.GetQuoteUseCase
+import app.oguzhanozgokce.midmoney.plugin.market.domain.usecase.ObservePriceUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val getQuote: GetQuoteUseCase,
+    private val observePrice: ObservePriceUseCase,
     private val navigator: Navigator,
 ) : ViewModel(),
     MVI<DetailUiState, DetailUiAction, DetailUiEffect> by mvi(DetailUiState()) {
@@ -36,6 +39,15 @@ class DetailViewModel @Inject constructor(
                         copy(isLoading = false, errorMessage = throwable.message ?: "Something went wrong")
                     }
                 }
+        }
+        observeLivePrice(symbol)
+    }
+
+    private fun observeLivePrice(symbol: String) {
+        viewModelScope.launch {
+            observePrice(symbol)
+                .catch { /* Ignore stream errors; the REST quote stays on screen. */ }
+                .collect { price -> updateUiState { copy(livePrice = price) } }
         }
     }
 }
