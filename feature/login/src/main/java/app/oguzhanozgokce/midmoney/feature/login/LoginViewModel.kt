@@ -2,6 +2,7 @@ package app.oguzhanozgokce.midmoney.feature.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.oguzhanozgokce.midmoney.event.Analytics
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val userClient: UserClient,
     private val navigator: Navigator,
+    private val analytics: Analytics,
 ) : ViewModel(),
     MVI<LoginUiState, LoginUiAction, LoginUiEffect> by mvi(LoginUiState()) {
 
@@ -35,13 +37,16 @@ class LoginViewModel @Inject constructor(
             return
         }
         updateUiState { copy(isLoading = true) }
+        analytics.track(LoginAnalyticsEvent.LoginClicked)
         viewModelScope.launch {
             userClient.login(state.email, state.password)
                 .onSuccess {
+                    analytics.track(LoginAnalyticsEvent.LoginSucceeded)
                     navigator.navigateAndClearBackStack(Destination.Market)
                 }
                 .onFailure { throwable ->
                     updateUiState { copy(isLoading = false) }
+                    analytics.track(LoginAnalyticsEvent.LoginFailed(throwable.message ?: "unknown"))
                     emitUiEffect(LoginUiEffect.ShowMessage(throwable.message ?: "Login failed"))
                 }
         }
