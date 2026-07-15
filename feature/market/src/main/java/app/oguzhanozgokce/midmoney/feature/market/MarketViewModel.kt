@@ -6,14 +6,14 @@ import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.Navigator
-import app.oguzhanozgokce.midmoney.plugin.market.domain.usecase.GetMarketQuotesUseCase
+import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MarketViewModel @Inject constructor(
-    private val getMarketQuotes: GetMarketQuotesUseCase,
+    private val marketClient: MarketClient,
     private val navigator: Navigator,
 ) : ViewModel(),
     MVI<MarketUiState, MarketUiAction, MarketUiEffect> by mvi(MarketUiState()) {
@@ -33,7 +33,7 @@ class MarketViewModel @Inject constructor(
     private fun loadQuotes() {
         updateUiState { copy(isLoading = true, errorMessage = null) }
         viewModelScope.launch {
-            getMarketQuotes()
+            marketClient.getQuotes()
                 .onSuccess { quotes ->
                     updateUiState { copy(quotes = quotes, isLoading = false) }
                 }

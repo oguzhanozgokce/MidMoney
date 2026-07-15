@@ -7,6 +7,7 @@ import app.oguzhanozgokce.midmoney.websocket.WebSocketEvent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.transform
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
@@ -31,7 +32,7 @@ class FinnhubTradeStream @Inject constructor(
         }
 
     private suspend fun FlowCollector<TradePrice>.emitTrades(text: String) {
-        val message = runCatching { json.decodeFromString(TradeMessageDto.serializer(), text) }.getOrNull()
+        val message = runCatching { json.decodeFromString<TradeMessageDto>(text) }.getOrNull()
         if (message?.type != TRADE_TYPE) return
         message.data.orEmpty().forEach { dto ->
             val symbol = dto.symbol ?: return@forEach
