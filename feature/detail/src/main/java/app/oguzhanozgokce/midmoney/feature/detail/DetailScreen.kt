@@ -7,11 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 
 @Composable
 fun DetailRoute(
@@ -41,7 +41,7 @@ private fun DetailScreen(
     uiState: DetailUiState,
     onAction: (DetailUiAction) -> Unit,
 ) {
-    Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
+    MidMoneyScaffold { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -75,12 +75,11 @@ private fun DetailScreen(
                 uiState.quote != null -> QuoteDetails(uiState.quote)
             }
 
-            Button(
+            MidMoneyButton(
+                text = "Back",
                 onClick = { onAction(DetailUiAction.BackClicked) },
                 modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(text = "Back")
-            }
+            )
         }
     }
 }

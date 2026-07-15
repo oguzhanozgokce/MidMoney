@@ -5,10 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -22,6 +20,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 
 @Composable
 fun LoginRoute(viewModel: LoginViewModel = hiltViewModel()) {
@@ -49,8 +49,7 @@ private fun LoginScreen(
     onAction: (LoginUiAction) -> Unit,
     snackbarHostState: SnackbarHostState,
 ) {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
+    MidMoneyScaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { padding ->
         Column(
@@ -77,13 +76,12 @@ private fun LoginScreen(
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth(),
             )
-            Button(
+            MidMoneyButton(
+                text = "Login",
                 onClick = { onAction(LoginUiAction.LoginClicked) },
-                enabled = !uiState.isLoading,
+                loading = uiState.isLoading,
                 modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(text = if (uiState.isLoading) "Signing in…" else "Login")
-            }
+            )
         }
     }
 }

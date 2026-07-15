@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 
 @Composable
 fun WatchlistRoute(viewModel: WatchlistViewModel = hiltViewModel()) {
@@ -31,7 +31,7 @@ private fun WatchlistScreen(
     uiState: WatchlistUiState,
     onAction: (WatchlistUiAction) -> Unit,
 ) {
-    Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
+    MidMoneyScaffold { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -41,12 +41,11 @@ private fun WatchlistScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(text = "Watchlist", style = MaterialTheme.typography.headlineLarge)
-            Button(
+            MidMoneyButton(
+                text = "Back",
                 onClick = { onAction(WatchlistUiAction.BackClicked) },
                 modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(text = "Back")
-            }
+            )
         }
     }
 }

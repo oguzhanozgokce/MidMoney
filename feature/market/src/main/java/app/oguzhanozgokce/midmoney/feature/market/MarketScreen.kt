@@ -2,7 +2,6 @@ package app.oguzhanozgokce.midmoney.feature.market
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,12 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -27,6 +23,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyBadge
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 
 @Composable
@@ -40,7 +40,7 @@ private fun MarketScreen(
     uiState: MarketUiState,
     onAction: (MarketUiAction) -> Unit,
 ) {
-    Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
+    MidMoneyScaffold { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -65,7 +65,7 @@ private fun MarketScreen(
             }
 
             when {
-                uiState.isLoading -> LoadingContent()
+                uiState.isLoading -> MidMoneyLoading()
                 uiState.errorMessage != null -> ErrorContent(
                     message = uiState.errorMessage,
                     onRetry = { onAction(MarketUiAction.Retry) },
@@ -109,10 +109,9 @@ private fun QuoteRow(quote: QuoteUi, onClick: () -> Unit) {
                     text = quote.priceText,
                     style = MaterialTheme.typography.titleMedium,
                 )
-                Text(
+                MidMoneyBadge(
                     text = quote.changePercentText,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = if (quote.isPositive) {
+                    contentColor = if (quote.isPositive) {
                         MidMoneyTheme.extraColors.priceUp
                     } else {
                         MidMoneyTheme.extraColors.priceDown
@@ -120,13 +119,6 @@ private fun QuoteRow(quote: QuoteUi, onClick: () -> Unit) {
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun LoadingContent() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        CircularProgressIndicator()
     }
 }
 
@@ -140,8 +132,6 @@ private fun ErrorContent(message: String, onRetry: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(text = message, style = MaterialTheme.typography.bodyLarge)
-        Button(onClick = onRetry) {
-            Text(text = "Retry")
-        }
+        MidMoneyButton(text = "Retry", onClick = onRetry)
     }
 }
