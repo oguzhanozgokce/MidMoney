@@ -3,6 +3,7 @@ package app.oguzhanozgokce.midmoney.feature.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.oguzhanozgokce.midmoney.common.extensions.formatPrice
+import app.oguzhanozgokce.midmoney.event.Analytics
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Navigator
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val marketClient: MarketClient,
     private val navigator: Navigator,
+    private val analytics: Analytics,
 ) : ViewModel(),
     MVI<DetailUiState, DetailUiAction, DetailUiEffect> by mvi(DetailUiState()) {
 
@@ -27,6 +29,7 @@ class DetailViewModel @Inject constructor(
     }
 
     private fun load(symbol: String) {
+        analytics.track(DetailAnalyticsEvent.Viewed(symbol))
         updateUiState { copy(symbol = symbol, isLoading = true, errorMessage = null) }
         viewModelScope.launch {
             marketClient.getQuote(symbol)

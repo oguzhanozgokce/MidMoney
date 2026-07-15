@@ -2,6 +2,7 @@ package app.oguzhanozgokce.midmoney.feature.market
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.oguzhanozgokce.midmoney.event.Analytics
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
@@ -17,6 +18,7 @@ class MarketViewModel @Inject constructor(
     private val marketClient: MarketClient,
     private val userClient: UserClient,
     private val navigator: Navigator,
+    private val analytics: Analytics,
 ) : ViewModel(),
     MVI<MarketUiState, MarketUiAction, MarketUiEffect> by mvi(MarketUiState()) {
 
@@ -26,14 +28,21 @@ class MarketViewModel @Inject constructor(
 
     override fun onAction(uiAction: MarketUiAction) {
         when (uiAction) {
-            is MarketUiAction.OpenDetail -> navigator.navigate(Destination.Detail(uiAction.symbol))
-            MarketUiAction.OpenWatchlist -> navigator.navigate(Destination.Watchlist)
+            is MarketUiAction.OpenDetail -> {
+                analytics.track(MarketAnalyticsEvent.OpenDetail(uiAction.symbol))
+                navigator.navigate(Destination.Detail(uiAction.symbol))
+            }
+            MarketUiAction.OpenWatchlist -> {
+                analytics.track(MarketAnalyticsEvent.OpenWatchlist)
+                navigator.navigate(Destination.Watchlist)
+            }
             MarketUiAction.Retry -> loadQuotes()
             MarketUiAction.Logout -> logout()
         }
     }
 
     private fun logout() {
+        analytics.track(MarketAnalyticsEvent.Logout)
         userClient.logout()
         navigator.navigateAndClearBackStack(Destination.Login)
     }
