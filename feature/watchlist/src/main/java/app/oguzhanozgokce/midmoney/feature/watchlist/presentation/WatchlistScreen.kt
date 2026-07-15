@@ -17,21 +17,13 @@ import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 @Composable
 fun WatchlistRoute(viewModel: WatchlistViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    WatchlistScreen(uiState = uiState, onAction = viewModel::onAction)
+    WatchlistScreen(uiState = uiState)
 }
 
 @Composable
-private fun WatchlistScreen(
-    uiState: WatchlistUiState,
-    onAction: (WatchlistUiAction) -> Unit,
-) {
+private fun WatchlistScreen(uiState: WatchlistUiState) {
     MidMoneyScaffold(
-        topBar = {
-            MidMoneyTopAppBar(
-                title = "Watchlist",
-                onNavigationClick = { onAction(WatchlistUiAction.BackClicked) },
-            )
-        },
+        topBar = { MidMoneyTopAppBar(title = "Watchlist") },
     ) { padding ->
         MidMoneyEmptyState(
             icon = Icons.Outlined.Star,
@@ -46,6 +38,6 @@ private fun WatchlistScreen(
 @Composable
 private fun WatchlistScreenPreview() {
     MidMoneyTheme {
-        WatchlistScreen(uiState = WatchlistUiState(), onAction = {})
+        WatchlistScreen(uiState = WatchlistUiState())
     }
 }

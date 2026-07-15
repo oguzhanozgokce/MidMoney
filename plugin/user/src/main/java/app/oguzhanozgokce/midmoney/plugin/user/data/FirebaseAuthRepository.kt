@@ -23,6 +23,14 @@ class FirebaseAuthRepository @Inject constructor(
         awaitClose { auth.removeAuthStateListener(listener) }
     }
 
+    override val currentUserEmail: Flow<String?> = callbackFlow {
+        val listener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            trySend(firebaseAuth.currentUser?.email)
+        }
+        auth.addAuthStateListener(listener)
+        awaitClose { auth.removeAuthStateListener(listener) }
+    }
+
     override fun isCurrentlyLoggedIn(): Boolean = auth.currentUser != null
 
     override suspend fun login(email: String, password: String): Result<Unit> =

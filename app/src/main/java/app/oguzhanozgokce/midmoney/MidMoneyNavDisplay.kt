@@ -6,6 +6,8 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import app.oguzhanozgokce.midmoney.home.HomeShell
+import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.EntryProviderInstaller
 import app.oguzhanozgokce.midmoney.navigation.NavigationCommand
 import app.oguzhanozgokce.midmoney.navigation.Navigator
@@ -40,6 +42,7 @@ fun MidMoneyNavDisplay(
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
+            entry<Destination.Home> { HomeShell() }
             entryInstallers.forEach { installer -> installer() }
         },
     )

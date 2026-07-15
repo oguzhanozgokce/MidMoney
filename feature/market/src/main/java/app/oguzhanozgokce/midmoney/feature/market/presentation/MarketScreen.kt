@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -34,15 +33,23 @@ import app.oguzhanozgokce.midmoney.feature.market.presentation.component.QuoteLi
 import app.oguzhanozgokce.midmoney.feature.market.presentation.model.HomeBannerUi
 
 @Composable
-fun MarketRoute(viewModel: MarketViewModel = hiltViewModel()) {
+fun MarketRoute(
+    onOpenWatchlist: () -> Unit,
+    viewModel: MarketViewModel = hiltViewModel(),
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    MarketScreen(uiState = uiState, onAction = viewModel::onAction)
+    MarketScreen(
+        uiState = uiState,
+        onAction = viewModel::onAction,
+        onOpenWatchlist = onOpenWatchlist,
+    )
 }
 
 @Composable
 private fun MarketScreen(
     uiState: MarketUiState,
     onAction: (MarketUiAction) -> Unit,
+    onOpenWatchlist: () -> Unit,
 ) {
     MidMoneyScaffold { padding ->
         Column(
@@ -50,10 +57,7 @@ private fun MarketScreen(
                 .fillMaxSize()
                 .padding(padding),
         ) {
-            HomeHeader(
-                onWatchlistClick = { onAction(MarketUiAction.OpenWatchlist) },
-                onLogoutClick = { onAction(MarketUiAction.Logout) },
-            )
+            HomeHeader()
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(bottom = 16.dp),
@@ -61,7 +65,7 @@ private fun MarketScreen(
                 item {
                     HomeBannerPager(
                         banners = HomeBannerUi.defaults,
-                        onActionClick = { onAction(MarketUiAction.OpenWatchlist) },
+                        onActionClick = { onOpenWatchlist() },
                         modifier = Modifier.padding(vertical = 8.dp),
                     )
                 }
@@ -98,31 +102,19 @@ private fun MarketScreen(
 }
 
 @Composable
-private fun HomeHeader(
-    onWatchlistClick: () -> Unit,
-    onLogoutClick: () -> Unit,
-) {
+private fun HomeHeader() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 4.dp, top = 8.dp, bottom = 4.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+            .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = "MidMoney",
-            style = MaterialTheme.typography.headlineMedium,
+            style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground,
         )
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            TextButton(onClick = onWatchlistClick) {
-                Text(text = "Watchlist")
-            }
-            TextButton(onClick = onLogoutClick) {
-                Text(text = "Logout")
-            }
-        }
     }
 }
 
@@ -162,6 +154,6 @@ private fun MarketScreenPreview(
     @PreviewParameter(MarketUiStatePreviewProvider::class) state: MarketUiState,
 ) {
     MidMoneyTheme {
-        MarketScreen(uiState = state, onAction = {})
+        MarketScreen(uiState = state, onAction = {}, onOpenWatchlist = {})
     }
 }

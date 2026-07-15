@@ -10,7 +10,6 @@ import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.Navigator
 import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
-import app.oguzhanozgokce.midmoney.plugin.user.UserClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +17,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MarketViewModel @Inject constructor(
     private val marketClient: MarketClient,
-    private val userClient: UserClient,
     private val navigator: Navigator,
     private val analytics: Analytics,
 ) : ViewModel(),
@@ -34,19 +32,8 @@ class MarketViewModel @Inject constructor(
                 analytics.track(MarketAnalyticsEvent.OpenDetail(uiAction.symbol))
                 navigator.navigate(Destination.Detail(uiAction.symbol))
             }
-            MarketUiAction.OpenWatchlist -> {
-                analytics.track(MarketAnalyticsEvent.OpenWatchlist)
-                navigator.navigate(Destination.Watchlist)
-            }
             MarketUiAction.Retry -> loadQuotes()
-            MarketUiAction.Logout -> logout()
         }
-    }
-
-    private fun logout() {
-        analytics.track(MarketAnalyticsEvent.Logout)
-        userClient.logout()
-        navigator.navigateAndClearBackStack(Destination.Login)
     }
 
     private fun loadQuotes() {

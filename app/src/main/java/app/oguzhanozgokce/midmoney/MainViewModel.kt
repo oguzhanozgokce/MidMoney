@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor(
 
     private fun resolveStartDestination() {
         val startDestination = if (userClient.isCurrentlyLoggedIn()) {
-            Destination.Market
+            Destination.Home
         } else {
             Destination.Login
         }

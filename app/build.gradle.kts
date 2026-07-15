@@ -40,6 +40,7 @@ dependencies {
     implementation(project(":feature:market"))
     implementation(project(":feature:detail"))
     implementation(project(":feature:watchlist"))
+    implementation(project(":feature:profile"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

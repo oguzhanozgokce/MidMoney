@@ -43,7 +43,7 @@ class LoginViewModel @Inject constructor(
             userClient.login(state.email, state.password)
                 .onSuccess {
                     analytics.track(LoginAnalyticsEvent.LoginSucceeded)
-                    navigator.navigateAndClearBackStack(Destination.Market)
+                    navigator.navigateAndClearBackStack(Destination.Home)
                 }
                 .onFailure { throwable ->
                     updateUiState { copy(isLoading = false) }

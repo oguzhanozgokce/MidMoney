@@ -9,13 +9,10 @@ import app.oguzhanozgokce.midmoney.navigation.Navigator
 import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.MarketRepository
-import app.oguzhanozgokce.midmoney.plugin.user.UserClient
-import app.oguzhanozgokce.midmoney.plugin.user.domain.repository.AuthRepository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
@@ -28,11 +25,9 @@ class MarketViewModelTest {
 
     private val navigator = FakeNavigator()
     private val analytics = FakeAnalytics()
-    private val authRepository = FakeAuthRepository()
 
     private fun viewModel(marketRepository: MarketRepository) = MarketViewModel(
         marketClient = MarketClient(marketRepository),
-        userClient = UserClient(authRepository),
         navigator = navigator,
         analytics = analytics,
     )
@@ -65,18 +60,6 @@ class MarketViewModelTest {
         assertThat(analytics.trackedEvents).contains(MarketAnalyticsEvent.OpenDetail("AAPL"))
     }
 
-    @Test
-    fun `logout clears the session, returns to login and tracks the event`() = runTest {
-        val viewModel = viewModel(FakeMarketRepository())
-
-        viewModel.onAction(MarketUiAction.Logout)
-
-        assertThat(authRepository.loggedOut).isTrue()
-        assertThat(navigator.commandsLog)
-            .contains(NavigationCommand.NavigateAndClearBackStack(Destination.Login))
-        assertThat(analytics.trackedEvents).contains(MarketAnalyticsEvent.Logout)
-    }
-
     private fun quote(symbol: String) = Quote(
         symbol = symbol,
         current = 150.0,
@@ -100,19 +83,6 @@ private class FakeMarketRepository(
         error?.let { Result.failure(it) } ?: Result.success(quotes.first())
 
     override fun observePrice(symbol: String): Flow<Double> = emptyFlow()
-}
-
-private class FakeAuthRepository : AuthRepository {
-    var loggedOut: Boolean = false
-        private set
-
-    override val currentUserId: Flow<String?> = flowOf(null)
-    override fun isCurrentlyLoggedIn(): Boolean = false
-    override suspend fun login(email: String, password: String): Result<Unit> = Result.success(Unit)
-    override suspend fun register(email: String, password: String): Result<Unit> = Result.success(Unit)
-    override fun logout() {
-        loggedOut = true
-    }
 }
 
 private class FakeNavigator : Navigator {

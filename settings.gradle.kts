@@ -41,4 +41,5 @@ include(":feature:login")
 include(":feature:market")
 include(":feature:detail")
 include(":feature:watchlist")
+include(":feature:profile")
  

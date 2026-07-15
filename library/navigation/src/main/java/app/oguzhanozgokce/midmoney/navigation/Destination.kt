@@ -13,12 +13,10 @@ sealed interface Destination : NavKey {
     @Serializable
     data object Login : Destination
 
+    /** The signed-in shell that hosts the bottom-navigation tabs (market, watchlist, profile). */
     @Serializable
-    data object Market : Destination
+    data object Home : Destination
 
     @Serializable
     data class Detail(val symbol: String) : Destination
-
-    @Serializable
-    data object Watchlist : Destination
 }
