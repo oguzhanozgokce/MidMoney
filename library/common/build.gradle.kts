@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.midmoney.android.library)
+    alias(libs.plugins.midmoney.android.hilt)
 }
 
 android {

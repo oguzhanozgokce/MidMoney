@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "app.oguzhanozgokce.midmoney.feature.market"
 }
+
+dependencies {
+    implementation(project(":plugin:market"))
+}

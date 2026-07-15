@@ -32,6 +32,8 @@ include(":library:network")
 include(":library:datastore")
 include(":library:navigation")
 include(":library:mvi")
+include(":plugin:market")
+
 include(":feature:login")
 include(":feature:market")
 include(":feature:detail")
