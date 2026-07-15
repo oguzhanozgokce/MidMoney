@@ -20,6 +20,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -144,5 +147,28 @@ private fun ErrorContent(message: String, onRetry: () -> Unit) {
             color = MaterialTheme.colorScheme.onBackground,
         )
         MidMoneyButton(text = "Retry", onClick = onRetry, style = MidMoneyButtonStyle.Outlined)
+    }
+}
+
+private class MarketUiStatePreviewProvider : PreviewParameterProvider<MarketUiState> {
+    override val values = sequenceOf(
+        MarketUiState(isLoading = true),
+        MarketUiState(
+            quotes = listOf(
+                QuoteUi(symbol = "AAPL", priceText = "150.25", changePercentText = "+1.20%", isPositive = true),
+                QuoteUi(symbol = "TSLA", priceText = "240.10", changePercentText = "-0.85%", isPositive = false),
+            ),
+        ),
+        MarketUiState(errorMessage = "Something went wrong"),
+    )
+}
+
+@PreviewLightDark
+@Composable
+private fun MarketScreenPreview(
+    @PreviewParameter(MarketUiStatePreviewProvider::class) state: MarketUiState,
+) {
+    MidMoneyTheme {
+        MarketScreen(uiState = state, onAction = {})
     }
 }

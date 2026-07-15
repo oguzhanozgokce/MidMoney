@@ -6,11 +6,13 @@ import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyEmptyState
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTopAppBar
+import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 
 @Composable
 fun WatchlistRoute(viewModel: WatchlistViewModel = hiltViewModel()) {
@@ -37,5 +39,13 @@ private fun WatchlistScreen(
             description = "Symbols you follow will appear here.",
             modifier = Modifier.padding(padding),
         )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun WatchlistScreenPreview() {
+    MidMoneyTheme {
+        WatchlistScreen(uiState = WatchlistUiState(), onAction = {})
     }
 }

@@ -20,6 +20,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,6 +30,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonSize
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTextField
+import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 
 @Composable
 fun LoginRoute(viewModel: LoginViewModel = hiltViewModel()) {
@@ -95,5 +99,27 @@ private fun LoginScreen(
                 modifier = Modifier.fillMaxWidth(),
             )
         }
+    }
+}
+
+private class LoginUiStatePreviewProvider : PreviewParameterProvider<LoginUiState> {
+    override val values = sequenceOf(
+        LoginUiState(),
+        LoginUiState(email = "user@midmoney.app", password = "secret"),
+        LoginUiState(email = "user@midmoney.app", password = "secret", isLoading = true),
+    )
+}
+
+@PreviewLightDark
+@Composable
+private fun LoginScreenPreview(
+    @PreviewParameter(LoginUiStatePreviewProvider::class) state: LoginUiState,
+) {
+    MidMoneyTheme {
+        LoginScreen(
+            uiState = state,
+            onAction = {},
+            snackbarHostState = remember { SnackbarHostState() },
+        )
     }
 }
