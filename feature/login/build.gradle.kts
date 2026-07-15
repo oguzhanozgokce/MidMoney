@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "app.oguzhanozgokce.midmoney.feature.login"
 }
+
+dependencies {
+    implementation(project(":plugin:user"))
+}

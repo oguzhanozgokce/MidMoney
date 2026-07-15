@@ -34,6 +34,7 @@ include(":library:navigation")
 include(":library:mvi")
 include(":library:websocket")
 include(":plugin:market")
+include(":plugin:user")
 
 include(":feature:login")
 include(":feature:market")

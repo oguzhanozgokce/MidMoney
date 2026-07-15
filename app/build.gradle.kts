@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.midmoney.android.application)
     alias(libs.plugins.midmoney.android.compose)
     alias(libs.plugins.midmoney.android.hilt)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -31,6 +32,7 @@ dependencies {
     implementation(project(":library:network"))
     implementation(project(":library:datastore"))
     implementation(project(":library:navigation"))
+    implementation(project(":plugin:user"))
 
     implementation(project(":feature:login"))
     implementation(project(":feature:market"))
