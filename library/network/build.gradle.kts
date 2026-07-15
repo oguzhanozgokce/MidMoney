@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.library.logger)
+    implementation(project(":library:logger"))
 
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlinx.serialization.converter)

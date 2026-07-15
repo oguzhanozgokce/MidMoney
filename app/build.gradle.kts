@@ -25,11 +25,11 @@ android {
 }
 
 dependencies {
-    implementation(projects.library.designsystem)
-    implementation(projects.library.common)
-    implementation(projects.library.logger)
-    implementation(projects.library.network)
-    implementation(projects.library.datastore)
+    implementation(project(":library:designsystem"))
+    implementation(project(":library:common"))
+    implementation(project(":library:logger"))
+    implementation(project(":library:network"))
+    implementation(project(":library:datastore"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
