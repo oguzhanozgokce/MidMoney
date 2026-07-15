@@ -33,6 +33,7 @@ build-logic:convention   Gradle convention plugins (shared build config)
 :library:datastore       DataStore (session token, preferences)
 :library:designsystem    Theme, typography, shared Composables
 :library:navigation      Nav3 keys + Navigator abstraction
+:library:mvi             MVI contract (StateFlow state, actions, effects) + delegate
 
 :plugin:user             Session/token + profile + login/logout (cross-cutting)
 :plugin:market           Market + watchlist domain & data
@@ -87,6 +88,12 @@ a type-safe back stack. Two multi-module choices:
   multibinding; the app installs the whole set into one `entryProvider`. Adding a feature to navigation
   is just providing its installer — the app never references features directly.
 
+### 6. MVI via delegation
+Each screen has a `UiState` (StateFlow), `UiAction`s, and one-off `UiEffect`s. ViewModels implement the
+`MVI` contract by delegating to a reusable `MVIDelegate` (`by mvi(initialState)`) and only override
+`onAction`. Screens read state + dispatch actions through `unpackMVI()`. Navigation is driven from the
+ViewModel via the injected `Navigator`; effects are reserved for transient UI (messages, dialogs).
+
 ## Convention plugins
 
 | Plugin id | Applies to | Responsibility |
@@ -95,6 +102,7 @@ a type-safe back stack. Two multi-module choices:
 | `midmoney.android.library` | every library/plugin/feature | Android library, SDK/Java/Kotlin config |
 | `midmoney.android.compose` | UI modules | Compose compiler plugin + `buildFeatures.compose` |
 | `midmoney.android.hilt` | DI modules | Hilt + KSP + Hilt dependencies |
+| `midmoney.android.feature` | `:feature:*` | library + compose + hilt + shared feature deps (mvi, navigation, designsystem) |
 
 ## Build
 
