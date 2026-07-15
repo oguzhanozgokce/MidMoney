@@ -1,0 +1,21 @@
+# detekt configuration, layered on top of the bundled defaults (buildUponDefaultConfig = true).
+# Only rules that need project-specific tuning are listed here.
+
+naming:
+  FunctionNaming:
+    # Jetpack Compose @Composable functions are intentionally PascalCase.
+    ignoreAnnotated: ['Composable']
+
+complexity:
+  LongMethod:
+    # Compose screen functions are naturally long; rely on review instead.
+    ignoreAnnotated: ['Composable']
+
+style:
+  MagicNumber:
+    # dp/sp/color literals are idiomatic in Compose UI code.
+    ignoreAnnotated: ['Composable']
+    ignorePropertyDeclaration: true
+  UnusedParameter:
+    # Stateless screens keep a uniform (uiState, onAction) signature even before all state is read.
+    active: false

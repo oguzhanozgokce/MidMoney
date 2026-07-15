@@ -8,4 +8,24 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.detekt) apply false
+}
+
+// Static analysis + formatting applied to every module.
+subprojects {
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    apply(plugin = "dev.detekt")
+
+    configure<dev.detekt.gradle.extensions.DetektExtension> {
+        buildUponDefaultConfig = true
+        config.setFrom(rootProject.files("config/detekt/detekt.yml"))
+    }
+}
+
+// One-time setup: points git at the committed .githooks directory so the pre-commit hook runs.
+tasks.register<Exec>("installGitHooks") {
+    group = "git hooks"
+    description = "Configures git to use the .githooks directory for this repository."
+    commandLine("git", "config", "core.hooksPath", ".githooks")
 }

@@ -11,6 +11,8 @@ serializationJson = "1.9.0"
 datastore = "1.1.7"
 nav3 = "1.1.4"
 lifecycleViewmodelNav3 = "2.11.0"
+ktlintGradle = "14.2.0"
+detekt = "2.0.0-alpha.5"
 
 coreKtx = "1.19.0"
 junit = "4.13.2"
@@ -75,6 +77,8 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlintGradle" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
 
 # Convention plugins (defined locally in build-logic)
 midmoney-android-application = { id = "midmoney.android.application" }

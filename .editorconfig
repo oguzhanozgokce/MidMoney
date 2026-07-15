@@ -1,0 +1,33 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{kt,kts}]
+# Natural IntelliJ/Android-Studio-style formatting (not the aggressive ktlint_official style).
+ktlint_code_style = intellij_idea
+max_line_length = 120
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+
+# Forbid wildcard imports.
+ktlint_standard_no-wildcard-imports = enabled
+
+# Jetpack Compose @Composable functions are intentionally PascalCase.
+ktlint_function_naming_ignore_when_annotated_with = Composable
+
+# Don't force short constructors / signatures onto multiple lines, and don't rewrap `= value` or
+# strip intentional blank lines — keep the hand-written, readable layout.
+ktlint_function_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than = unset
+ktlint_standard_class-signature = disabled
+ktlint_standard_function-signature = disabled
+ktlint_standard_multiline-expression-wrapping = disabled
+ktlint_standard_no-empty-first-line-in-class-body = disabled
+
+[*.{yml,yaml,json}]
+indent_size = 2
