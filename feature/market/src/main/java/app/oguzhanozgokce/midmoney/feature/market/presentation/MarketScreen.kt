@@ -27,6 +27,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonStyle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
+import app.oguzhanozgokce.midmoney.designsystem.theme.DisplayFontFamily
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 import app.oguzhanozgokce.midmoney.feature.market.presentation.component.HomeBannerPager
 import app.oguzhanozgokce.midmoney.feature.market.presentation.component.QuoteListItem
@@ -112,6 +113,7 @@ private fun HomeHeader() {
         Text(
             text = "MidMoney",
             style = MaterialTheme.typography.headlineSmall,
+            fontFamily = DisplayFontFamily,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground,
         )
