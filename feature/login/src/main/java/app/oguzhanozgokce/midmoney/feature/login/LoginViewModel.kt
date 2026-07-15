@@ -6,12 +6,14 @@ import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.Navigator
+import app.oguzhanozgokce.midmoney.plugin.user.UserClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
+    private val userClient: UserClient,
     private val navigator: Navigator,
 ) : ViewModel(),
     MVI<LoginUiState, LoginUiAction, LoginUiEffect> by mvi(LoginUiState()) {
@@ -32,7 +34,16 @@ class LoginViewModel @Inject constructor(
             }
             return
         }
-        // Real authentication will arrive with :plugin:user; for now go straight to the market.
-        navigator.navigateAndClearBackStack(Destination.Market)
+        updateUiState { copy(isLoading = true) }
+        viewModelScope.launch {
+            userClient.login(state.email, state.password)
+                .onSuccess {
+                    navigator.navigateAndClearBackStack(Destination.Market)
+                }
+                .onFailure { throwable ->
+                    updateUiState { copy(isLoading = false) }
+                    emitUiEffect(LoginUiEffect.ShowMessage(throwable.message ?: "Login failed"))
+                }
+        }
     }
 }

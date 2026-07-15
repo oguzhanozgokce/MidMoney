@@ -54,8 +54,13 @@ private fun MarketScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(text = "Market", style = MaterialTheme.typography.headlineMedium)
-                TextButton(onClick = { onAction(MarketUiAction.OpenWatchlist) }) {
-                    Text(text = "Watchlist")
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    TextButton(onClick = { onAction(MarketUiAction.OpenWatchlist) }) {
+                        Text(text = "Watchlist")
+                    }
+                    TextButton(onClick = { onAction(MarketUiAction.Logout) }) {
+                        Text(text = "Logout")
+                    }
                 }
             }
 

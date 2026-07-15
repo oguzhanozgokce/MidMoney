@@ -79,9 +79,10 @@ private fun LoginScreen(
             )
             Button(
                 onClick = { onAction(LoginUiAction.LoginClicked) },
+                enabled = !uiState.isLoading,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text(text = "Login")
+                Text(text = if (uiState.isLoading) "Signing in…" else "Login")
             }
         }
     }
