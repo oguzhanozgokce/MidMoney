@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonStyle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 
 @Composable
@@ -78,6 +79,7 @@ private fun DetailScreen(
             MidMoneyButton(
                 text = "Back",
                 onClick = { onAction(DetailUiAction.BackClicked) },
+                style = MidMoneyButtonStyle.Outlined,
                 modifier = Modifier.fillMaxWidth(),
             )
         }

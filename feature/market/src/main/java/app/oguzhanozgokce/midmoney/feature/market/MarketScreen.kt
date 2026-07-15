@@ -25,6 +25,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyBadge
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonStyle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
@@ -111,7 +112,7 @@ private fun QuoteRow(quote: QuoteUi, onClick: () -> Unit) {
                 )
                 MidMoneyBadge(
                     text = quote.changePercentText,
-                    contentColor = if (quote.isPositive) {
+                    color = if (quote.isPositive) {
                         MidMoneyTheme.extraColors.priceUp
                     } else {
                         MidMoneyTheme.extraColors.priceDown
@@ -132,6 +133,6 @@ private fun ErrorContent(message: String, onRetry: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(text = message, style = MaterialTheme.typography.bodyLarge)
-        MidMoneyButton(text = "Retry", onClick = onRetry)
+        MidMoneyButton(text = "Retry", onClick = onRetry, style = MidMoneyButtonStyle.Outlined)
     }
 }

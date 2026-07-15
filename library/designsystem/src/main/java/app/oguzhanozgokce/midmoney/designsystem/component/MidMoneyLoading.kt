@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
-/** Centered progress indicator for full-screen loading states. */
 @Composable
 fun MidMoneyLoading(modifier: Modifier = Modifier) {
     Box(

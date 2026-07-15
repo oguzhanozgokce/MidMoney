@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonSize
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 
 @Composable
@@ -79,6 +80,7 @@ private fun LoginScreen(
             MidMoneyButton(
                 text = "Login",
                 onClick = { onAction(LoginUiAction.LoginClicked) },
+                size = MidMoneyButtonSize.Large,
                 loading = uiState.isLoading,
                 modifier = Modifier.fillMaxWidth(),
             )
