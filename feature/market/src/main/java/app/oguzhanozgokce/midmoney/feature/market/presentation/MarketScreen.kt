@@ -1,17 +1,16 @@
 package app.oguzhanozgokce.midmoney.feature.market.presentation
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -25,13 +24,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyBadge
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonStyle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.QuoteUi
+import app.oguzhanozgokce.midmoney.feature.market.presentation.component.HomeBannerPager
+import app.oguzhanozgokce.midmoney.feature.market.presentation.component.QuoteListItem
+import app.oguzhanozgokce.midmoney.feature.market.presentation.model.HomeBannerUi
 
 @Composable
 fun MarketRoute(viewModel: MarketViewModel = hiltViewModel()) {
@@ -50,41 +50,45 @@ private fun MarketScreen(
                 .fillMaxSize()
                 .padding(padding),
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
+            HomeHeader(
+                onWatchlistClick = { onAction(MarketUiAction.OpenWatchlist) },
+                onLogoutClick = { onAction(MarketUiAction.Logout) },
+            )
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = 16.dp),
             ) {
-                Text(
-                    text = "Market",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
-                )
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    TextButton(onClick = { onAction(MarketUiAction.OpenWatchlist) }) {
-                        Text(text = "Watchlist")
-                    }
-                    TextButton(onClick = { onAction(MarketUiAction.Logout) }) {
-                        Text(text = "Logout")
-                    }
+                item {
+                    HomeBannerPager(
+                        banners = HomeBannerUi.defaults,
+                        modifier = Modifier.padding(vertical = 8.dp),
+                    )
                 }
-            }
+                item { SectionTitle(text = "Popular") }
 
-            when {
-                uiState.isLoading -> MidMoneyLoading()
-                uiState.errorMessage != null -> ErrorContent(
-                    message = uiState.errorMessage,
-                    onRetry = { onAction(MarketUiAction.Retry) },
-                )
-                else -> LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    items(uiState.quotes, key = { it.symbol }) { quote ->
-                        QuoteRow(quote = quote, onClick = { onAction(MarketUiAction.OpenDetail(quote.symbol)) })
+                when {
+                    uiState.isLoading -> item {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(240.dp),
+                        ) {
+                            MidMoneyLoading()
+                        }
+                    }
+
+                    uiState.errorMessage != null -> item {
+                        ErrorContent(
+                            message = uiState.errorMessage,
+                            onRetry = { onAction(MarketUiAction.Retry) },
+                        )
+                    }
+
+                    else -> items(uiState.quotes, key = { it.symbol }) { quote ->
+                        QuoteListItem(
+                            quote = quote,
+                            onClick = { onAction(MarketUiAction.OpenDetail(quote.symbol)) },
+                        )
                     }
                 }
             }
@@ -93,50 +97,51 @@ private fun MarketScreen(
 }
 
 @Composable
-private fun QuoteRow(quote: QuoteUi, onClick: () -> Unit) {
-    Card(
+private fun HomeHeader(
+    onWatchlistClick: () -> Unit,
+    onLogoutClick: () -> Unit,
+) {
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+            .padding(start = 16.dp, end = 4.dp, top = 8.dp, bottom = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = quote.symbol,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface,
-            )
-            Column(horizontalAlignment = Alignment.End) {
-                Text(
-                    text = quote.priceText,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                )
-                MidMoneyBadge(
-                    text = quote.changePercentText,
-                    color = if (quote.isPositive) {
-                        MidMoneyTheme.extraColors.priceUp
-                    } else {
-                        MidMoneyTheme.extraColors.priceDown
-                    },
-                )
+        Text(
+            text = "MidMoney",
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onBackground,
+        )
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            TextButton(onClick = onWatchlistClick) {
+                Text(text = "Watchlist")
+            }
+            TextButton(onClick = onLogoutClick) {
+                Text(text = "Logout")
             }
         }
     }
+}
+
+@Composable
+private fun SectionTitle(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.titleLarge,
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colorScheme.onBackground,
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+    )
 }
 
 @Composable
 private fun ErrorContent(message: String, onRetry: () -> Unit) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
+            .height(240.dp)
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,

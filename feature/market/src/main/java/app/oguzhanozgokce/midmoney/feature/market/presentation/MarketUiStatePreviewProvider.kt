@@ -8,8 +8,20 @@ class MarketUiStatePreviewProvider : PreviewParameterProvider<MarketUiState> {
         MarketUiState(isLoading = true),
         MarketUiState(
             quotes = listOf(
-                QuoteUi(symbol = "AAPL", priceText = "150.25", changePercentText = "+1.20%", isPositive = true),
-                QuoteUi(symbol = "TSLA", priceText = "240.10", changePercentText = "-0.85%", isPositive = false),
+                QuoteUi(
+                    symbol = "AAPL",
+                    name = "Apple Inc.",
+                    priceText = "150.25",
+                    changePercentText = "+1.20%",
+                    isPositive = true,
+                ),
+                QuoteUi(
+                    symbol = "TSLA",
+                    name = "Tesla Inc.",
+                    priceText = "240.10",
+                    changePercentText = "-0.85%",
+                    isPositive = false,
+                ),
             ),
         ),
         MarketUiState(errorMessage = "Something went wrong"),
