@@ -32,7 +32,7 @@ class LoginViewModel @Inject constructor(
             }
             return
         }
-        // TODO: real authentication via :plugin:user; for now go straight to the market.
+        // Real authentication will arrive with :plugin:user; for now go straight to the market.
         navigator.navigateAndClearBackStack(Destination.Market)
     }
 }

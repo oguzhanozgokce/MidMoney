@@ -2,7 +2,6 @@ package app.oguzhanozgokce.midmoney.logger
 
 import android.util.Log
 
-
 object MidMoneyLogger {
     private const val DEFAULT_TAG = "MidMoney"
 

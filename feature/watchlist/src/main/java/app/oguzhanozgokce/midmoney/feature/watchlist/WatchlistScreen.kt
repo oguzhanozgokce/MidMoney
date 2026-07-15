@@ -22,7 +22,7 @@ fun WatchlistRoute(viewModel: WatchlistViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     WatchlistScreen(
         uiState = uiState,
-        onAction = viewModel::onAction
+        onAction = viewModel::onAction,
     )
 }
 
