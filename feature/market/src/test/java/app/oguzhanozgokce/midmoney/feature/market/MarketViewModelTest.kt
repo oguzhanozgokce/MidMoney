@@ -1,0 +1,142 @@
+package app.oguzhanozgokce.midmoney.feature.market
+
+import app.oguzhanozgokce.midmoney.event.Analytics
+import app.oguzhanozgokce.midmoney.event.AnalyticsEvent
+import app.oguzhanozgokce.midmoney.navigation.Destination
+import app.oguzhanozgokce.midmoney.navigation.NavigationCommand
+import app.oguzhanozgokce.midmoney.navigation.Navigator
+import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
+import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
+import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.MarketRepository
+import app.oguzhanozgokce.midmoney.plugin.user.UserClient
+import app.oguzhanozgokce.midmoney.plugin.user.domain.repository.AuthRepository
+import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
+import org.junit.Rule
+import org.junit.Test
+
+@OptIn(ExperimentalCoroutinesApi::class)
+class MarketViewModelTest {
+
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
+    private val navigator = FakeNavigator()
+    private val analytics = FakeAnalytics()
+    private val authRepository = FakeAuthRepository()
+
+    private fun viewModel(marketRepository: MarketRepository) = MarketViewModel(
+        marketClient = MarketClient(marketRepository),
+        userClient = UserClient(authRepository),
+        navigator = navigator,
+        analytics = analytics,
+    )
+
+    @Test
+    fun `loads quotes on init`() = runTest {
+        val viewModel = viewModel(FakeMarketRepository(quotes = listOf(quote("AAPL"))))
+
+        val state = viewModel.currentUiState
+        assertThat(state.isLoading).isFalse()
+        assertThat(state.quotes.map { it.symbol }).containsExactly("AAPL")
+    }
+
+    @Test
+    fun `sets error message when loading fails`() = runTest {
+        val viewModel = viewModel(FakeMarketRepository(error = RuntimeException("boom")))
+
+        val state = viewModel.currentUiState
+        assertThat(state.isLoading).isFalse()
+        assertThat(state.errorMessage).isEqualTo("boom")
+    }
+
+    @Test
+    fun `open detail navigates to detail and tracks the event`() = runTest {
+        val viewModel = viewModel(FakeMarketRepository())
+
+        viewModel.onAction(MarketUiAction.OpenDetail("AAPL"))
+
+        assertThat(navigator.commandsLog).contains(NavigationCommand.Navigate(Destination.Detail("AAPL")))
+        assertThat(analytics.trackedEvents).contains(MarketAnalyticsEvent.OpenDetail("AAPL"))
+    }
+
+    @Test
+    fun `logout clears the session, returns to login and tracks the event`() = runTest {
+        val viewModel = viewModel(FakeMarketRepository())
+
+        viewModel.onAction(MarketUiAction.Logout)
+
+        assertThat(authRepository.loggedOut).isTrue()
+        assertThat(navigator.commandsLog)
+            .contains(NavigationCommand.NavigateAndClearBackStack(Destination.Login))
+        assertThat(analytics.trackedEvents).contains(MarketAnalyticsEvent.Logout)
+    }
+
+    private fun quote(symbol: String) = Quote(
+        symbol = symbol,
+        current = 150.0,
+        change = 1.0,
+        percentChange = 0.5,
+        high = 151.0,
+        low = 149.0,
+        open = 150.0,
+        previousClose = 149.5,
+    )
+}
+
+private class FakeMarketRepository(
+    private val quotes: List<Quote> = emptyList(),
+    private val error: Throwable? = null,
+) : MarketRepository {
+    override suspend fun getQuotes(symbols: List<String>): Result<List<Quote>> =
+        error?.let { Result.failure(it) } ?: Result.success(quotes)
+
+    override suspend fun getQuote(symbol: String): Result<Quote> =
+        error?.let { Result.failure(it) } ?: Result.success(quotes.first())
+
+    override fun observePrice(symbol: String): Flow<Double> = emptyFlow()
+}
+
+private class FakeAuthRepository : AuthRepository {
+    var loggedOut: Boolean = false
+        private set
+
+    override val currentUserId: Flow<String?> = flowOf(null)
+    override fun isCurrentlyLoggedIn(): Boolean = false
+    override suspend fun login(email: String, password: String): Result<Unit> = Result.success(Unit)
+    override suspend fun register(email: String, password: String): Result<Unit> = Result.success(Unit)
+    override fun logout() {
+        loggedOut = true
+    }
+}
+
+private class FakeNavigator : Navigator {
+    val commandsLog: MutableList<NavigationCommand> = mutableListOf()
+
+    override val commands: Flow<NavigationCommand> = emptyFlow()
+    override fun navigate(destination: Destination) {
+        commandsLog += NavigationCommand.Navigate(destination)
+    }
+
+    override fun navigateAndClearBackStack(destination: Destination) {
+        commandsLog += NavigationCommand.NavigateAndClearBackStack(destination)
+    }
+
+    override fun goBack() {
+        commandsLog += NavigationCommand.Back
+    }
+}
+
+private class FakeAnalytics : Analytics {
+    val trackedEvents: MutableList<AnalyticsEvent> = mutableListOf()
+
+    override fun track(event: AnalyticsEvent) {
+        trackedEvents += event
+    }
+
+    override fun setUserId(id: String?) = Unit
+}
