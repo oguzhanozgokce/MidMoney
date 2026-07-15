@@ -1,0 +1,41 @@
+# Gradle
+.gradle/
+build/
+/captures
+
+# Android Studio / IntelliJ
+*.iml
+.idea/
+
+# Local configuration (SDK path, API keys, secrets)
+local.properties
+
+# Native build
+.externalNativeBuild
+.cxx
+
+# Built application files
+*.apk
+*.aab
+*.aar
+*.ap_
+*.dex
+
+# Logs & profiling
+*.log
+*.hprof
+
+# Keystore (uncomment if you do not want to commit signing keys)
+# *.jks
+# *.keystore
+
+# OS
+.DS_Store
+
+# Test / tooling outputs
+/lint/outputs/
+/build-logic/*/build/
+
+# Temporary files
+*.tmp
+*.temp
