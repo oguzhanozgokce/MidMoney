@@ -14,6 +14,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             }
 
             dependencies {
+                add("implementation", project(":library:common"))
                 add("implementation", project(":library:mvi"))
                 add("implementation", project(":library:navigation"))
                 add("implementation", project(":library:designsystem"))
