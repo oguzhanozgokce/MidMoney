@@ -108,9 +108,9 @@ private fun QuoteRow(quote: QuoteUi, onClick: () -> Unit) {
                     text = quote.changePercentText,
                     style = MaterialTheme.typography.bodyMedium,
                     color = if (quote.isPositive) {
-                        MidMoneyTheme.extendedColors.priceUp
+                        MidMoneyTheme.extraColors.priceUp
                     } else {
-                        MidMoneyTheme.extendedColors.priceDown
+                        MidMoneyTheme.extraColors.priceDown
                     },
                 )
             }
