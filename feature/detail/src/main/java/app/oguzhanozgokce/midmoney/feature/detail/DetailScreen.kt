@@ -11,24 +11,25 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.oguzhanozgokce.midmoney.mvi.unpackMVI
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun DetailRoute(
     symbol: String,
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
-    val (uiState, onAction, _) = viewModel.unpackMVI()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(symbol) {
-        onAction(DetailUiAction.Load(symbol))
+        viewModel.onAction(DetailUiAction.Load(symbol))
     }
 
-    DetailScreen(uiState = uiState, onAction = onAction)
+    DetailScreen(uiState = uiState, onAction = viewModel::onAction)
 }
 
 @Composable

@@ -1,8 +1,5 @@
 package app.oguzhanozgokce.midmoney.mvi
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,11 +27,6 @@ interface MVI<UiState, UiAction, UiEffect> {
 fun <UiState, UiAction, UiEffect> mvi(
     initialState: UiState,
 ): MVI<UiState, UiAction, UiEffect> = MVIDelegate(initialState)
-
-@Stable
-@Composable
-fun <UiState, UiAction, UiEffect> MVI<UiState, UiAction, UiEffect>.unpackMVI() =
-    Triple(uiState.collectAsStateWithLifecycle().value, ::onAction, uiEffect)
 
 class MVIDelegate<UiState, UiAction, UiEffect>(
     initialUiState: UiState,

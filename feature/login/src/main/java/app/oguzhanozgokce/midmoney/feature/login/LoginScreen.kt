@@ -14,21 +14,22 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.oguzhanozgokce.midmoney.mvi.unpackMVI
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun LoginRoute(viewModel: LoginViewModel = hiltViewModel()) {
-    val (uiState, onAction, uiEffect) = viewModel.unpackMVI()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
-        uiEffect.collect { effect ->
+        viewModel.uiEffect.collect { effect ->
             when (effect) {
                 is LoginUiEffect.ShowMessage -> snackbarHostState.showSnackbar(effect.message)
             }
@@ -37,7 +38,7 @@ fun LoginRoute(viewModel: LoginViewModel = hiltViewModel()) {
 
     LoginScreen(
         uiState = uiState,
-        onAction = onAction,
+        onAction = viewModel::onAction,
         snackbarHostState = snackbarHostState,
     )
 }

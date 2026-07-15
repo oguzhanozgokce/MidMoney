@@ -10,20 +10,24 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.oguzhanozgokce.midmoney.mvi.unpackMVI
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun MarketRoute(viewModel: MarketViewModel = hiltViewModel()) {
-    val (_, onAction, _) = viewModel.unpackMVI()
-    MarketScreen(onAction = onAction)
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    MarketScreen(uiState = uiState, onAction = viewModel::onAction)
 }
 
 @Composable
-private fun MarketScreen(onAction: (MarketUiAction) -> Unit) {
+private fun MarketScreen(
+    uiState: MarketUiState,
+    onAction: (MarketUiAction) -> Unit,
+) {
     Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
         Column(
             modifier = Modifier

@@ -10,20 +10,27 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.oguzhanozgokce.midmoney.mvi.unpackMVI
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun WatchlistRoute(viewModel: WatchlistViewModel = hiltViewModel()) {
-    val (_, onAction, _) = viewModel.unpackMVI()
-    WatchlistScreen(onAction = onAction)
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    WatchlistScreen(
+        uiState = uiState,
+        onAction = viewModel::onAction
+    )
 }
 
 @Composable
-private fun WatchlistScreen(onAction: (WatchlistUiAction) -> Unit) {
+private fun WatchlistScreen(
+    uiState: WatchlistUiState,
+    onAction: (WatchlistUiAction) -> Unit,
+) {
     Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
         Column(
             modifier = Modifier
