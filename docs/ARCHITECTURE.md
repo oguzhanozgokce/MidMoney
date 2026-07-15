@@ -49,7 +49,8 @@ build-logic:convention   Gradle convention plugins (shared build config)
 
 - **`library:*`** — pure infrastructure, reusable and domain-agnostic (network, storage, design system).
 - **`plugin:*`** — a self-contained business domain (`domain` + `data` layers). Reusable across features.
-- **`feature:*`** — a user-facing screen slice (`presentation` layer only). Consumes plugins via use cases.
+- **`feature:*`** — a user-facing screen slice (`presentation` layer only). Consumes a plugin's client
+  facade (e.g. `MarketClient`), which wraps the repository and keeps it internal to the plugin.
 
 This mirrors the layered structure of a real production app while keeping each module small enough to
 reason about.
