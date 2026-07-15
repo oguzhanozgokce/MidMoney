@@ -17,6 +17,20 @@ MidMoney uses the free [Finnhub](https://finnhub.io) API for market data.
 
 For CI, provide the key through the `FINNHUB_API_KEY` environment variable instead of `local.properties`.
 
+## Firebase (authentication)
+
+Login uses Firebase Authentication (email/password). The repo ships a **placeholder**
+`app/google-services.json` so the project builds without setup — but real login needs your own
+Firebase project:
+
+1. Create a project at [console.firebase.google.com](https://console.firebase.google.com).
+2. Add an Android app with package `app.oguzhanozgokce.midmoney`.
+3. Download the real `google-services.json` and replace `app/google-services.json`.
+4. In **Authentication → Sign-in method**, enable **Email/Password**.
+
+Firebase client config is not a secret, but to keep your real file out of git you can run
+`git update-index --skip-worktree app/google-services.json` after replacing it.
+
 ## Build
 
 ```bash

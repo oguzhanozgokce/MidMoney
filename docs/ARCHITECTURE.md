@@ -36,7 +36,7 @@ build-logic:convention   Gradle convention plugins (shared build config)
 :library:mvi             MVI contract (StateFlow state, actions, effects) + delegate
 :library:websocket       Generic OkHttp WebSocket transport (provider-agnostic)
 
-:plugin:user             Session/token + profile + login/logout (cross-cutting)
+:plugin:user             Auth/session via Firebase (login/logout, isLoggedIn) — cross-cutting
 :plugin:market           Market + watchlist domain & data
 
 :feature:login           UI → :plugin:user
