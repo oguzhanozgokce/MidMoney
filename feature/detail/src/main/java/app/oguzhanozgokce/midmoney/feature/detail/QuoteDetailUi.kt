@@ -4,7 +4,6 @@ import app.oguzhanozgokce.midmoney.common.extensions.formatPrice
 import app.oguzhanozgokce.midmoney.common.extensions.formatSignedPercent
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 
-/** Display-ready quote for the detail screen: every field is a pre-formatted string. */
 data class QuoteDetailUi(
     val current: String,
     val change: String,
