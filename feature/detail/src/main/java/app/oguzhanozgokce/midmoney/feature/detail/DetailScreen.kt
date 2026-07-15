@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -19,9 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
-import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonStyle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTopAppBar
 
 @Composable
 fun DetailRoute(
@@ -42,16 +43,22 @@ private fun DetailScreen(
     uiState: DetailUiState,
     onAction: (DetailUiAction) -> Unit,
 ) {
-    MidMoneyScaffold { padding ->
+    MidMoneyScaffold(
+        topBar = {
+            MidMoneyTopAppBar(
+                title = uiState.symbol,
+                onNavigationClick = { onAction(DetailUiAction.BackClicked) },
+            )
+        },
+    ) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
+                .verticalScroll(rememberScrollState())
                 .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            Text(text = uiState.symbol, style = MaterialTheme.typography.headlineLarge)
-
             uiState.livePriceText?.let { livePrice ->
                 Text(
                     text = "Live: $livePrice",
@@ -62,7 +69,9 @@ private fun DetailScreen(
 
             when {
                 uiState.isLoading -> Box(
-                    modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 32.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     CircularProgressIndicator()
@@ -75,13 +84,6 @@ private fun DetailScreen(
 
                 uiState.quote != null -> QuoteDetails(uiState.quote)
             }
-
-            MidMoneyButton(
-                text = "Back",
-                onClick = { onAction(DetailUiAction.BackClicked) },
-                style = MidMoneyButtonStyle.Outlined,
-                modifier = Modifier.fillMaxWidth(),
-            )
         }
     }
 }

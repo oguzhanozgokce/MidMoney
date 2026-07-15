@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -68,6 +70,50 @@ private fun MidMoneyLoadingPreview() {
     MidMoneyTheme {
         Surface(modifier = Modifier.size(160.dp)) {
             MidMoneyLoading()
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun MidMoneyTopAppBarPreview() {
+    MidMoneyTheme {
+        MidMoneyTopAppBar(
+            title = "Detail",
+            onNavigationClick = {},
+            actionIcon = Icons.Outlined.Star,
+            onActionClick = {},
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun MidMoneyTextFieldPreview() {
+    MidMoneyTheme {
+        Surface {
+            MidMoneyTextField(
+                value = "user@midmoney.app",
+                onValueChange = {},
+                label = "Email",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun MidMoneyEmptyStatePreview() {
+    MidMoneyTheme {
+        Surface {
+            MidMoneyEmptyState(
+                icon = Icons.Outlined.Star,
+                title = "Nothing here yet",
+                description = "Your watchlist items will show up here.",
+            )
         }
     }
 }
