@@ -29,4 +29,7 @@ rootProject.name = "MidMoney"
 include(":app")
 include(":library:common")
 include(":library:designsystem")
+include(":library:logger")
+include(":library:network")
+include(":library:datastore")
  

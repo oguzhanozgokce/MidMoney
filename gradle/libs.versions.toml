@@ -4,6 +4,10 @@ kotlin = "2.4.10"
 ksp = "2.3.10"
 hilt = "2.60.1"
 coroutines = "1.10.2"
+retrofit = "3.0.0"
+okhttp = "5.1.0"
+serializationJson = "1.9.0"
+datastore = "1.1.7"
 
 coreKtx = "1.19.0"
 junit = "4.13.2"
@@ -32,6 +36,16 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 # Coroutines
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+
+# Networking
+retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-kotlinx-serialization-converter = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serializationJson" }
+
+# DataStore
+androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 
 # Hilt (dependency injection)
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
