@@ -1,5 +1,7 @@
 package app.oguzhanozgokce.midmoney.designsystem.theme
 
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
 // Brand — green conveys growth/money.
@@ -20,8 +22,32 @@ val DarkOnBackground = Color(0xFFE1E3DD)
 val DarkSurfaceVariant = Color(0xFF414942)
 val DarkOnSurfaceVariant = Color(0xFFC0C9BF)
 
-// Semantic price colors (not part of Material's ColorScheme — see ExtendedColors).
+// Semantic price colors — Material's ColorScheme has no slot for these, so they live in ExtendedColors.
 val PriceUpLight = Color(0xFF1B8E3D)
 val PriceUpDark = Color(0xFF5CD98A)
 val PriceDownLight = Color(0xFFD32F2F)
 val PriceDownDark = Color(0xFFF28B82)
+
+/**
+ * App-specific semantic colors that Material's [androidx.compose.material3.ColorScheme] does not
+ * cover (e.g. price direction). Provided by `MidMoneyTheme` and read via `MidMoneyTheme.extendedColors`.
+ */
+@Immutable
+data class ExtendedColors(
+    val priceUp: Color,
+    val priceDown: Color,
+)
+
+val LightExtendedColors = ExtendedColors(
+    priceUp = PriceUpLight,
+    priceDown = PriceDownLight,
+)
+
+val DarkExtendedColors = ExtendedColors(
+    priceUp = PriceUpDark,
+    priceDown = PriceDownDark,
+)
+
+val LocalExtendedColors = staticCompositionLocalOf {
+    ExtendedColors(priceUp = Color.Unspecified, priceDown = Color.Unspecified)
+}
