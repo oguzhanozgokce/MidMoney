@@ -38,6 +38,7 @@ fun MidMoneyEmptyState(
         Text(
             text = title,
             style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(top = 16.dp),
         )

@@ -54,7 +54,11 @@ private fun MarketScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(text = "Market", style = MaterialTheme.typography.headlineMedium)
+                Text(
+                    text = "Market",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     TextButton(onClick = { onAction(MarketUiAction.OpenWatchlist) }) {
                         Text(text = "Watchlist")
@@ -104,11 +108,13 @@ private fun QuoteRow(quote: QuoteUi, onClick: () -> Unit) {
                 text = quote.symbol,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface,
             )
             Column(horizontalAlignment = Alignment.End) {
                 Text(
                     text = quote.priceText,
                     style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
                 MidMoneyBadge(
                     text = quote.changePercentText,
@@ -132,7 +138,11 @@ private fun ErrorContent(message: String, onRetry: () -> Unit) {
         verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(text = message, style = MaterialTheme.typography.bodyLarge)
+        Text(
+            text = message,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground,
+        )
         MidMoneyButton(text = "Retry", onClick = onRetry, style = MidMoneyButtonStyle.Outlined)
     }
 }

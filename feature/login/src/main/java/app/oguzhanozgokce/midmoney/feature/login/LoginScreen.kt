@@ -66,7 +66,11 @@ private fun LoginScreen(
                 .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            Text(text = "MidMoney", style = MaterialTheme.typography.headlineLarge)
+            Text(
+                text = "MidMoney",
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onBackground,
+            )
             MidMoneyTextField(
                 value = uiState.email,
                 onValueChange = { onAction(LoginUiAction.EmailChanged(it)) },
