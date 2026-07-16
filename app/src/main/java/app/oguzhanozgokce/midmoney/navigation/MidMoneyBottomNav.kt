@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.home
+package app.oguzhanozgokce.midmoney.bottomnav
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.consumeWindowInsets

@@ -22,6 +22,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -31,7 +33,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
@@ -40,7 +41,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.oguzhanozgokce.midmoney.common.extensions.showToast
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonSize
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyEmptyState
@@ -58,7 +58,7 @@ fun DetailRoute(
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(symbol) {
         viewModel.onAction(DetailUiAction.Load(symbol))
@@ -66,12 +66,16 @@ fun DetailRoute(
     LaunchedEffect(Unit) {
         viewModel.uiEffect.collect { effect ->
             when (effect) {
-                is DetailUiEffect.ShowMessage -> context.showToast(effect.message)
+                is DetailUiEffect.ShowMessage -> snackbarHostState.showSnackbar(effect.message)
             }
         }
     }
 
-    DetailScreen(uiState = uiState, onAction = viewModel::onAction)
+    DetailScreen(
+        uiState = uiState,
+        onAction = viewModel::onAction,
+        snackbarHostState = snackbarHostState,
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,6 +83,7 @@ fun DetailRoute(
 private fun DetailScreen(
     uiState: DetailUiState,
     onAction: (DetailUiAction) -> Unit,
+    snackbarHostState: SnackbarHostState,
 ) {
     val scrollState = rememberScrollState()
     val thresholdPx = with(LocalDensity.current) { COLLAPSE_THRESHOLD.toPx() }
@@ -87,6 +92,7 @@ private fun DetailScreen(
     MidMoneyScaffold(
         topBar = { DetailTopBar(uiState = uiState, titleVisible = titleVisible, onAction = onAction) },
         bottomBar = { if (uiState.quote != null) DetailActions(onAction = onAction) },
+        snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { padding ->
         Box(
             modifier = Modifier
@@ -291,6 +297,6 @@ private fun DetailScreenPreview(
     @PreviewParameter(DetailUiStatePreviewProvider::class) state: DetailUiState,
 ) {
     MidMoneyTheme {
-        DetailScreen(uiState = state, onAction = {})
+        DetailScreen(uiState = state, onAction = {}, snackbarHostState = remember { SnackbarHostState() })
     }
 }

@@ -6,7 +6,7 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import app.oguzhanozgokce.midmoney.home.MidMoneyBottomNav
+import app.oguzhanozgokce.midmoney.bottomnav.MidMoneyBottomNav
 import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.EntryProviderInstaller
 import app.oguzhanozgokce.midmoney.navigation.NavigationCommand
