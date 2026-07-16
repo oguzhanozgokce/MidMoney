@@ -101,7 +101,7 @@ private fun DetailScreen(
                 uiState.errorMessage != null -> MidMoneyEmptyState(
                     icon = Icons.Outlined.CloudOff,
                     title = stringResource(R.string.detail_error_title),
-                    description = stringResource(R.string.detail_error_description, uiState.errorMessage),
+                    description = uiState.errorMessage.asString(),
                     actionText = stringResource(R.string.detail_retry),
                     onActionClick = { onAction(DetailUiAction.Retry) },
                 )

@@ -1,6 +1,7 @@
 package app.oguzhanozgokce.midmoney.feature.detail.presentation
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.NewsUi
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.QuoteDetailUi
 
@@ -38,6 +39,10 @@ class DetailUiStatePreviewProvider : PreviewParameterProvider<DetailUiState> {
                 ),
             ),
         ),
-        DetailUiState(symbol = "AAPL", name = "Apple Inc.", errorMessage = "HTTP 429 Too Many Requests"),
+        DetailUiState(
+            symbol = "AAPL",
+            name = "Apple Inc.",
+            errorMessage = UiText.Dynamic("HTTP 429 Too Many Requests"),
+        ),
     )
 }

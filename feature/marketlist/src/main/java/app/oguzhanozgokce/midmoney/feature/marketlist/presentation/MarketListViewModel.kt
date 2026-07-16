@@ -2,6 +2,8 @@ package app.oguzhanozgokce.midmoney.feature.marketlist.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.oguzhanozgokce.midmoney.designsystem.text.UiText
+import app.oguzhanozgokce.midmoney.feature.marketlist.R
 import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.QuoteUi
 import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.toUi
 import app.oguzhanozgokce.midmoney.mvi.MVI
@@ -71,9 +73,9 @@ class MarketListViewModel @Inject constructor(
                     loadedQuotes = quotes
                     updateUiState { copy(quotes = displayed(selectedFilter), isLoading = false) }
                 }
-                .onFailure { throwable ->
+                .onFailure {
                     updateUiState {
-                        copy(isLoading = false, errorMessage = throwable.message ?: "Something went wrong")
+                        copy(isLoading = false, errorMessage = UiText.Resource(R.string.markets_error_description))
                     }
                 }
         }

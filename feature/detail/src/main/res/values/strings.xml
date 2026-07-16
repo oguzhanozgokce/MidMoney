@@ -4,7 +4,7 @@
     <string name="detail_save">Save</string>
 
     <string name="detail_error_title">Something went wrong</string>
-    <string name="detail_error_description">We couldn\'t load this stock. Please try again.\n\n%1$s</string>
+    <string name="detail_error_description">We couldn\'t load this stock. Please try again.</string>
     <string name="detail_retry">Retry</string>
 
     <string name="detail_statistics">Statistics</string>

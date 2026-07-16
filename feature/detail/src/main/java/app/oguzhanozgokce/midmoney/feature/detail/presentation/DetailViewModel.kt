@@ -50,9 +50,9 @@ class DetailViewModel @Inject constructor(
                 .onSuccess { quote ->
                     updateUiState { copy(quote = quote.toDetailUi(), isLoading = false) }
                 }
-                .onFailure { throwable ->
+                .onFailure {
                     updateUiState {
-                        copy(isLoading = false, errorMessage = throwable.message ?: "Something went wrong")
+                        copy(isLoading = false, errorMessage = UiText.Resource(R.string.detail_error_description))
                     }
                 }
         }

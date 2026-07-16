@@ -49,7 +49,7 @@ class MarketViewModelTest {
 
         val state = viewModel.currentUiState
         assertThat(state.isLoading).isFalse()
-        assertThat(state.errorMessage).isEqualTo("boom")
+        assertThat(state.errorMessage).isNotNull()
     }
 
     @Test

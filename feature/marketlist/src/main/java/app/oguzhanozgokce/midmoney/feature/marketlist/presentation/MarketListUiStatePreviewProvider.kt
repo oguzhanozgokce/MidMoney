@@ -1,6 +1,7 @@
 package app.oguzhanozgokce.midmoney.feature.marketlist.presentation
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.QuoteUi
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
 
@@ -25,7 +26,7 @@ class MarketListUiStatePreviewProvider : PreviewParameterProvider<MarketListUiSt
                 ),
             ),
         ),
-        MarketListUiState(errorMessage = "HTTP 429 Too Many Requests"),
+        MarketListUiState(errorMessage = UiText.Dynamic("HTTP 429 Too Many Requests")),
         MarketListUiState(
             query = "app",
             results = listOf(

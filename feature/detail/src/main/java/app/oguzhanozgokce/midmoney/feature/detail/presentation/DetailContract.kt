@@ -13,7 +13,7 @@ data class DetailUiState(
     val news: List<NewsUi> = emptyList(),
     val isNewsLoading: Boolean = false,
     val isLoading: Boolean = false,
-    val errorMessage: String? = null,
+    val errorMessage: UiText? = null,
 )
 
 sealed interface DetailUiAction {

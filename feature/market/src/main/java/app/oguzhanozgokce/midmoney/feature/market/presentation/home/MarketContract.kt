@@ -1,5 +1,6 @@
 package app.oguzhanozgokce.midmoney.feature.market.presentation.home
 
+import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.feature.market.presentation.model.QuoteUi
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 
@@ -7,7 +8,7 @@ data class MarketUiState(
     val quotes: List<QuoteUi> = emptyList(),
     val selectedFilter: MarketFilter = MarketFilter.Popular,
     val isLoading: Boolean = false,
-    val errorMessage: String? = null,
+    val errorMessage: UiText? = null,
 )
 
 sealed interface MarketUiAction {

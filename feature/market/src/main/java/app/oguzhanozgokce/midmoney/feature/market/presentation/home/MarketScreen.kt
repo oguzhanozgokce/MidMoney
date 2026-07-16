@@ -33,6 +33,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyQuoteRow
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScreenHeader
+import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 import app.oguzhanozgokce.midmoney.feature.market.R
 import app.oguzhanozgokce.midmoney.feature.market.presentation.component.HomeBannerPager
@@ -105,7 +106,7 @@ private fun MarketScreen(
 
                     uiState.errorMessage != null -> item {
                         ErrorContent(
-                            message = uiState.errorMessage,
+                            errorText = uiState.errorMessage,
                             onRetry = { onAction(MarketUiAction.Retry) },
                         )
                     }
@@ -155,7 +156,7 @@ private fun MarketFilter.labelRes(): Int = when (this) {
 }
 
 @Composable
-private fun ErrorContent(message: String, onRetry: () -> Unit) {
+private fun ErrorContent(errorText: UiText, onRetry: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -165,7 +166,7 @@ private fun ErrorContent(message: String, onRetry: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = message,
+            text = errorText.asString(),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onBackground,
         )

@@ -37,6 +37,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyQuoteRow
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneySearchBar
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTopAppBar
+import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 import app.oguzhanozgokce.midmoney.feature.marketlist.R
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
@@ -99,7 +100,7 @@ private fun QuoteList(
     when {
         uiState.isLoading -> CenteredLoading()
         uiState.errorMessage != null -> ErrorContent(
-            message = uiState.errorMessage,
+            errorText = uiState.errorMessage,
             onRetry = { onAction(MarketListUiAction.Retry) },
         )
         else -> LazyColumn(
@@ -178,11 +179,11 @@ private fun CenteredLoading() {
 }
 
 @Composable
-private fun ErrorContent(message: String, onRetry: () -> Unit) {
+private fun ErrorContent(errorText: UiText, onRetry: () -> Unit) {
     MidMoneyEmptyState(
         icon = Icons.Outlined.CloudOff,
         title = stringResource(R.string.markets_error_title),
-        description = stringResource(R.string.markets_error_description, message),
+        description = errorText.asString(),
         actionText = stringResource(R.string.markets_retry),
         onActionClick = onRetry,
     )

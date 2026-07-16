@@ -1,5 +1,6 @@
 package app.oguzhanozgokce.midmoney.feature.marketlist.presentation
 
+import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.QuoteUi
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
@@ -11,7 +12,7 @@ data class MarketListUiState(
     val quotes: List<QuoteUi> = emptyList(),
     val selectedFilter: MarketFilter = MarketFilter.Popular,
     val isLoading: Boolean = false,
-    val errorMessage: String? = null,
+    val errorMessage: UiText? = null,
 ) {
     val isSearchActive: Boolean get() = query.isNotBlank()
 }

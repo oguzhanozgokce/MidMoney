@@ -1,6 +1,7 @@
 package app.oguzhanozgokce.midmoney.feature.market.presentation.home
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.feature.market.presentation.model.QuoteUi
 
 class MarketUiStatePreviewProvider : PreviewParameterProvider<MarketUiState> {
@@ -24,6 +25,6 @@ class MarketUiStatePreviewProvider : PreviewParameterProvider<MarketUiState> {
                 ),
             ),
         ),
-        MarketUiState(errorMessage = "Something went wrong"),
+        MarketUiState(errorMessage = UiText.Dynamic("Something went wrong")),
     )
 }

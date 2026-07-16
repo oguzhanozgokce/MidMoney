@@ -2,6 +2,7 @@
 <resources>
     <string name="market_section_title">Markets</string>
     <string name="market_see_all">See all</string>
+    <string name="market_error_description">We couldn\'t load the market. Please try again.</string>
     <string name="market_retry">Retry</string>
 
     <string name="filter_popular">Popular</string>
