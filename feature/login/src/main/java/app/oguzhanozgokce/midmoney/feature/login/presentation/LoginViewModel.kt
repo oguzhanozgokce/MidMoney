@@ -40,7 +40,7 @@ class LoginViewModel @Inject constructor(
         updateUiState { copy(isLoading = true) }
         analytics.track(LoginAnalyticsEvent.LoginClicked)
         viewModelScope.launch {
-            userClient.login(state.email, state.password)
+            userClient.loginOrRegister(state.email, state.password)
                 .onSuccess {
                     analytics.track(LoginAnalyticsEvent.LoginSucceeded)
                     navigator.navigateAndClearBackStack(Destination.Home)
