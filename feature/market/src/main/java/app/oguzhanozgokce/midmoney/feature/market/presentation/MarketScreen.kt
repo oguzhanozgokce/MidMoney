@@ -1,19 +1,15 @@
 package app.oguzhanozgokce.midmoney.feature.market.presentation
 
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,8 +28,11 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScreenHeader
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 import app.oguzhanozgokce.midmoney.feature.market.presentation.component.HomeBannerPager
+import app.oguzhanozgokce.midmoney.feature.market.presentation.component.MarketFilters
 import app.oguzhanozgokce.midmoney.feature.market.presentation.component.QuoteListItem
 import app.oguzhanozgokce.midmoney.feature.market.presentation.model.HomeBannerUi
+
+private const val HOME_PREVIEW_COUNT = 6
 
 @Composable
 fun MarketRoute(
@@ -97,36 +96,26 @@ private fun MarketScreen(
                         )
                     }
 
-                    else -> items(uiState.quotes, key = { it.symbol }) { quote ->
-                        QuoteListItem(
-                            quote = quote,
-                            onClick = { onAction(MarketUiAction.OpenDetail(quote.symbol)) },
-                        )
+                    else -> {
+                        items(uiState.quotes.take(HOME_PREVIEW_COUNT), key = { it.symbol }) { quote ->
+                            QuoteListItem(
+                                quote = quote,
+                                onClick = { onAction(MarketUiAction.OpenDetail(quote.symbol)) },
+                            )
+                        }
+                        item {
+                            MidMoneyButton(
+                                text = "See all",
+                                onClick = { onAction(MarketUiAction.OpenAll) },
+                                style = MidMoneyButtonStyle.Outlined,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                            )
+                        }
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun MarketFilters(
-    selected: MarketFilter,
-    onSelect: (MarketFilter) -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .horizontalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        MarketFilter.entries.forEach { filter ->
-            FilterChip(
-                selected = filter == selected,
-                onClick = { onSelect(filter) },
-                label = { Text(text = filter.label) },
-            )
         }
     }
 }

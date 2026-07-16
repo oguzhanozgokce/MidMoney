@@ -1,0 +1,114 @@
+package app.oguzhanozgokce.midmoney.feature.market.presentation
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonStyle
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTopAppBar
+import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
+import app.oguzhanozgokce.midmoney.feature.market.presentation.component.MarketFilters
+import app.oguzhanozgokce.midmoney.feature.market.presentation.component.QuoteListItem
+
+@Composable
+fun MarketsRoute(viewModel: MarketsViewModel = hiltViewModel()) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    MarketsScreen(uiState = uiState, onAction = viewModel::onAction)
+}
+
+@Composable
+private fun MarketsScreen(
+    uiState: MarketsUiState,
+    onAction: (MarketsUiAction) -> Unit,
+) {
+    MidMoneyScaffold(
+        topBar = {
+            MidMoneyTopAppBar(
+                title = "Markets",
+                onNavigationClick = { onAction(MarketsUiAction.BackClicked) },
+            )
+        },
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
+        ) {
+            MarketFilters(
+                selected = uiState.selectedFilter,
+                onSelect = { onAction(MarketsUiAction.SelectFilter(it)) },
+            )
+            when {
+                uiState.isLoading -> Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    MidMoneyLoading()
+                }
+
+                uiState.errorMessage != null -> ErrorContent(
+                    message = uiState.errorMessage,
+                    onRetry = { onAction(MarketsUiAction.Retry) },
+                )
+
+                else -> LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(bottom = 16.dp),
+                ) {
+                    items(uiState.quotes, key = { it.symbol }) { quote ->
+                        QuoteListItem(
+                            quote = quote,
+                            onClick = { onAction(MarketsUiAction.OpenDetail(quote.symbol)) },
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ErrorContent(message: String, onRetry: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(
+            text = message,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onBackground,
+        )
+        MidMoneyButton(text = "Retry", onClick = onRetry, style = MidMoneyButtonStyle.Outlined)
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun MarketsScreenPreview(
+    @PreviewParameter(MarketsUiStatePreviewProvider::class) state: MarketsUiState,
+) {
+    MidMoneyTheme {
+        MarketsScreen(uiState = state, onAction = {})
+    }
+}

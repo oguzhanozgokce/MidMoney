@@ -1,18 +1,38 @@
 package app.oguzhanozgokce.midmoney.plugin.market.domain
 
-/**
- * The default set of symbols shown on the market screen. Finnhub's free tier does not offer a bulk
- * quote endpoint, so the repository fetches these individually.
- */
 object MarketSymbols {
-    val default: List<String> = listOf(
+    val all: List<String> = listOf(
         "AAPL",
-        "GOOGL",
         "MSFT",
+        "GOOGL",
         "AMZN",
-        "TSLA",
-        "META",
         "NVDA",
+        "META",
+        "TSLA",
         "NFLX",
+        "AMD",
+        "INTC",
+        "ORCL",
+        "CRM",
+        "ADBE",
+        "CSCO",
+        "QCOM",
+        "IBM",
+        "UBER",
+        "PYPL",
+        "DIS",
+        "KO",
+        "PEP",
+        "NKE",
+        "SBUX",
+        "MCD",
+        "JPM",
+        "V",
+        "MA",
+        "WMT",
     )
+
+    val home: List<String> = all.take(HOME_COUNT)
+
+    private const val HOME_COUNT = 8
 }

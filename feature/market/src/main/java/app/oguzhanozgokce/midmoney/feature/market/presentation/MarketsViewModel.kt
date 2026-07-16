@@ -2,8 +2,6 @@ package app.oguzhanozgokce.midmoney.feature.market.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.oguzhanozgokce.midmoney.event.Analytics
-import app.oguzhanozgokce.midmoney.feature.market.analytics.MarketAnalyticsEvent
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
@@ -15,12 +13,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MarketViewModel @Inject constructor(
+class MarketsViewModel @Inject constructor(
     private val marketClient: MarketClient,
     private val navigator: Navigator,
-    private val analytics: Analytics,
 ) : ViewModel(),
-    MVI<MarketUiState, MarketUiAction, MarketUiEffect> by mvi(MarketUiState()) {
+    MVI<MarketsUiState, MarketsUiAction, MarketsUiEffect> by mvi(MarketsUiState()) {
 
     private var loadedQuotes: List<Quote> = emptyList()
 
@@ -28,26 +25,23 @@ class MarketViewModel @Inject constructor(
         loadQuotes()
     }
 
-    override fun onAction(uiAction: MarketUiAction) {
+    override fun onAction(uiAction: MarketsUiAction) {
         when (uiAction) {
-            is MarketUiAction.OpenDetail -> {
-                analytics.track(MarketAnalyticsEvent.OpenDetail(uiAction.symbol))
-                navigator.navigate(Destination.Detail(uiAction.symbol))
-            }
-            is MarketUiAction.SelectFilter -> {
+            is MarketsUiAction.OpenDetail -> navigator.navigate(Destination.Detail(uiAction.symbol))
+            is MarketsUiAction.SelectFilter -> {
                 updateUiState {
                     copy(selectedFilter = uiAction.filter, quotes = loadedQuotes.toDisplayList(uiAction.filter))
                 }
             }
-            MarketUiAction.OpenAll -> navigator.navigate(Destination.Markets)
-            MarketUiAction.Retry -> loadQuotes()
+            MarketsUiAction.BackClicked -> navigator.goBack()
+            MarketsUiAction.Retry -> loadQuotes()
         }
     }
 
     private fun loadQuotes() {
         updateUiState { copy(isLoading = true, errorMessage = null) }
         viewModelScope.launch {
-            marketClient.getQuotes()
+            marketClient.getAllQuotes()
                 .onSuccess { quotes ->
                     loadedQuotes = quotes
                     updateUiState { copy(quotes = quotes.toDisplayList(selectedFilter), isLoading = false) }

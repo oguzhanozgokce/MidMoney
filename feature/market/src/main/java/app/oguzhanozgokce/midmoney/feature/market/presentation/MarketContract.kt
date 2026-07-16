@@ -18,6 +18,7 @@ enum class MarketFilter(val label: String) {
 sealed interface MarketUiAction {
     data class OpenDetail(val symbol: String) : MarketUiAction
     data class SelectFilter(val filter: MarketFilter) : MarketUiAction
+    data object OpenAll : MarketUiAction
     data object Retry : MarketUiAction
 }
 
