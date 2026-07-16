@@ -2,8 +2,10 @@ package app.oguzhanozgokce.midmoney.feature.login.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -17,7 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -29,6 +33,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonSize
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTextField
+import app.oguzhanozgokce.midmoney.designsystem.theme.DisplayFontFamily
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 
 @Composable
@@ -66,14 +71,24 @@ private fun LoginScreen(
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
                 .imePadding()
-                .padding(24.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(horizontal = 24.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = "MidMoney",
-                style = MaterialTheme.typography.headlineLarge,
+                style = MaterialTheme.typography.displaySmall,
+                fontFamily = DisplayFontFamily,
+                fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,
             )
+            Spacer(Modifier.height(8.dp))
+            Text(
+                text = "Sign in to continue",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Spacer(Modifier.height(40.dp))
             MidMoneyTextField(
                 value = uiState.email,
                 onValueChange = { onAction(LoginUiAction.EmailChanged(it)) },
@@ -82,6 +97,7 @@ private fun LoginScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 modifier = Modifier.fillMaxWidth(),
             )
+            Spacer(Modifier.height(12.dp))
             MidMoneyTextField(
                 value = uiState.password,
                 onValueChange = { onAction(LoginUiAction.PasswordChanged(it)) },
@@ -90,6 +106,7 @@ private fun LoginScreen(
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 modifier = Modifier.fillMaxWidth(),
             )
+            Spacer(Modifier.height(28.dp))
             MidMoneyButton(
                 text = "Login",
                 onClick = { onAction(LoginUiAction.LoginClicked) },

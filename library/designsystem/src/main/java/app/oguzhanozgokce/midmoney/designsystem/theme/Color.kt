@@ -43,8 +43,8 @@ val LightColorScheme = lightColorScheme(
 )
 
 val DarkColorScheme = darkColorScheme(
-    primary = Blue80,
-    onPrimary = OnBlueDark,
+    primary = Blue40,
+    onPrimary = OnBlueLight,
     secondary = BlueGrey80,
     background = DarkBackground,
     onBackground = DarkOnBackground,
