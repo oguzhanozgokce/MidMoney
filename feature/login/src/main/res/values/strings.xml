@@ -5,4 +5,6 @@
     <string name="login_email_placeholder">you@example.com</string>
     <string name="login_password_label">Password</string>
     <string name="login_action">Log in</string>
+    <string name="login_empty_fields">Enter your email and password</string>
+    <string name="login_error_generic">Login failed. Please try again.</string>
 </resources>

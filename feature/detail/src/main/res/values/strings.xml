@@ -17,4 +17,9 @@
 
     <string name="detail_sell">Sell</string>
     <string name="detail_buy">Buy</string>
+
+    <string name="detail_redirect_buy">You\'ll be redirected to buy %1$s.</string>
+    <string name="detail_redirect_sell">You\'ll be redirected to sell %1$s.</string>
+    <string name="detail_saved">Added to your watchlist.</string>
+    <string name="detail_unsaved">Removed from your watchlist.</string>
 </resources>

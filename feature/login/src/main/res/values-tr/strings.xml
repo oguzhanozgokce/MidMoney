@@ -5,4 +5,6 @@
     <string name="login_email_placeholder">ornek@eposta.com</string>
     <string name="login_password_label">Şifre</string>
     <string name="login_action">Giriş yap</string>
+    <string name="login_empty_fields">E-posta ve şifreni gir</string>
+    <string name="login_error_generic">Giriş başarısız. Lütfen tekrar dene.</string>
 </resources>

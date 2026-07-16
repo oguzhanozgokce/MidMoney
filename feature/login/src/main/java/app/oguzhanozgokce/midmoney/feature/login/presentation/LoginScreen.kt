@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,11 +49,12 @@ import app.oguzhanozgokce.midmoney.designsystem.R as DesignR
 fun LoginRoute(viewModel: LoginViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.uiEffect.collect { effect ->
             when (effect) {
-                is LoginUiEffect.ShowMessage -> snackbarHostState.showSnackbar(effect.message)
+                is LoginUiEffect.ShowMessage -> snackbarHostState.showSnackbar(effect.text.asString(context))
             }
         }
     }

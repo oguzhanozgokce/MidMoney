@@ -1,5 +1,7 @@
 package app.oguzhanozgokce.midmoney.feature.login.presentation
 
+import app.oguzhanozgokce.midmoney.designsystem.text.UiText
+
 data class LoginUiState(
     val email: String = "",
     val password: String = "",
@@ -13,5 +15,5 @@ sealed interface LoginUiAction {
 }
 
 sealed interface LoginUiEffect {
-    data class ShowMessage(val message: String) : LoginUiEffect
+    data class ShowMessage(val text: UiText) : LoginUiEffect
 }

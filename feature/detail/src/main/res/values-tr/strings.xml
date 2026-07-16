@@ -17,4 +17,9 @@
 
     <string name="detail_sell">Sat</string>
     <string name="detail_buy">Al</string>
+
+    <string name="detail_redirect_buy">%1$s almak için yönlendirileceksiniz.</string>
+    <string name="detail_redirect_sell">%1$s satmak için yönlendirileceksiniz.</string>
+    <string name="detail_saved">Takip listene eklendi.</string>
+    <string name="detail_unsaved">Takip listenden çıkarıldı.</string>
 </resources>

@@ -2,7 +2,9 @@ package app.oguzhanozgokce.midmoney.feature.login.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.event.Analytics
+import app.oguzhanozgokce.midmoney.feature.login.R
 import app.oguzhanozgokce.midmoney.feature.login.analytics.LoginAnalyticsEvent
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
@@ -33,7 +35,7 @@ class LoginViewModel @Inject constructor(
         val state = currentUiState
         if (state.email.isBlank() || state.password.isBlank()) {
             viewModelScope.launch {
-                emitUiEffect(LoginUiEffect.ShowMessage("Enter your email and password"))
+                emitUiEffect(LoginUiEffect.ShowMessage(UiText.Resource(R.string.login_empty_fields)))
             }
             return
         }
@@ -48,7 +50,10 @@ class LoginViewModel @Inject constructor(
                 .onFailure { throwable ->
                     updateUiState { copy(isLoading = false) }
                     analytics.track(LoginAnalyticsEvent.LoginFailed(throwable.message ?: "unknown"))
-                    emitUiEffect(LoginUiEffect.ShowMessage(throwable.message ?: "Login failed"))
+                    val text = throwable.message?.takeIf { it.isNotBlank() }
+                        ?.let { UiText.Dynamic(it) }
+                        ?: UiText.Resource(R.string.login_error_generic)
+                    emitUiEffect(LoginUiEffect.ShowMessage(text))
                 }
         }
     }

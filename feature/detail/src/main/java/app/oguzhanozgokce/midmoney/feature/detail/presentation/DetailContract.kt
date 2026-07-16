@@ -1,5 +1,6 @@
 package app.oguzhanozgokce.midmoney.feature.detail.presentation
 
+import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.NewsUi
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.QuoteDetailUi
 
@@ -25,5 +26,5 @@ sealed interface DetailUiAction {
 }
 
 sealed interface DetailUiEffect {
-    data class ShowMessage(val message: String) : DetailUiEffect
+    data class ShowMessage(val text: UiText) : DetailUiEffect
 }

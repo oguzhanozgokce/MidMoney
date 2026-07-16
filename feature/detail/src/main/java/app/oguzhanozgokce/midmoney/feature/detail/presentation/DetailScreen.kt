@@ -68,7 +68,7 @@ fun DetailRoute(
     LaunchedEffect(Unit) {
         viewModel.uiEffect.collect { effect ->
             when (effect) {
-                is DetailUiEffect.ShowMessage -> context.showToast(effect.message)
+                is DetailUiEffect.ShowMessage -> context.showToast(effect.text.asString(context))
             }
         }
     }
