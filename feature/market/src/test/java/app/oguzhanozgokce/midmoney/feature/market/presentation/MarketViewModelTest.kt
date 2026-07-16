@@ -60,11 +60,30 @@ class MarketViewModelTest {
         assertThat(analytics.trackedEvents).contains(MarketAnalyticsEvent.OpenDetail("AAPL"))
     }
 
-    private fun quote(symbol: String) = Quote(
+    @Test
+    fun `gainers filter sorts quotes by daily change descending`() = runTest {
+        val viewModel = viewModel(
+            FakeMarketRepository(
+                quotes = listOf(
+                    quote("AAA", percentChange = -2.0),
+                    quote("BBB", percentChange = 5.0),
+                    quote("CCC", percentChange = 1.0),
+                ),
+            ),
+        )
+
+        viewModel.onAction(MarketUiAction.SelectFilter(MarketFilter.Gainers))
+
+        assertThat(viewModel.currentUiState.quotes.map { it.symbol })
+            .containsExactly("BBB", "CCC", "AAA")
+            .inOrder()
+    }
+
+    private fun quote(symbol: String, percentChange: Double = 0.5) = Quote(
         symbol = symbol,
         current = 150.0,
         change = 1.0,
-        percentChange = 0.5,
+        percentChange = percentChange,
         high = 151.0,
         low = 149.0,
         open = 150.0,
