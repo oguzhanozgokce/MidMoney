@@ -32,7 +32,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyFilterChips
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyQuoteRow
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
-import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTextField
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneySearchBar
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTopAppBar
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
@@ -62,10 +62,9 @@ private fun MarketListScreen(
                 .fillMaxSize()
                 .padding(padding),
         ) {
-            MidMoneyTextField(
-                value = uiState.query,
-                onValueChange = { onAction(MarketListUiAction.QueryChanged(it)) },
-                label = "Search",
+            MidMoneySearchBar(
+                query = uiState.query,
+                onQueryChange = { onAction(MarketListUiAction.QueryChanged(it)) },
                 placeholder = "Search stocks (e.g. AAPL)",
                 modifier = Modifier
                     .fillMaxWidth()
