@@ -1,17 +1,19 @@
 package app.oguzhanozgokce.midmoney.feature.marketlist.presentation
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CloudOff
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -26,8 +28,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
-import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonStyle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyEmptyState
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyFilterChips
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
@@ -64,13 +64,14 @@ private fun MarketListScreen(
                 .padding(padding)
                 .imePadding(),
         ) {
+            Spacer(modifier = Modifier.size(16.dp))
             MidMoneySearchBar(
                 query = uiState.query,
                 onQueryChange = { onAction(MarketListUiAction.QueryChanged(it)) },
                 placeholder = "Search stocks (e.g. AAPL)",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(horizontal = 16.dp),
             )
 
             if (uiState.isSearchActive) {
@@ -175,20 +176,13 @@ private fun CenteredLoading() {
 
 @Composable
 private fun ErrorContent(message: String, onRetry: () -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = message,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onBackground,
-        )
-        MidMoneyButton(text = "Retry", onClick = onRetry, style = MidMoneyButtonStyle.Outlined)
-    }
+    MidMoneyEmptyState(
+        icon = Icons.Outlined.CloudOff,
+        title = "Something went wrong",
+        description = "We couldn't load market data. Check your connection and try again.\n\n$message",
+        actionText = "Retry",
+        onActionClick = onRetry,
+    )
 }
 
 @PreviewLightDark

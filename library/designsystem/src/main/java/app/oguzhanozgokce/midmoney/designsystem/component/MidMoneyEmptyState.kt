@@ -26,6 +26,8 @@ fun MidMoneyEmptyState(
     title: String,
     description: String,
     modifier: Modifier = Modifier,
+    actionText: String? = null,
+    onActionClick: (() -> Unit)? = null,
 ) {
     Column(
         modifier = modifier
@@ -54,6 +56,14 @@ fun MidMoneyEmptyState(
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(top = 8.dp),
         )
+        if (actionText != null && onActionClick != null) {
+            MidMoneyButton(
+                text = actionText,
+                onClick = onActionClick,
+                modifier = Modifier.padding(top = 24.dp),
+                size = MidMoneyButtonSize.Small,
+            )
+        }
     }
 }
 
