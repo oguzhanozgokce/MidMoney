@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.presantation
+package app.oguzhanozgokce.midmoney.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

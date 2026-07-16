@@ -8,10 +8,6 @@ import androidx.compose.material.icons.outlined.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 import app.oguzhanozgokce.midmoney.feature.market.R
 
-/**
- * A promotional banner shown in the home pager. There is no campaign endpoint on the free tier, so
- * these are static presentation content; the text is resolved from string resources at render time.
- */
 data class HomeBannerUi(
     val icon: ImageVector,
     @StringRes val titleRes: Int,

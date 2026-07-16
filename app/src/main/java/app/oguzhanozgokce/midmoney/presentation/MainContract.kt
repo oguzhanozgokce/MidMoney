@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.presantation
+package app.oguzhanozgokce.midmoney.presentation
 
 import androidx.navigation3.runtime.NavKey
 import app.oguzhanozgokce.midmoney.navigation.Destination
