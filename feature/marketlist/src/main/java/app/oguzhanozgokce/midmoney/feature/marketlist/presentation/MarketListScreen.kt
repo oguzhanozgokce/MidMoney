@@ -101,7 +101,7 @@ private fun QuoteList(
         )
         else -> LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(bottom = 16.dp),
+            contentPadding = PaddingValues(top = 8.dp, bottom = 16.dp),
         ) {
             items(uiState.quotes, key = { it.symbol }) { quote ->
                 MidMoneyQuoteRow(
@@ -131,7 +131,7 @@ private fun SearchResults(
         )
         else -> LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(bottom = 16.dp),
+            contentPadding = PaddingValues(top = 8.dp, bottom = 16.dp),
         ) {
             items(uiState.results, key = { it.symbol }) { match ->
                 SearchResultItem(
