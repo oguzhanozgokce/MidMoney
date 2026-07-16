@@ -1,5 +1,6 @@
 package app.oguzhanozgokce.midmoney.navigation
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,15 +23,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import app.oguzhanozgokce.midmoney.R
 import app.oguzhanozgokce.midmoney.feature.market.presentation.home.MarketRoute
 import app.oguzhanozgokce.midmoney.feature.profile.presentation.ProfileRoute
 import app.oguzhanozgokce.midmoney.feature.watchlist.presentation.WatchlistRoute
 
-private enum class HomeTab(val label: String, val icon: ImageVector) {
-    Market("Home", Icons.AutoMirrored.Outlined.ShowChart),
-    Watchlist("Watchlist", Icons.Outlined.Star),
-    Profile("Profile", Icons.Outlined.Person),
+private enum class HomeTab(@StringRes val labelRes: Int, val icon: ImageVector) {
+    Market(R.string.nav_home, Icons.AutoMirrored.Outlined.ShowChart),
+    Watchlist(R.string.nav_watchlist, Icons.Outlined.Star),
+    Profile(R.string.nav_profile, Icons.Outlined.Person),
 }
 
 @Composable
@@ -45,11 +48,12 @@ fun MidMoneyBottomNav() {
                 tonalElevation = 0.dp,
             ) {
                 HomeTab.entries.forEach { tab ->
+                    val label = stringResource(tab.labelRes)
                     NavigationBarItem(
                         selected = selectedTab == tab,
                         onClick = { selectedTab = tab },
-                        icon = { Icon(imageVector = tab.icon, contentDescription = tab.label) },
-                        label = { Text(text = tab.label) },
+                        icon = { Icon(imageVector = tab.icon, contentDescription = label) },
+                        label = { Text(text = label) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = MaterialTheme.colorScheme.onPrimary,
                             selectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
