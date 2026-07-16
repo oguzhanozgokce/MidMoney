@@ -27,7 +27,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonSize
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonStyle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
-import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTopAppBar
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScreenHeader
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 
 @Composable
@@ -41,38 +41,43 @@ private fun ProfileScreen(
     uiState: ProfileUiState,
     onAction: (ProfileUiAction) -> Unit,
 ) {
-    MidMoneyScaffold(
-        topBar = { MidMoneyTopAppBar(title = "Profile") },
-    ) { padding ->
+    MidMoneyScaffold { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(padding),
         ) {
-            Spacer(Modifier.size(16.dp))
-            Avatar(email = uiState.email)
-            Text(
-                text = uiState.email ?: "Signed in",
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onBackground,
-            )
-            Text(
-                text = "MidMoney account",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Spacer(Modifier.weight(1f))
-            MidMoneyButton(
-                text = "Log out",
-                onClick = { onAction(ProfileUiAction.Logout) },
-                style = MidMoneyButtonStyle.Outlined,
-                size = MidMoneyButtonSize.Large,
-                modifier = Modifier.fillMaxWidth(),
-            )
+            MidMoneyScreenHeader(title = "Profile")
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp, vertical = 8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                Spacer(Modifier.size(16.dp))
+                Avatar(email = uiState.email)
+                Text(
+                    text = uiState.email ?: "Signed in",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+                Text(
+                    text = "MidMoney account",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                Spacer(Modifier.weight(1f))
+                MidMoneyButton(
+                    text = "Log out",
+                    onClick = { onAction(ProfileUiAction.Logout) },
+                    style = MidMoneyButtonStyle.Outlined,
+                    size = MidMoneyButtonSize.Large,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
     }
 }
