@@ -50,7 +50,7 @@ import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.component.NewsSection
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.QuoteDetailUi
 
-private val COLLAPSE_THRESHOLD = 130.dp
+private val COLLAPSE_THRESHOLD = 72.dp
 
 @Composable
 fun DetailRoute(
