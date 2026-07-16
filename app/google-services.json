@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "123456789000",
-    "project_id": "midmoney-placeholder",
-    "storage_bucket": "midmoney-placeholder.appspot.com"
+    "project_number": "670091306003",
+    "project_id": "midmodey",
+    "storage_bucket": "midmodey.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:123456789000:android:abcdef1234567890abcdef",
+        "mobilesdk_app_id": "1:670091306003:android:b39875220fd8b62cb6cbe6",
         "android_client_info": {
           "package_name": "app.oguzhanozgokce.midmoney"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyPLACEHOLDERPLACEHOLDERPLACEHOLDER0000"
+          "current_key": "AIzaSyDWh9e67gaZMTvJCM_CpIwDc3ZytSYidws"
         }
       ],
       "services": {
