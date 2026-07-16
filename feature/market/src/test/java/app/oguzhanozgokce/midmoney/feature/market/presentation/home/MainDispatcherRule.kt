@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation
+package app.oguzhanozgokce.midmoney.feature.market.presentation.home
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

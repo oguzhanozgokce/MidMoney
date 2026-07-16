@@ -1,5 +1,6 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation
+package app.oguzhanozgokce.midmoney.feature.market.presentation.home
 
+import app.oguzhanozgokce.midmoney.feature.market.presentation.model.MarketFilter
 import app.oguzhanozgokce.midmoney.feature.market.presentation.model.QuoteUi
 
 data class MarketUiState(
@@ -8,12 +9,6 @@ data class MarketUiState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
 )
-
-enum class MarketFilter(val label: String) {
-    Popular("Popular"),
-    Gainers("Gainers"),
-    Losers("Losers"),
-}
 
 sealed interface MarketUiAction {
     data class OpenDetail(val symbol: String) : MarketUiAction

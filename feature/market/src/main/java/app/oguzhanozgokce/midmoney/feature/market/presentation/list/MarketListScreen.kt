@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation
+package app.oguzhanozgokce.midmoney.feature.market.presentation.list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,21 +38,21 @@ import app.oguzhanozgokce.midmoney.feature.market.presentation.component.QuoteLi
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
 
 @Composable
-fun MarketsRoute(viewModel: MarketsViewModel = hiltViewModel()) {
+fun MarketListRoute(viewModel: MarketListViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    MarketsScreen(uiState = uiState, onAction = viewModel::onAction)
+    MarketListScreen(uiState = uiState, onAction = viewModel::onAction)
 }
 
 @Composable
-private fun MarketsScreen(
-    uiState: MarketsUiState,
-    onAction: (MarketsUiAction) -> Unit,
+private fun MarketListScreen(
+    uiState: MarketListUiState,
+    onAction: (MarketListUiAction) -> Unit,
 ) {
     MidMoneyScaffold(
         topBar = {
             MidMoneyTopAppBar(
                 title = "Markets",
-                onNavigationClick = { onAction(MarketsUiAction.BackClicked) },
+                onNavigationClick = { onAction(MarketListUiAction.BackClicked) },
             )
         },
     ) { padding ->
@@ -63,7 +63,7 @@ private fun MarketsScreen(
         ) {
             MidMoneyTextField(
                 value = uiState.query,
-                onValueChange = { onAction(MarketsUiAction.QueryChanged(it)) },
+                onValueChange = { onAction(MarketListUiAction.QueryChanged(it)) },
                 label = "Search",
                 placeholder = "Search stocks (e.g. AAPL)",
                 modifier = Modifier
@@ -76,7 +76,7 @@ private fun MarketsScreen(
             } else {
                 MarketFilters(
                     selected = uiState.selectedFilter,
-                    onSelect = { onAction(MarketsUiAction.SelectFilter(it)) },
+                    onSelect = { onAction(MarketListUiAction.SelectFilter(it)) },
                 )
                 QuoteList(uiState = uiState, onAction = onAction)
             }
@@ -86,14 +86,14 @@ private fun MarketsScreen(
 
 @Composable
 private fun QuoteList(
-    uiState: MarketsUiState,
-    onAction: (MarketsUiAction) -> Unit,
+    uiState: MarketListUiState,
+    onAction: (MarketListUiAction) -> Unit,
 ) {
     when {
         uiState.isLoading -> CenteredLoading()
         uiState.errorMessage != null -> ErrorContent(
             message = uiState.errorMessage,
-            onRetry = { onAction(MarketsUiAction.Retry) },
+            onRetry = { onAction(MarketListUiAction.Retry) },
         )
         else -> LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -102,7 +102,7 @@ private fun QuoteList(
             items(uiState.quotes, key = { it.symbol }) { quote ->
                 QuoteListItem(
                     quote = quote,
-                    onClick = { onAction(MarketsUiAction.OpenDetail(quote.symbol)) },
+                    onClick = { onAction(MarketListUiAction.OpenDetail(quote.symbol)) },
                 )
             }
         }
@@ -111,8 +111,8 @@ private fun QuoteList(
 
 @Composable
 private fun SearchResults(
-    uiState: MarketsUiState,
-    onAction: (MarketsUiAction) -> Unit,
+    uiState: MarketListUiState,
+    onAction: (MarketListUiAction) -> Unit,
 ) {
     when {
         uiState.isSearching -> CenteredLoading()
@@ -128,7 +128,7 @@ private fun SearchResults(
             items(uiState.results, key = { it.symbol }) { match ->
                 SearchResultItem(
                     match = match,
-                    onClick = { onAction(MarketsUiAction.OpenDetail(match.symbol)) },
+                    onClick = { onAction(MarketListUiAction.OpenDetail(match.symbol)) },
                 )
             }
         }
@@ -186,10 +186,10 @@ private fun ErrorContent(message: String, onRetry: () -> Unit) {
 
 @PreviewLightDark
 @Composable
-private fun MarketsScreenPreview(
-    @PreviewParameter(MarketsUiStatePreviewProvider::class) state: MarketsUiState,
+private fun MarketListScreenPreview(
+    @PreviewParameter(MarketListUiStatePreviewProvider::class) state: MarketListUiState,
 ) {
     MidMoneyTheme {
-        MarketsScreen(uiState = state, onAction = {})
+        MarketListScreen(uiState = state, onAction = {})
     }
 }

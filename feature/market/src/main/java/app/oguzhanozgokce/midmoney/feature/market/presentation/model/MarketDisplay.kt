@@ -1,9 +1,8 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation
+package app.oguzhanozgokce.midmoney.feature.market.presentation.model
 
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.QuoteUi
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.toUi
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 
+/** Orders quotes for the selected filter and maps them to UI models. Shared by the home and list screens. */
 internal fun List<Quote>.toDisplayList(filter: MarketFilter): List<QuoteUi> {
     val ordered = when (filter) {
         MarketFilter.Popular -> this

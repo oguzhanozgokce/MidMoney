@@ -12,7 +12,7 @@ sealed interface Destination : NavKey {
     data object Home : Destination
 
     @Serializable
-    data object Markets : Destination
+    data object MarketList : Destination
 
     @Serializable
     data class Detail(val symbol: String) : Destination

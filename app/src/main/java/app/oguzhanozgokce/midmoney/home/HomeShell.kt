@@ -21,7 +21,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import app.oguzhanozgokce.midmoney.feature.market.presentation.MarketRoute
+import app.oguzhanozgokce.midmoney.feature.market.presentation.home.MarketRoute
 import app.oguzhanozgokce.midmoney.feature.profile.presentation.ProfileRoute
 import app.oguzhanozgokce.midmoney.feature.watchlist.presentation.WatchlistRoute
 

@@ -1,7 +1,8 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation
+package app.oguzhanozgokce.midmoney.feature.market.presentation.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.oguzhanozgokce.midmoney.feature.market.presentation.model.toDisplayList
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
@@ -17,11 +18,11 @@ import javax.inject.Inject
 private const val SEARCH_DEBOUNCE_MS = 350L
 
 @HiltViewModel
-class MarketsViewModel @Inject constructor(
+class MarketListViewModel @Inject constructor(
     private val marketClient: MarketClient,
     private val navigator: Navigator,
 ) : ViewModel(),
-    MVI<MarketsUiState, MarketsUiAction, MarketsUiEffect> by mvi(MarketsUiState()) {
+    MVI<MarketListUiState, MarketListUiAction, MarketListUiEffect> by mvi(MarketListUiState()) {
 
     private var loadedQuotes: List<Quote> = emptyList()
     private var searchJob: Job? = null
@@ -30,17 +31,17 @@ class MarketsViewModel @Inject constructor(
         loadQuotes()
     }
 
-    override fun onAction(uiAction: MarketsUiAction) {
+    override fun onAction(uiAction: MarketListUiAction) {
         when (uiAction) {
-            is MarketsUiAction.OpenDetail -> navigator.navigate(Destination.Detail(uiAction.symbol))
-            is MarketsUiAction.SelectFilter -> {
+            is MarketListUiAction.OpenDetail -> navigator.navigate(Destination.Detail(uiAction.symbol))
+            is MarketListUiAction.SelectFilter -> {
                 updateUiState {
                     copy(selectedFilter = uiAction.filter, quotes = loadedQuotes.toDisplayList(uiAction.filter))
                 }
             }
-            is MarketsUiAction.QueryChanged -> onQueryChanged(uiAction.query)
-            MarketsUiAction.BackClicked -> navigator.goBack()
-            MarketsUiAction.Retry -> loadQuotes()
+            is MarketListUiAction.QueryChanged -> onQueryChanged(uiAction.query)
+            MarketListUiAction.BackClicked -> navigator.goBack()
+            MarketListUiAction.Retry -> loadQuotes()
         }
     }
 

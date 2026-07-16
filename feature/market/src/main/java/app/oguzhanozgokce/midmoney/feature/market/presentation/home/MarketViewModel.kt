@@ -1,9 +1,10 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation
+package app.oguzhanozgokce.midmoney.feature.market.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.oguzhanozgokce.midmoney.event.Analytics
 import app.oguzhanozgokce.midmoney.feature.market.analytics.MarketAnalyticsEvent
+import app.oguzhanozgokce.midmoney.feature.market.presentation.model.toDisplayList
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
@@ -39,7 +40,7 @@ class MarketViewModel @Inject constructor(
                     copy(selectedFilter = uiAction.filter, quotes = loadedQuotes.toDisplayList(uiAction.filter))
                 }
             }
-            MarketUiAction.OpenAll -> navigator.navigate(Destination.Markets)
+            MarketUiAction.OpenAll -> navigator.navigate(Destination.MarketList)
             MarketUiAction.Retry -> loadQuotes()
         }
     }
