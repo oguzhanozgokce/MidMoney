@@ -4,8 +4,10 @@ import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.QuoteDetail
 
 data class DetailUiState(
     val symbol: String = "",
+    val name: String = "",
     val quote: QuoteDetailUi? = null,
     val livePriceText: String? = null,
+    val isSaved: Boolean = false,
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
 )
@@ -13,6 +15,12 @@ data class DetailUiState(
 sealed interface DetailUiAction {
     data class Load(val symbol: String) : DetailUiAction
     data object BackClicked : DetailUiAction
+    data object Retry : DetailUiAction
+    data object BuyClicked : DetailUiAction
+    data object SellClicked : DetailUiAction
+    data object ToggleSave : DetailUiAction
 }
 
-sealed interface DetailUiEffect
+sealed interface DetailUiEffect {
+    data class ShowMessage(val message: String) : DetailUiEffect
+}

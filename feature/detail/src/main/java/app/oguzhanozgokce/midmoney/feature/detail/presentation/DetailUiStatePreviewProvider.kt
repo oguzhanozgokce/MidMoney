@@ -5,20 +5,22 @@ import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.QuoteDetail
 
 class DetailUiStatePreviewProvider : PreviewParameterProvider<DetailUiState> {
     override val values = sequenceOf(
-        DetailUiState(symbol = "AAPL", isLoading = true),
+        DetailUiState(symbol = "AAPL", name = "Apple Inc.", isLoading = true),
         DetailUiState(
             symbol = "AAPL",
+            name = "Apple Inc.",
             livePriceText = "150.42",
             quote = QuoteDetailUi(
                 current = "150.25",
                 change = "+1.20",
                 changePercent = "+0.80%",
+                isPositive = true,
                 open = "149.00",
                 high = "151.30",
                 low = "148.80",
                 previousClose = "149.05",
             ),
         ),
-        DetailUiState(symbol = "AAPL", errorMessage = "Something went wrong"),
+        DetailUiState(symbol = "AAPL", name = "Apple Inc.", errorMessage = "HTTP 429 Too Many Requests"),
     )
 }

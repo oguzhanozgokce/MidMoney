@@ -11,12 +11,14 @@ import androidx.compose.ui.Modifier
 fun MidMoneyScaffold(
     modifier: Modifier = Modifier,
     topBar: @Composable () -> Unit = {},
+    bottomBar: @Composable () -> Unit = {},
     snackbarHost: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = topBar,
+        bottomBar = bottomBar,
         snackbarHost = snackbarHost,
         containerColor = MaterialTheme.colorScheme.background,
         content = content,
