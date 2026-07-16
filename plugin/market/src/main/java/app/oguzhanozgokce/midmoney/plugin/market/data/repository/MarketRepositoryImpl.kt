@@ -5,6 +5,7 @@ import app.oguzhanozgokce.midmoney.plugin.market.data.remote.FinnhubApi
 import app.oguzhanozgokce.midmoney.plugin.market.data.remote.FinnhubTradeStream
 import app.oguzhanozgokce.midmoney.plugin.market.data.remote.toDomain
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
+import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
 import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.MarketRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -24,6 +25,11 @@ class MarketRepositoryImpl @Inject constructor(
     override suspend fun getQuote(symbol: String): Result<Quote> = withContext(dispatchers.io) {
         runCatching { api.getQuote(symbol).toDomain(symbol) }
     }
+
+    override suspend fun searchSymbols(query: String): Result<List<SymbolMatch>> =
+        withContext(dispatchers.io) {
+            runCatching { api.search(query).toDomain() }
+        }
 
     override suspend fun getQuotes(symbols: List<String>): Result<List<Quote>> =
         withContext(dispatchers.io) {

@@ -8,6 +8,7 @@ import app.oguzhanozgokce.midmoney.navigation.NavigationCommand
 import app.oguzhanozgokce.midmoney.navigation.Navigator
 import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
+import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
 import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.MarketRepository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -100,6 +101,9 @@ private class FakeMarketRepository(
 
     override suspend fun getQuote(symbol: String): Result<Quote> =
         error?.let { Result.failure(it) } ?: Result.success(quotes.first())
+
+    override suspend fun searchSymbols(query: String): Result<List<SymbolMatch>> =
+        Result.success(emptyList())
 
     override fun observePrice(symbol: String): Flow<Double> = emptyFlow()
 }

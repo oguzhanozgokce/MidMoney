@@ -9,8 +9,12 @@ import app.oguzhanozgokce.midmoney.navigation.Navigator
 import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+private const val SEARCH_DEBOUNCE_MS = 350L
 
 @HiltViewModel
 class MarketsViewModel @Inject constructor(
@@ -20,6 +24,7 @@ class MarketsViewModel @Inject constructor(
     MVI<MarketsUiState, MarketsUiAction, MarketsUiEffect> by mvi(MarketsUiState()) {
 
     private var loadedQuotes: List<Quote> = emptyList()
+    private var searchJob: Job? = null
 
     init {
         loadQuotes()
@@ -33,8 +38,25 @@ class MarketsViewModel @Inject constructor(
                     copy(selectedFilter = uiAction.filter, quotes = loadedQuotes.toDisplayList(uiAction.filter))
                 }
             }
+            is MarketsUiAction.QueryChanged -> onQueryChanged(uiAction.query)
             MarketsUiAction.BackClicked -> navigator.goBack()
             MarketsUiAction.Retry -> loadQuotes()
+        }
+    }
+
+    private fun onQueryChanged(query: String) {
+        updateUiState { copy(query = query) }
+        searchJob?.cancel()
+        if (query.isBlank()) {
+            updateUiState { copy(results = emptyList(), isSearching = false) }
+            return
+        }
+        searchJob = viewModelScope.launch {
+            delay(SEARCH_DEBOUNCE_MS)
+            updateUiState { copy(isSearching = true) }
+            marketClient.search(query)
+                .onSuccess { matches -> updateUiState { copy(results = matches, isSearching = false) } }
+                .onFailure { updateUiState { copy(results = emptyList(), isSearching = false) } }
         }
     }
 

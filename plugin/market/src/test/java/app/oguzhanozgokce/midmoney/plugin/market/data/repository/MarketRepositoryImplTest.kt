@@ -5,6 +5,7 @@ import app.oguzhanozgokce.midmoney.common.coroutines.DispatcherProvider
 import app.oguzhanozgokce.midmoney.plugin.market.data.remote.FinnhubApi
 import app.oguzhanozgokce.midmoney.plugin.market.data.remote.FinnhubTradeStream
 import app.oguzhanozgokce.midmoney.plugin.market.data.remote.dto.QuoteDto
+import app.oguzhanozgokce.midmoney.plugin.market.data.remote.dto.SymbolSearchResponseDto
 import app.oguzhanozgokce.midmoney.websocket.WebSocketClient
 import app.oguzhanozgokce.midmoney.websocket.WebSocketEvent
 import com.google.common.truth.Truth.assertThat
@@ -91,6 +92,8 @@ private class FakeFinnhubApi(
         error?.let { throw it }
         return quote
     }
+
+    override suspend fun search(query: String): SymbolSearchResponseDto = SymbolSearchResponseDto()
 }
 
 private class FakeWebSocketClient(

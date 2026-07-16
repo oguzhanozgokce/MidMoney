@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.feature.market.presentation.model.HomeBannerUi
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val AUTO_SCROLL_DELAY_MS = 4000L
 
@@ -41,14 +42,9 @@ fun HomeBannerPager(
 ) {
     if (banners.isEmpty()) return
     val pagerState = rememberPagerState(pageCount = { banners.size })
-
-    // Key on settledPage, not currentPage: currentPage flips at the half-way point of a scroll,
-    // which would relaunch this effect mid-animation and cancel animateScrollToPage (leaving the
-    // pager stuck between pages). settledPage only changes once a page fully settles, so the timer
-    // still restarts after every swipe — automatic or manual — without interrupting the animation.
     if (banners.size > 1) {
         LaunchedEffect(pagerState.settledPage) {
-            delay(AUTO_SCROLL_DELAY_MS)
+            delay(AUTO_SCROLL_DELAY_MS.milliseconds)
             pagerState.animateScrollToPage((pagerState.settledPage + 1) % banners.size)
         }
     }
