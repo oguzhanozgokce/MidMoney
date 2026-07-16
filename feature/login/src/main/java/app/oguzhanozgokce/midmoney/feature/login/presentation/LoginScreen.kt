@@ -1,5 +1,6 @@
 package app.oguzhanozgokce.midmoney.feature.login.presentation
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +24,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -29,6 +34,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.oguzhanozgokce.midmoney.designsystem.R
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonSize
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
@@ -75,6 +81,14 @@ private fun LoginScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Image(
+                painter = painterResource(R.drawable.midmoney_logo),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(88.dp)
+                    .clip(RoundedCornerShape(22.dp)),
+            )
+            Spacer(Modifier.height(24.dp))
             Text(
                 text = "MidMoney",
                 style = MaterialTheme.typography.displaySmall,
