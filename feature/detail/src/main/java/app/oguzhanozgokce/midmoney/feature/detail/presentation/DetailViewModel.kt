@@ -6,11 +6,13 @@ import app.oguzhanozgokce.midmoney.common.extensions.formatPrice
 import app.oguzhanozgokce.midmoney.event.Analytics
 import app.oguzhanozgokce.midmoney.feature.detail.analytics.DetailAnalyticsEvent
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.toDetailUi
+import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.toUi
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Navigator
 import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
 import app.oguzhanozgokce.midmoney.plugin.market.domain.CompanyNames
+import app.oguzhanozgokce.midmoney.plugin.news.NewsClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
@@ -19,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val marketClient: MarketClient,
+    private val newsClient: NewsClient,
     private val navigator: Navigator,
     private val analytics: Analytics,
 ) : ViewModel(),
@@ -52,6 +55,20 @@ class DetailViewModel @Inject constructor(
                 }
         }
         observeLivePrice(symbol)
+        loadNews(symbol)
+    }
+
+    private fun loadNews(symbol: String) {
+        updateUiState { copy(isNewsLoading = true) }
+        viewModelScope.launch {
+            newsClient.getCompanyNews(symbol)
+                .onSuccess { articles ->
+                    updateUiState { copy(news = articles.map { it.toUi() }, isNewsLoading = false) }
+                }
+                .onFailure {
+                    updateUiState { copy(news = emptyList(), isNewsLoading = false) }
+                }
+        }
     }
 
     private fun observeLivePrice(symbol: String) {

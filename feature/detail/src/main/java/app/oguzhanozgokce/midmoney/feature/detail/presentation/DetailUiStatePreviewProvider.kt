@@ -1,6 +1,7 @@
 package app.oguzhanozgokce.midmoney.feature.detail.presentation
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.NewsUi
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.QuoteDetailUi
 
 class DetailUiStatePreviewProvider : PreviewParameterProvider<DetailUiState> {
@@ -19,6 +20,22 @@ class DetailUiStatePreviewProvider : PreviewParameterProvider<DetailUiState> {
                 high = "151.30",
                 low = "148.80",
                 previousClose = "149.05",
+            ),
+            news = listOf(
+                NewsUi(
+                    headline = "Apple unveils new lineup at fall event",
+                    source = "Reuters",
+                    dateText = "12 Jul",
+                    imageUrl = "",
+                    url = "https://example.com/a",
+                ),
+                NewsUi(
+                    headline = "Analysts raise price targets after strong quarter",
+                    source = "Bloomberg",
+                    dateText = "11 Jul",
+                    imageUrl = "",
+                    url = "https://example.com/b",
+                ),
             ),
         ),
         DetailUiState(symbol = "AAPL", name = "Apple Inc.", errorMessage = "HTTP 429 Too Many Requests"),

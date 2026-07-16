@@ -1,5 +1,6 @@
 package app.oguzhanozgokce.midmoney.feature.detail.presentation
 
+import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.NewsUi
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.QuoteDetailUi
 
 data class DetailUiState(
@@ -8,6 +9,8 @@ data class DetailUiState(
     val quote: QuoteDetailUi? = null,
     val livePriceText: String? = null,
     val isSaved: Boolean = false,
+    val news: List<NewsUi> = emptyList(),
+    val isNewsLoading: Boolean = false,
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
 )

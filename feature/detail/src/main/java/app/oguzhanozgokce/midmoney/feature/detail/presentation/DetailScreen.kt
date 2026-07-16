@@ -34,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -46,6 +47,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyEmptyState
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
+import app.oguzhanozgokce.midmoney.feature.detail.presentation.component.NewsSection
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.QuoteDetailUi
 
 private val COLLAPSE_THRESHOLD = 130.dp
@@ -162,15 +164,21 @@ private fun DetailContent(
     scrollState: androidx.compose.foundation.ScrollState,
 ) {
     val quote = uiState.quote ?: return
+    val uriHandler = LocalUriHandler.current
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
-            .padding(horizontal = 24.dp, vertical = 8.dp),
+            .padding(horizontal = 20.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(28.dp),
     ) {
         Header(uiState = uiState, quote = quote)
         Statistics(quote = quote)
+        NewsSection(
+            news = uiState.news,
+            isLoading = uiState.isNewsLoading,
+            onOpen = { url -> uriHandler.openUri(url) },
+        )
     }
 }
 

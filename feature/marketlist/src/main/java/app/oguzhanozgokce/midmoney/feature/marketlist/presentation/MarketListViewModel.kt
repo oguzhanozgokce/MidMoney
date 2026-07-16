@@ -17,6 +17,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val SEARCH_DEBOUNCE_MS = 350L
 
@@ -38,9 +39,7 @@ class MarketListViewModel @Inject constructor(
         when (uiAction) {
             is MarketListUiAction.OpenDetail -> navigator.navigate(Destination.Detail(uiAction.symbol))
             is MarketListUiAction.SelectFilter -> {
-                updateUiState {
-                    copy(selectedFilter = uiAction.filter, quotes = displayed(uiAction.filter))
-                }
+                updateUiState { copy(selectedFilter = uiAction.filter, quotes = displayed(uiAction.filter)) }
             }
             is MarketListUiAction.QueryChanged -> onQueryChanged(uiAction.query)
             MarketListUiAction.BackClicked -> navigator.goBack()
@@ -56,7 +55,7 @@ class MarketListViewModel @Inject constructor(
             return
         }
         searchJob = viewModelScope.launch {
-            delay(SEARCH_DEBOUNCE_MS)
+            delay(SEARCH_DEBOUNCE_MS.milliseconds)
             updateUiState { copy(isSearching = true) }
             marketClient.search(query)
                 .onSuccess { matches -> updateUiState { copy(results = matches, isSearching = false) } }

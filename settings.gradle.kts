@@ -35,6 +35,7 @@ include(":library:mvi")
 include(":library:websocket")
 include(":library:event")
 include(":plugin:market")
+include(":plugin:news")
 include(":plugin:user")
 
 include(":feature:login")

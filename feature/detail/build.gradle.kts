@@ -8,4 +8,5 @@ android {
 
 dependencies {
     implementation(project(":plugin:market"))
+    implementation(project(":plugin:news"))
 }
