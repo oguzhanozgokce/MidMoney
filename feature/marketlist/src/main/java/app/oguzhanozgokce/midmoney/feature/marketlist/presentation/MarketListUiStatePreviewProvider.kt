@@ -6,18 +6,26 @@ import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
 
 class MarketListUiStatePreviewProvider : PreviewParameterProvider<MarketListUiState> {
     override val values = sequenceOf(
-        // Loading the curated list.
         MarketListUiState(isLoading = true),
-        // Loaded list.
         MarketListUiState(
             quotes = listOf(
-                QuoteUi("AAPL", "Apple Inc.", "150.25", "+1.20%", isPositive = true),
-                QuoteUi("TSLA", "Tesla Inc.", "240.10", "-0.85%", isPositive = false),
+                QuoteUi(
+                    symbol = "AAPL",
+                    name = "Apple Inc.",
+                    priceText = "150.25",
+                    changePercentText = "+1.20%",
+                    isPositive = true,
+                ),
+                QuoteUi(
+                    symbol = "TSLA",
+                    name = "Tesla Inc.",
+                    priceText = "240.10",
+                    changePercentText = "-0.85%",
+                    isPositive = false,
+                ),
             ),
         ),
-        // Failed to load the list.
         MarketListUiState(errorMessage = "HTTP 429 Too Many Requests"),
-        // Search with results.
         MarketListUiState(
             query = "app",
             results = listOf(
@@ -25,7 +33,6 @@ class MarketListUiStatePreviewProvider : PreviewParameterProvider<MarketListUiSt
                 SymbolMatch(symbol = "APP", description = "AppLovin Corp."),
             ),
         ),
-        // Search with no matches.
         MarketListUiState(query = "zzzz", results = emptyList()),
     )
 }

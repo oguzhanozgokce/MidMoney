@@ -33,17 +33,8 @@ private enum class HomeTab(val label: String, val icon: ImageVector) {
     Profile("Profile", Icons.Outlined.Person),
 }
 
-/**
- * The signed-in shell. Hosts the bottom navigation and swaps between the top-level tab routes
- * locally, so tab switching never touches the global back stack. Detail is still pushed above this
- * shell by the market tab.
- *
- * Owns edge-to-edge insets for its tabs: the Scaffold applies the status-bar inset on top and the
- * navigation-bar inset to the bottom bar, then [consumeWindowInsets] stops the tab screens' own
- * scaffolds from adding the same insets a second time.
- */
 @Composable
-fun HomeShell() {
+fun MidMoneyBottomNav() {
     var selectedTab by rememberSaveable { mutableStateOf(HomeTab.Market) }
 
     Scaffold(
@@ -61,8 +52,8 @@ fun HomeShell() {
                         label = { Text(text = tab.label) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = MaterialTheme.colorScheme.onPrimary,
-                            selectedTextColor = MaterialTheme.colorScheme.primary,
-                            indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                            selectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            indicatorColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
                             unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
                             unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
                         ),

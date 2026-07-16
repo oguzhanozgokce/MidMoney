@@ -6,17 +6,12 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import app.oguzhanozgokce.midmoney.home.HomeShell
+import app.oguzhanozgokce.midmoney.home.MidMoneyBottomNav
 import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.EntryProviderInstaller
 import app.oguzhanozgokce.midmoney.navigation.NavigationCommand
 import app.oguzhanozgokce.midmoney.navigation.Navigator
 
-/**
- * Hosts the Navigation 3 back stack. Owns the back stack (so it survives config changes), collects
- * navigation commands from the [Navigator], and assembles the [entryProvider] from the entry
- * installers each feature contributed via Hilt.
- */
 @Composable
 fun MidMoneyNavDisplay(
     startDestination: NavKey,
@@ -42,7 +37,7 @@ fun MidMoneyNavDisplay(
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
-            entry<Destination.Home> { HomeShell() }
+            entry<Destination.Home> { MidMoneyBottomNav() }
             entryInstallers.forEach { installer -> installer() }
         },
     )
