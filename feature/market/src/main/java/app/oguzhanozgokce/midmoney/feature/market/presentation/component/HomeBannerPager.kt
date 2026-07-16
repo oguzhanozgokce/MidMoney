@@ -42,12 +42,14 @@ fun HomeBannerPager(
     if (banners.isEmpty()) return
     val pagerState = rememberPagerState(pageCount = { banners.size })
 
-    // Keying on currentPage restarts the timer whenever the page changes, whether the swipe was
-    // automatic or made by the user.
+    // Key on settledPage, not currentPage: currentPage flips at the half-way point of a scroll,
+    // which would relaunch this effect mid-animation and cancel animateScrollToPage (leaving the
+    // pager stuck between pages). settledPage only changes once a page fully settles, so the timer
+    // still restarts after every swipe — automatic or manual — without interrupting the animation.
     if (banners.size > 1) {
-        LaunchedEffect(pagerState.currentPage) {
+        LaunchedEffect(pagerState.settledPage) {
             delay(AUTO_SCROLL_DELAY_MS)
-            pagerState.animateScrollToPage((pagerState.currentPage + 1) % banners.size)
+            pagerState.animateScrollToPage((pagerState.settledPage + 1) % banners.size)
         }
     }
 
