@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_title">Profil</string>
+    <string name="profile_signed_in">Giriş yapıldı</string>
+    <string name="profile_account">MidMoney hesabı</string>
+    <string name="profile_logout">Çıkış yap</string>
+</resources>

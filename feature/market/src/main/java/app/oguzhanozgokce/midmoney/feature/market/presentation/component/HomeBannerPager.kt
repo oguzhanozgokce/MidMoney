@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -84,20 +85,20 @@ private fun BannerContent(
             tint = MaterialTheme.colorScheme.onBackground,
         )
         Text(
-            text = banner.title,
+            text = stringResource(banner.titleRes),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground,
             textAlign = TextAlign.Center,
         )
         Text(
-            text = banner.subtitle,
+            text = stringResource(banner.subtitleRes),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
         )
         MidMoneyButton(
-            text = banner.actionText,
+            text = stringResource(banner.actionTextRes),
             onClick = onActionClick,
             modifier = Modifier.padding(top = 4.dp),
         )

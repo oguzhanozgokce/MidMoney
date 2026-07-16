@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="market_section_title">Piyasalar</string>
+    <string name="market_see_all">Tümünü gör</string>
+    <string name="market_retry">Tekrar dene</string>
+
+    <string name="filter_popular">Popüler</string>
+    <string name="filter_gainers">Yükselenler</string>
+    <string name="filter_losers">Düşenler</string>
+
+    <string name="banner_markets_title">Piyasayı canlı takip et</string>
+    <string name="banner_markets_subtitle">Önemsediğin hisselerin anlık fiyatları cebinde.</string>
+    <string name="banner_markets_action">Piyasaları keşfet</string>
+    <string name="banner_watchlist_title">Takip listeni oluştur</string>
+    <string name="banner_watchlist_subtitle">Favori hisselerini izle, her hareketi takip et.</string>
+    <string name="banner_watchlist_action">Takip listesini aç</string>
+    <string name="banner_updates_title">Hiçbir hareketi kaçırma</string>
+    <string name="banner_updates_subtitle">Canlı işlem güncellemeleriyle her fiyat taze kalır.</string>
+    <string name="banner_updates_action">Detayları gör</string>
+</resources>

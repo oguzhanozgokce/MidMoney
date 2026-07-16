@@ -1,5 +1,6 @@
 package app.oguzhanozgokce.midmoney.feature.marketlist.presentation
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -36,6 +38,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneySearchBar
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTopAppBar
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
+import app.oguzhanozgokce.midmoney.feature.marketlist.R
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
 
@@ -53,7 +56,7 @@ private fun MarketListScreen(
     MidMoneyScaffold(
         topBar = {
             MidMoneyTopAppBar(
-                title = "Markets",
+                title = stringResource(R.string.markets_title),
                 onNavigationClick = { onAction(MarketListUiAction.BackClicked) },
             )
         },
@@ -68,7 +71,7 @@ private fun MarketListScreen(
             MidMoneySearchBar(
                 query = uiState.query,
                 onQueryChange = { onAction(MarketListUiAction.QueryChanged(it)) },
-                placeholder = "Search stocks (e.g. AAPL)",
+                placeholder = stringResource(R.string.markets_search_hint),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
@@ -78,7 +81,7 @@ private fun MarketListScreen(
                 SearchResults(uiState = uiState, onAction = onAction)
             } else {
                 MidMoneyFilterChips(
-                    options = MarketFilter.entries.map { it.label },
+                    options = MarketFilter.entries.map { stringResource(it.labelRes()) },
                     selectedIndex = uiState.selectedFilter.ordinal,
                     onSelect = { onAction(MarketListUiAction.SelectFilter(MarketFilter.entries[it])) },
                 )
@@ -126,8 +129,8 @@ private fun SearchResults(
         uiState.isSearching -> CenteredLoading()
         uiState.results.isEmpty() -> MidMoneyEmptyState(
             icon = Icons.Outlined.Search,
-            title = "No results",
-            description = "No stocks match \"${uiState.query}\".",
+            title = stringResource(R.string.markets_no_results_title),
+            description = stringResource(R.string.markets_no_results_description, uiState.query),
         )
         else -> LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -178,11 +181,18 @@ private fun CenteredLoading() {
 private fun ErrorContent(message: String, onRetry: () -> Unit) {
     MidMoneyEmptyState(
         icon = Icons.Outlined.CloudOff,
-        title = "Something went wrong",
-        description = "We couldn't load market data. Check your connection and try again.\n\n$message",
-        actionText = "Retry",
+        title = stringResource(R.string.markets_error_title),
+        description = stringResource(R.string.markets_error_description, message),
+        actionText = stringResource(R.string.markets_retry),
         onActionClick = onRetry,
     )
+}
+
+@StringRes
+private fun MarketFilter.labelRes(): Int = when (this) {
+    MarketFilter.Popular -> R.string.filter_popular
+    MarketFilter.Gainers -> R.string.filter_gainers
+    MarketFilter.Losers -> R.string.filter_losers
 }
 
 @PreviewLightDark

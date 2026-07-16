@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_back">Back</string>
+    <string name="detail_save">Save</string>
+
+    <string name="detail_error_title">Something went wrong</string>
+    <string name="detail_error_description">We couldn\'t load this stock. Please try again.\n\n%1$s</string>
+    <string name="detail_retry">Retry</string>
+
+    <string name="detail_statistics">Statistics</string>
+    <string name="detail_open">Open</string>
+    <string name="detail_previous_close">Previous close</string>
+    <string name="detail_high">High</string>
+    <string name="detail_low">Low</string>
+
+    <string name="detail_news">News</string>
+
+    <string name="detail_sell">Sell</string>
+    <string name="detail_buy">Buy</string>
+</resources>

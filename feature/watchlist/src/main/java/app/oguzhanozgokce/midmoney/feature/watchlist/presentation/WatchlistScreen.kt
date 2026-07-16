@@ -8,6 +8,7 @@ import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -15,6 +16,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyEmptyState
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScreenHeader
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
+import app.oguzhanozgokce.midmoney.feature.watchlist.R
 
 @Composable
 fun WatchlistRoute(viewModel: WatchlistViewModel = hiltViewModel()) {
@@ -30,11 +32,11 @@ private fun WatchlistScreen(uiState: WatchlistUiState) {
                 .fillMaxSize()
                 .padding(padding),
         ) {
-            MidMoneyScreenHeader(title = "Watchlist")
+            MidMoneyScreenHeader(title = stringResource(R.string.watchlist_title))
             MidMoneyEmptyState(
                 icon = Icons.Outlined.Star,
-                title = "Your watchlist is empty",
-                description = "Symbols you follow will appear here.",
+                title = stringResource(R.string.watchlist_empty_title),
+                description = stringResource(R.string.watchlist_empty_description),
                 modifier = Modifier.weight(1f),
             )
         }

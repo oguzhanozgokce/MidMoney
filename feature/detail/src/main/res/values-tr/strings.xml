@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_back">Geri</string>
+    <string name="detail_save">Kaydet</string>
+
+    <string name="detail_error_title">Bir şeyler ters gitti</string>
+    <string name="detail_error_description">Bu hisse yüklenemedi. Lütfen tekrar dene.\n\n%1$s</string>
+    <string name="detail_retry">Tekrar dene</string>
+
+    <string name="detail_statistics">İstatistikler</string>
+    <string name="detail_open">Açılış</string>
+    <string name="detail_previous_close">Önceki kapanış</string>
+    <string name="detail_high">En yüksek</string>
+    <string name="detail_low">En düşük</string>
+
+    <string name="detail_news">Haberler</string>
+
+    <string name="detail_sell">Sat</string>
+    <string name="detail_buy">Al</string>
+</resources>

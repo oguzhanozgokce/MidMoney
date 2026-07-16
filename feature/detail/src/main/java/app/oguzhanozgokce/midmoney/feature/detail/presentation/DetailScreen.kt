@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -47,6 +48,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyEmptyState
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
+import app.oguzhanozgokce.midmoney.feature.detail.R
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.component.NewsSection
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.QuoteDetailUi
 
@@ -98,9 +100,9 @@ private fun DetailScreen(
 
                 uiState.errorMessage != null -> MidMoneyEmptyState(
                     icon = Icons.Outlined.CloudOff,
-                    title = "Something went wrong",
-                    description = "We couldn't load this stock. Please try again.\n\n${uiState.errorMessage}",
-                    actionText = "Retry",
+                    title = stringResource(R.string.detail_error_title),
+                    description = stringResource(R.string.detail_error_description, uiState.errorMessage),
+                    actionText = stringResource(R.string.detail_retry),
                     onActionClick = { onAction(DetailUiAction.Retry) },
                 )
 
@@ -140,14 +142,17 @@ private fun DetailTopBar(
         },
         navigationIcon = {
             IconButton(onClick = { onAction(DetailUiAction.BackClicked) }) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(R.string.detail_back),
+                )
             }
         },
         actions = {
             IconButton(onClick = { onAction(DetailUiAction.ToggleSave) }) {
                 Icon(
                     imageVector = if (uiState.isSaved) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
-                    contentDescription = "Save",
+                    contentDescription = stringResource(R.string.detail_save),
                 )
             }
         },
@@ -228,18 +233,22 @@ private fun Header(uiState: DetailUiState, quote: QuoteDetailUi) {
 private fun Statistics(quote: QuoteDetailUi) {
     Column(verticalArrangement = Arrangement.spacedBy(20.dp)) {
         Text(
-            text = "Statistics",
+            text = stringResource(R.string.detail_statistics),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground,
         )
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            StatCell(label = "Open", value = quote.open, modifier = Modifier.weight(1f))
-            StatCell(label = "Previous close", value = quote.previousClose, modifier = Modifier.weight(1f))
+            StatCell(label = stringResource(R.string.detail_open), value = quote.open, modifier = Modifier.weight(1f))
+            StatCell(
+                label = stringResource(R.string.detail_previous_close),
+                value = quote.previousClose,
+                modifier = Modifier.weight(1f),
+            )
         }
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            StatCell(label = "High", value = quote.high, modifier = Modifier.weight(1f))
-            StatCell(label = "Low", value = quote.low, modifier = Modifier.weight(1f))
+            StatCell(label = stringResource(R.string.detail_high), value = quote.high, modifier = Modifier.weight(1f))
+            StatCell(label = stringResource(R.string.detail_low), value = quote.low, modifier = Modifier.weight(1f))
         }
     }
 }
@@ -271,13 +280,13 @@ private fun DetailActions(onAction: (DetailUiAction) -> Unit) {
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         MidMoneyButton(
-            text = "Sell",
+            text = stringResource(R.string.detail_sell),
             onClick = { onAction(DetailUiAction.SellClicked) },
             size = MidMoneyButtonSize.Large,
             modifier = Modifier.weight(1f),
         )
         MidMoneyButton(
-            text = "Buy",
+            text = stringResource(R.string.detail_buy),
             onClick = { onAction(DetailUiAction.BuyClicked) },
             size = MidMoneyButtonSize.Large,
             modifier = Modifier.weight(1f),

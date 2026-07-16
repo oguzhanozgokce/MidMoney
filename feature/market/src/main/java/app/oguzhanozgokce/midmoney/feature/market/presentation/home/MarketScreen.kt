@@ -1,5 +1,6 @@
 package app.oguzhanozgokce.midmoney.feature.market.presentation.home
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -32,6 +34,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyQuoteRow
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScreenHeader
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
+import app.oguzhanozgokce.midmoney.feature.market.R
 import app.oguzhanozgokce.midmoney.feature.market.presentation.component.HomeBannerPager
 import app.oguzhanozgokce.midmoney.feature.market.presentation.model.HomeBannerUi
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
@@ -77,13 +80,13 @@ private fun MarketScreen(
                 }
                 item {
                     SectionHeader(
-                        title = "Markets",
+                        title = stringResource(R.string.market_section_title),
                         onSeeAll = { onAction(MarketUiAction.OpenAll) },
                     )
                 }
                 item {
                     MidMoneyFilterChips(
-                        options = MarketFilter.entries.map { it.label },
+                        options = MarketFilter.entries.map { stringResource(it.labelRes()) },
                         selectedIndex = uiState.selectedFilter.ordinal,
                         onSelect = { onAction(MarketUiAction.SelectFilter(MarketFilter.entries[it])) },
                     )
@@ -139,9 +142,16 @@ private fun SectionHeader(title: String, onSeeAll: () -> Unit) {
             modifier = Modifier.weight(1f),
         )
         TextButton(onClick = onSeeAll) {
-            Text(text = "See all")
+            Text(text = stringResource(R.string.market_see_all))
         }
     }
+}
+
+@StringRes
+private fun MarketFilter.labelRes(): Int = when (this) {
+    MarketFilter.Popular -> R.string.filter_popular
+    MarketFilter.Gainers -> R.string.filter_gainers
+    MarketFilter.Losers -> R.string.filter_losers
 }
 
 @Composable
@@ -159,7 +169,11 @@ private fun ErrorContent(message: String, onRetry: () -> Unit) {
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onBackground,
         )
-        MidMoneyButton(text = "Retry", onClick = onRetry, style = MidMoneyButtonStyle.Outlined)
+        MidMoneyButton(
+            text = stringResource(R.string.market_retry),
+            onClick = onRetry,
+            style = MidMoneyButtonStyle.Outlined,
+        )
     }
 }
 

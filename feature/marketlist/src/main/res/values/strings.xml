@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="markets_title">Markets</string>
+    <string name="markets_search_hint">Search stocks (e.g. AAPL)</string>
+
+    <string name="markets_no_results_title">No results</string>
+    <string name="markets_no_results_description">No stocks match \"%1$s\".</string>
+
+    <string name="markets_error_title">Something went wrong</string>
+    <string name="markets_error_description">We couldn\'t load market data. Check your connection and try again.\n\n%1$s</string>
+    <string name="markets_retry">Retry</string>
+
+    <string name="filter_popular">Popular</string>
+    <string name="filter_gainers">Gainers</string>
+    <string name="filter_losers">Losers</string>
+</resources>

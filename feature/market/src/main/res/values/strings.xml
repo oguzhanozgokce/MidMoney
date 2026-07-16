@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="market_section_title">Markets</string>
+    <string name="market_see_all">See all</string>
+    <string name="market_retry">Retry</string>
+
+    <string name="filter_popular">Popular</string>
+    <string name="filter_gainers">Gainers</string>
+    <string name="filter_losers">Losers</string>
+
+    <string name="banner_markets_title">Track the market live</string>
+    <string name="banner_markets_subtitle">Real-time prices for the symbols you care about, right in your pocket.</string>
+    <string name="banner_markets_action">Explore markets</string>
+    <string name="banner_watchlist_title">Build your watchlist</string>
+    <string name="banner_watchlist_subtitle">Keep an eye on your favorite stocks and follow every move.</string>
+    <string name="banner_watchlist_action">Open watchlist</string>
+    <string name="banner_updates_title">Never miss a move</string>
+    <string name="banner_updates_subtitle">Live trade updates keep every quote fresh as the market shifts.</string>
+    <string name="banner_updates_action">See details</string>
+</resources>

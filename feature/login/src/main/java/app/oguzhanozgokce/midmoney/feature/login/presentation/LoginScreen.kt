@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -34,13 +35,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import app.oguzhanozgokce.midmoney.designsystem.R
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonSize
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTextField
 import app.oguzhanozgokce.midmoney.designsystem.theme.DisplayFontFamily
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
+import app.oguzhanozgokce.midmoney.feature.login.R
+import app.oguzhanozgokce.midmoney.designsystem.R as DesignR
 
 @Composable
 fun LoginRoute(viewModel: LoginViewModel = hiltViewModel()) {
@@ -82,7 +84,7 @@ private fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
-                painter = painterResource(R.drawable.midmoney_logo),
+                painter = painterResource(DesignR.drawable.midmoney_logo),
                 contentDescription = null,
                 modifier = Modifier
                     .size(88.dp)
@@ -98,7 +100,7 @@ private fun LoginScreen(
             )
             Spacer(Modifier.height(8.dp))
             Text(
-                text = "Sign in to continue",
+                text = stringResource(R.string.login_subtitle),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -106,8 +108,8 @@ private fun LoginScreen(
             MidMoneyTextField(
                 value = uiState.email,
                 onValueChange = { onAction(LoginUiAction.EmailChanged(it)) },
-                label = "Email",
-                placeholder = "you@example.com",
+                label = stringResource(R.string.login_email_label),
+                placeholder = stringResource(R.string.login_email_placeholder),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -115,14 +117,14 @@ private fun LoginScreen(
             MidMoneyTextField(
                 value = uiState.password,
                 onValueChange = { onAction(LoginUiAction.PasswordChanged(it)) },
-                label = "Password",
+                label = stringResource(R.string.login_password_label),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 modifier = Modifier.fillMaxWidth(),
             )
             Spacer(Modifier.height(28.dp))
             MidMoneyButton(
-                text = "Login",
+                text = stringResource(R.string.login_action),
                 onClick = { onAction(LoginUiAction.LoginClicked) },
                 size = MidMoneyButtonSize.Large,
                 loading = uiState.isLoading,

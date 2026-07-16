@@ -17,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -29,6 +30,7 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonStyle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScreenHeader
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
+import app.oguzhanozgokce.midmoney.feature.profile.R
 
 @Composable
 fun ProfileRoute(viewModel: ProfileViewModel = hiltViewModel()) {
@@ -47,7 +49,7 @@ private fun ProfileScreen(
                 .fillMaxSize()
                 .padding(padding),
         ) {
-            MidMoneyScreenHeader(title = "Profile")
+            MidMoneyScreenHeader(title = stringResource(R.string.profile_title))
             Column(
                 modifier = Modifier
                     .weight(1f)
@@ -59,19 +61,19 @@ private fun ProfileScreen(
                 Spacer(Modifier.size(16.dp))
                 Avatar(email = uiState.email)
                 Text(
-                    text = uiState.email ?: "Signed in",
+                    text = uiState.email ?: stringResource(R.string.profile_signed_in),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground,
                 )
                 Text(
-                    text = "MidMoney account",
+                    text = stringResource(R.string.profile_account),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.weight(1f))
                 MidMoneyButton(
-                    text = "Log out",
+                    text = stringResource(R.string.profile_logout),
                     onClick = { onAction(ProfileUiAction.Logout) },
                     style = MidMoneyButtonStyle.Outlined,
                     size = MidMoneyButtonSize.Large,

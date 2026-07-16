@@ -13,11 +13,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyNetworkImage
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyShimmer
+import app.oguzhanozgokce.midmoney.feature.detail.R
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.NewsUi
 
 @Composable
@@ -29,7 +31,7 @@ internal fun NewsSection(
     if (!isLoading && news.isEmpty()) return
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
-            text = "News",
+            text = stringResource(R.string.detail_news),
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground,

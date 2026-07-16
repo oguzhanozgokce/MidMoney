@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="markets_title">Piyasalar</string>
+    <string name="markets_search_hint">Hisse ara (örn. AAPL)</string>
+
+    <string name="markets_no_results_title">Sonuç yok</string>
+    <string name="markets_no_results_description">\"%1$s\" ile eşleşen hisse yok.</string>
+
+    <string name="markets_error_title">Bir şeyler ters gitti</string>
+    <string name="markets_error_description">Piyasa verileri yüklenemedi. Bağlantını kontrol edip tekrar dene.\n\n%1$s</string>
+    <string name="markets_retry">Tekrar dene</string>
+
+    <string name="filter_popular">Popüler</string>
+    <string name="filter_gainers">Yükselenler</string>
+    <string name="filter_losers">Düşenler</string>
+</resources>
