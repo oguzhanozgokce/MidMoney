@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "app.oguzhanozgokce.midmoney.feature.market"
+    namespace = "app.oguzhanozgokce.midmoney.feature.marketlist"
 }
 
 dependencies {

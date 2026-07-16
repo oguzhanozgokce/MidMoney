@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation.component
+package app.oguzhanozgokce.midmoney.designsystem.component
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -13,13 +13,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.MarketFilter
+import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 
+/**
+ * A horizontally scrollable row of single-choice filter chips styled as filled pills (primary when
+ * selected). Generic over string labels so any screen can reuse it.
+ */
 @Composable
-fun MarketFilters(
-    selected: MarketFilter,
-    onSelect: (MarketFilter) -> Unit,
+fun MidMoneyFilterChips(
+    options: List<String>,
+    selectedIndex: Int,
+    onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -29,11 +35,11 @@ fun MarketFilters(
             .padding(horizontal = 16.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        MarketFilter.entries.forEach { filter ->
+        options.forEachIndexed { index, label ->
             FilterChip(
-                selected = filter == selected,
-                onClick = { onSelect(filter) },
-                label = { Text(text = filter.label) },
+                selected = index == selectedIndex,
+                onClick = { onSelect(index) },
+                label = { Text(text = label) },
                 shape = CircleShape,
                 border = null,
                 colors = FilterChipDefaults.filterChipColors(
@@ -44,5 +50,17 @@ fun MarketFilters(
                 ),
             )
         }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun MidMoneyFilterChipsPreview() {
+    MidMoneyTheme {
+        MidMoneyFilterChips(
+            options = listOf("Popular", "Gainers", "Losers"),
+            selectedIndex = 0,
+            onSelect = {},
+        )
     }
 }

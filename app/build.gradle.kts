@@ -38,6 +38,7 @@ dependencies {
 
     implementation(project(":feature:login"))
     implementation(project(":feature:market"))
+    implementation(project(":feature:marketlist"))
     implementation(project(":feature:detail"))
     implementation(project(":feature:watchlist"))
     implementation(project(":feature:profile"))

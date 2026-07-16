@@ -1,7 +1,7 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation.model
+package app.oguzhanozgokce.midmoney.plugin.market.domain.model
 
 /**
- * Client-side views over the curated symbol list — the free Finnhub tier has no trending endpoint,
+ * Client-side views over the curated symbol list. The free Finnhub tier has no trending endpoint,
  * so "Popular" is the curated order and gainers/losers sort by daily change.
  */
 enum class MarketFilter(val label: String) {

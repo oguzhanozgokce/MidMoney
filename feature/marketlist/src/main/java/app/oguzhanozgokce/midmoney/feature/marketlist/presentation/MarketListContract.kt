@@ -1,7 +1,7 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation.list
+package app.oguzhanozgokce.midmoney.feature.marketlist.presentation
 
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.MarketFilter
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.QuoteUi
+import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.QuoteUi
+import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
 
 data class MarketListUiState(

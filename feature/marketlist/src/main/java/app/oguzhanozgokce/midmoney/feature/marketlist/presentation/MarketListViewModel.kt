@@ -1,13 +1,16 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation.list
+package app.oguzhanozgokce.midmoney.feature.marketlist.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.toDisplayList
+import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.QuoteUi
+import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.toUi
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.Navigator
 import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
+import app.oguzhanozgokce.midmoney.plugin.market.domain.applyFilter
+import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -36,7 +39,7 @@ class MarketListViewModel @Inject constructor(
             is MarketListUiAction.OpenDetail -> navigator.navigate(Destination.Detail(uiAction.symbol))
             is MarketListUiAction.SelectFilter -> {
                 updateUiState {
-                    copy(selectedFilter = uiAction.filter, quotes = loadedQuotes.toDisplayList(uiAction.filter))
+                    copy(selectedFilter = uiAction.filter, quotes = displayed(uiAction.filter))
                 }
             }
             is MarketListUiAction.QueryChanged -> onQueryChanged(uiAction.query)
@@ -67,7 +70,7 @@ class MarketListViewModel @Inject constructor(
             marketClient.getAllQuotes()
                 .onSuccess { quotes ->
                     loadedQuotes = quotes
-                    updateUiState { copy(quotes = quotes.toDisplayList(selectedFilter), isLoading = false) }
+                    updateUiState { copy(quotes = displayed(selectedFilter), isLoading = false) }
                 }
                 .onFailure { throwable ->
                     updateUiState {
@@ -76,4 +79,7 @@ class MarketListViewModel @Inject constructor(
                 }
         }
     }
+
+    private fun displayed(filter: MarketFilter): List<QuoteUi> =
+        loadedQuotes.applyFilter(filter).map { it.toUi() }
 }

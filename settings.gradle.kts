@@ -39,6 +39,7 @@ include(":plugin:user")
 
 include(":feature:login")
 include(":feature:market")
+include(":feature:marketlist")
 include(":feature:detail")
 include(":feature:watchlist")
 include(":feature:profile")

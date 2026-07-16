@@ -26,14 +26,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonStyle
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyFilterChips
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyQuoteRow
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScreenHeader
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 import app.oguzhanozgokce.midmoney.feature.market.presentation.component.HomeBannerPager
-import app.oguzhanozgokce.midmoney.feature.market.presentation.component.MarketFilters
-import app.oguzhanozgokce.midmoney.feature.market.presentation.component.QuoteListItem
 import app.oguzhanozgokce.midmoney.feature.market.presentation.model.HomeBannerUi
+import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 
 private const val HOME_PREVIEW_COUNT = 6
 
@@ -81,9 +82,10 @@ private fun MarketScreen(
                     )
                 }
                 item {
-                    MarketFilters(
-                        selected = uiState.selectedFilter,
-                        onSelect = { onAction(MarketUiAction.SelectFilter(it)) },
+                    MidMoneyFilterChips(
+                        options = MarketFilter.entries.map { it.label },
+                        selectedIndex = uiState.selectedFilter.ordinal,
+                        onSelect = { onAction(MarketUiAction.SelectFilter(MarketFilter.entries[it])) },
                     )
                 }
 
@@ -106,8 +108,12 @@ private fun MarketScreen(
                     }
 
                     else -> items(uiState.quotes.take(HOME_PREVIEW_COUNT), key = { it.symbol }) { quote ->
-                        QuoteListItem(
-                            quote = quote,
+                        MidMoneyQuoteRow(
+                            symbol = quote.symbol,
+                            name = quote.name,
+                            priceText = quote.priceText,
+                            changeText = quote.changePercentText,
+                            isPositive = quote.isPositive,
                             onClick = { onAction(MarketUiAction.OpenDetail(quote.symbol)) },
                         )
                     }

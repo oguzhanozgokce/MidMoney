@@ -1,8 +1,8 @@
-package app.oguzhanozgokce.midmoney.feature.market.navigation
+package app.oguzhanozgokce.midmoney.feature.marketlist.navigation
 
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
-import app.oguzhanozgokce.midmoney.feature.market.presentation.list.MarketListRoute
+import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.MarketListRoute
 import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.EntryProviderInstaller
 import dagger.Module

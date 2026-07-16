@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation.list
+package app.oguzhanozgokce.midmoney.feature.marketlist.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -28,13 +28,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonStyle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyEmptyState
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyFilterChips
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyQuoteRow
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTextField
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTopAppBar
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
-import app.oguzhanozgokce.midmoney.feature.market.presentation.component.MarketFilters
-import app.oguzhanozgokce.midmoney.feature.market.presentation.component.QuoteListItem
+import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
 
 @Composable
@@ -74,9 +75,10 @@ private fun MarketListScreen(
             if (uiState.isSearchActive) {
                 SearchResults(uiState = uiState, onAction = onAction)
             } else {
-                MarketFilters(
-                    selected = uiState.selectedFilter,
-                    onSelect = { onAction(MarketListUiAction.SelectFilter(it)) },
+                MidMoneyFilterChips(
+                    options = MarketFilter.entries.map { it.label },
+                    selectedIndex = uiState.selectedFilter.ordinal,
+                    onSelect = { onAction(MarketListUiAction.SelectFilter(MarketFilter.entries[it])) },
                 )
                 QuoteList(uiState = uiState, onAction = onAction)
             }
@@ -100,8 +102,12 @@ private fun QuoteList(
             contentPadding = PaddingValues(bottom = 16.dp),
         ) {
             items(uiState.quotes, key = { it.symbol }) { quote ->
-                QuoteListItem(
-                    quote = quote,
+                MidMoneyQuoteRow(
+                    symbol = quote.symbol,
+                    name = quote.name,
+                    priceText = quote.priceText,
+                    changeText = quote.changePercentText,
+                    isPositive = quote.isPositive,
                     onClick = { onAction(MarketListUiAction.OpenDetail(quote.symbol)) },
                 )
             }

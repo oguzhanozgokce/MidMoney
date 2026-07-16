@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation.component
+package app.oguzhanozgokce.midmoney.designsystem.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,14 +19,22 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.QuoteUi
 import kotlin.math.abs
 
+/**
+ * A market list row: a colored symbol monogram, the symbol and name, and the price with a
+ * color-coded change. Domain-agnostic — callers pass already-formatted strings.
+ */
 @Composable
-fun QuoteListItem(
-    quote: QuoteUi,
+fun MidMoneyQuoteRow(
+    symbol: String,
+    name: String,
+    priceText: String,
+    changeText: String,
+    isPositive: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -38,16 +46,16 @@ fun QuoteListItem(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        SymbolMonogram(symbol = quote.symbol)
+        SymbolMonogram(symbol = symbol)
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = quote.symbol,
+                text = symbol,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface,
             )
             Text(
-                text = quote.name,
+                text = name,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
@@ -56,15 +64,15 @@ fun QuoteListItem(
         }
         Column(horizontalAlignment = Alignment.End) {
             Text(
-                text = quote.priceText,
+                text = priceText,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurface,
             )
             Text(
-                text = quote.changePercentText,
+                text = changeText,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium,
-                color = if (quote.isPositive) {
+                color = if (isPositive) {
                     MidMoneyTheme.extraColors.priceUp
                 } else {
                     MidMoneyTheme.extraColors.priceDown
@@ -100,6 +108,21 @@ private fun SymbolMonogram(symbol: String) {
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = Color.White,
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun MidMoneyQuoteRowPreview() {
+    MidMoneyTheme {
+        MidMoneyQuoteRow(
+            symbol = "AAPL",
+            name = "Apple Inc.",
+            priceText = "150.25",
+            changeText = "+1.20%",
+            isPositive = true,
+            onClick = {},
         )
     }
 }

@@ -3,11 +3,11 @@ package app.oguzhanozgokce.midmoney.feature.market.presentation.home
 import app.oguzhanozgokce.midmoney.event.Analytics
 import app.oguzhanozgokce.midmoney.event.AnalyticsEvent
 import app.oguzhanozgokce.midmoney.feature.market.analytics.MarketAnalyticsEvent
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.MarketFilter
 import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.NavigationCommand
 import app.oguzhanozgokce.midmoney.navigation.Navigator
 import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
+import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
 import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.MarketRepository
