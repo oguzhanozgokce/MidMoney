@@ -11,17 +11,6 @@ private const val MAX_BODY_BYTES = 8_192L
 private const val NS_PER_MS = 1_000_000.0
 private const val REDACTED_QUERY = "token"
 
-/**
- * Logs each call as a single compact block instead of OkHttp's header-per-line output:
- *
- * ```
- * → GET /quote?symbol=AAPL
- * ← 200 (558 ms)
- * { "c": 150.25, ... }
- * ```
- *
- * The API token query parameter is redacted so it never lands in Logcat. Debug builds only.
- */
 class NetworkLoggingInterceptor(
     private val json: Json,
     private val log: (String) -> Unit,
