@@ -26,6 +26,7 @@ dependencyResolutionManagement {
 rootProject.name = "MidMoney"
 include(":app")
 include(":library:common")
+include(":library:error")
 include(":library:designsystem")
 include(":library:logger")
 include(":library:network")
