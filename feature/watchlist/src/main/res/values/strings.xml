@@ -3,4 +3,6 @@
     <string name="watchlist_title">Watchlist</string>
     <string name="watchlist_empty_title">Your watchlist is empty</string>
     <string name="watchlist_empty_description">Symbols you follow will appear here.</string>
+    <string name="watchlist_error_title">Couldn\'t load your watchlist</string>
+    <string name="watchlist_retry">Try again</string>
 </resources>

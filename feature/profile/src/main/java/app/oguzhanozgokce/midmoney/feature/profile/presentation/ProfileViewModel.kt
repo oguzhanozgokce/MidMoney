@@ -2,7 +2,10 @@ package app.oguzhanozgokce.midmoney.feature.profile.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.oguzhanozgokce.midmoney.common.appinfo.AppInfoProvider
+import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.event.Analytics
+import app.oguzhanozgokce.midmoney.feature.profile.R
 import app.oguzhanozgokce.midmoney.feature.profile.analytics.ProfileAnalyticsEvent
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
@@ -18,17 +21,26 @@ class ProfileViewModel @Inject constructor(
     private val userClient: UserClient,
     private val navigator: Navigator,
     private val analytics: Analytics,
+    appInfo: AppInfoProvider,
 ) : ViewModel(),
     MVI<ProfileUiState, ProfileUiAction, ProfileUiEffect> by mvi(ProfileUiState()) {
 
     init {
         analytics.track(ProfileAnalyticsEvent.Viewed)
+        updateUiState { copy(versionName = appInfo.versionName) }
         observeEmail()
     }
 
     override fun onAction(uiAction: ProfileUiAction) {
         when (uiAction) {
             ProfileUiAction.Logout -> logout()
+            ProfileUiAction.ComingSoonClicked -> showComingSoon()
+        }
+    }
+
+    private fun showComingSoon() {
+        viewModelScope.launch {
+            emitUiEffect(ProfileUiEffect.ShowMessage(UiText.Resource(R.string.profile_coming_soon)))
         }
     }
 

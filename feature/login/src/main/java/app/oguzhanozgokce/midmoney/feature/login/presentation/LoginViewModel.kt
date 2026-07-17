@@ -11,6 +11,8 @@ import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.Navigator
 import app.oguzhanozgokce.midmoney.plugin.user.UserClient
+import app.oguzhanozgokce.midmoney.plugin.user.domain.model.AuthError
+import app.oguzhanozgokce.midmoney.plugin.user.domain.model.AuthException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -49,12 +51,18 @@ class LoginViewModel @Inject constructor(
                 }
                 .onFailure { throwable ->
                     updateUiState { copy(isLoading = false) }
-                    analytics.track(LoginAnalyticsEvent.LoginFailed(throwable.message ?: "unknown"))
-                    val text = throwable.message?.takeIf { it.isNotBlank() }
-                        ?.let { UiText.Dynamic(it) }
-                        ?: UiText.Resource(R.string.login_error_generic)
-                    emitUiEffect(LoginUiEffect.ShowMessage(text))
+                    val error = (throwable as? AuthException)?.error ?: AuthError.Unknown
+                    analytics.track(LoginAnalyticsEvent.LoginFailed(error.name))
+                    emitUiEffect(LoginUiEffect.ShowMessage(UiText.Resource(error.toMessageRes())))
                 }
         }
     }
+}
+
+private fun AuthError.toMessageRes(): Int = when (this) {
+    AuthError.WeakPassword -> R.string.login_error_weak_password
+    AuthError.InvalidCredentials -> R.string.login_error_invalid_credentials
+    AuthError.NoAccount -> R.string.login_error_no_account
+    AuthError.Network -> R.string.login_error_network
+    AuthError.Unknown -> R.string.login_error_generic
 }

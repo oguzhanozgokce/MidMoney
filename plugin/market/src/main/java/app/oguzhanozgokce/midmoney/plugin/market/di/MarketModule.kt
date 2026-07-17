@@ -1,7 +1,9 @@
 package app.oguzhanozgokce.midmoney.plugin.market.di
 
 import app.oguzhanozgokce.midmoney.plugin.market.data.remote.FinnhubApi
+import app.oguzhanozgokce.midmoney.plugin.market.data.repository.FavoritesRepositoryImpl
 import app.oguzhanozgokce.midmoney.plugin.market.data.repository.MarketRepositoryImpl
+import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.FavoritesRepository
 import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.MarketRepository
 import dagger.Binds
 import dagger.Module
@@ -28,4 +30,8 @@ abstract class MarketRepositoryModule {
     @Binds
     @Singleton
     abstract fun bindMarketRepository(impl: MarketRepositoryImpl): MarketRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindFavoritesRepository(impl: FavoritesRepositoryImpl): FavoritesRepository
 }

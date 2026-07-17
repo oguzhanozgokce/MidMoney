@@ -76,7 +76,7 @@ private fun NewsCard(article: NewsUi, onClick: () -> Unit) {
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
-                text = listOf(article.source, article.dateText).filter { it.isNotBlank() }.joinToString(" · "),
+                text = article.metaText,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

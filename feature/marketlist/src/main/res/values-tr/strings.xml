@@ -7,7 +7,6 @@
     <string name="markets_no_results_description">\"%1$s\" ile eşleşen hisse yok.</string>
 
     <string name="markets_error_title">Bir şeyler ters gitti</string>
-    <string name="markets_error_description">Piyasa verileri yüklenemedi. Bağlantını kontrol edip tekrar dene.</string>
     <string name="markets_retry">Tekrar dene</string>
 
     <string name="filter_popular">Popüler</string>

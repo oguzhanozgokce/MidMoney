@@ -3,11 +3,9 @@ package app.oguzhanozgokce.midmoney.feature.market.presentation.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
+import app.oguzhanozgokce.midmoney.error.errorMessageRes
 import app.oguzhanozgokce.midmoney.event.Analytics
-import app.oguzhanozgokce.midmoney.feature.market.R
 import app.oguzhanozgokce.midmoney.feature.market.analytics.MarketAnalyticsEvent
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.QuoteUi
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.toUi
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
@@ -16,6 +14,8 @@ import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
 import app.oguzhanozgokce.midmoney.plugin.market.domain.applyFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
+import app.oguzhanozgokce.midmoney.plugin.market.ui.QuoteUi
+import app.oguzhanozgokce.midmoney.plugin.market.ui.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -58,9 +58,9 @@ class MarketViewModel @Inject constructor(
                     loadedQuotes = quotes
                     updateUiState { copy(quotes = displayed(selectedFilter), isLoading = false) }
                 }
-                .onFailure {
+                .onFailure { throwable ->
                     updateUiState {
-                        copy(isLoading = false, errorMessage = UiText.Resource(R.string.market_error_description))
+                        copy(isLoading = false, errorMessage = UiText.Resource(throwable.errorMessageRes()))
                     }
                 }
         }

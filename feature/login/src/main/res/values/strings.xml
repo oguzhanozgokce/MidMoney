@@ -6,5 +6,9 @@
     <string name="login_password_label">Password</string>
     <string name="login_action">Log in</string>
     <string name="login_empty_fields">Enter your email and password</string>
-    <string name="login_error_generic">Login failed. Please try again.</string>
+    <string name="login_error_weak_password">Password must be at least 6 characters.</string>
+    <string name="login_error_invalid_credentials">Incorrect email or password.</string>
+    <string name="login_error_no_account">No account found for this email.</string>
+    <string name="login_error_network">No internet connection. Check your network and try again.</string>
+    <string name="login_error_generic">Something went wrong. Please try again.</string>
 </resources>

@@ -3,4 +3,6 @@
     <string name="watchlist_title">Takip listesi</string>
     <string name="watchlist_empty_title">Takip listen boş</string>
     <string name="watchlist_empty_description">Takip ettiğin hisseler burada görünür.</string>
+    <string name="watchlist_error_title">Takip listen yüklenemedi</string>
+    <string name="watchlist_retry">Tekrar dene</string>
 </resources>

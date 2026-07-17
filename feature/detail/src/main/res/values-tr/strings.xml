@@ -4,7 +4,6 @@
     <string name="detail_save">Kaydet</string>
 
     <string name="detail_error_title">Bir şeyler ters gitti</string>
-    <string name="detail_error_description">Bu hisse yüklenemedi. Lütfen tekrar dene.</string>
     <string name="detail_retry">Tekrar dene</string>
 
     <string name="detail_statistics">İstatistikler</string>

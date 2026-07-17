@@ -6,5 +6,9 @@
     <string name="login_password_label">Şifre</string>
     <string name="login_action">Giriş yap</string>
     <string name="login_empty_fields">E-posta ve şifreni gir</string>
-    <string name="login_error_generic">Giriş başarısız. Lütfen tekrar dene.</string>
+    <string name="login_error_weak_password">Şifre en az 6 karakter olmalı.</string>
+    <string name="login_error_invalid_credentials">E-posta veya şifre hatalı.</string>
+    <string name="login_error_no_account">Bu e-posta ile kayıtlı hesap bulunamadı.</string>
+    <string name="login_error_network">İnternet bağlantısı yok. Bağlantını kontrol edip tekrar dene.</string>
+    <string name="login_error_generic">Bir şeyler ters gitti. Lütfen tekrar dene.</string>
 </resources>

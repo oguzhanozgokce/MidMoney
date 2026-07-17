@@ -9,6 +9,5 @@ interface MarketRepository {
     suspend fun getQuote(symbol: String): Result<Quote>
     suspend fun searchSymbols(query: String): Result<List<SymbolMatch>>
 
-    /** Live last price for [symbol] from the WebSocket stream. */
     fun observePrice(symbol: String): Flow<Double>
 }

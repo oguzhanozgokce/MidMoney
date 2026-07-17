@@ -9,6 +9,7 @@ android {
 
 dependencies {
     implementation(project(":library:common"))
+    implementation(project(":library:error"))
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)

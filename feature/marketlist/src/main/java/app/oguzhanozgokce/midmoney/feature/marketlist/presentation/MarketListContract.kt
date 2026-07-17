@@ -1,9 +1,9 @@
 package app.oguzhanozgokce.midmoney.feature.marketlist.presentation
 
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
-import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.QuoteUi
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
+import app.oguzhanozgokce.midmoney.plugin.market.ui.QuoteUi
 
 data class MarketListUiState(
     val query: String = "",

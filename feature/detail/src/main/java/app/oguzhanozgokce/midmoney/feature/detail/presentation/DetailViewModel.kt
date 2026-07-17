@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.oguzhanozgokce.midmoney.common.extensions.formatPrice
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
+import app.oguzhanozgokce.midmoney.error.errorMessageRes
 import app.oguzhanozgokce.midmoney.event.Analytics
 import app.oguzhanozgokce.midmoney.feature.detail.R
 import app.oguzhanozgokce.midmoney.feature.detail.analytics.DetailAnalyticsEvent
@@ -50,14 +51,23 @@ class DetailViewModel @Inject constructor(
                 .onSuccess { quote ->
                     updateUiState { copy(quote = quote.toDetailUi(), isLoading = false) }
                 }
-                .onFailure {
+                .onFailure { throwable ->
                     updateUiState {
-                        copy(isLoading = false, errorMessage = UiText.Resource(R.string.detail_error_description))
+                        copy(isLoading = false, errorMessage = UiText.Resource(throwable.errorMessageRes()))
                     }
                 }
         }
         observeLivePrice(symbol)
+        observeSaved(symbol)
         loadNews(symbol)
+    }
+
+    private fun observeSaved(symbol: String) {
+        viewModelScope.launch {
+            marketClient.observeFavorite(symbol).collect { saved ->
+                updateUiState { copy(isSaved = saved) }
+            }
+        }
     }
 
     private fun loadNews(symbol: String) {
@@ -93,11 +103,13 @@ class DetailViewModel @Inject constructor(
     }
 
     private fun toggleSave() {
-        val saved = !currentUiState.isSaved
-        updateUiState { copy(isSaved = saved) }
-        analytics.track(DetailAnalyticsEvent.Save(currentUiState.symbol, saved))
-        val messageRes = if (saved) R.string.detail_saved else R.string.detail_unsaved
+        val symbol = currentUiState.symbol
+        if (symbol.isBlank()) return
+        val willSave = !currentUiState.isSaved
+        analytics.track(DetailAnalyticsEvent.Save(symbol, willSave))
+        val messageRes = if (willSave) R.string.detail_saved else R.string.detail_unsaved
         viewModelScope.launch {
+            marketClient.toggleFavorite(symbol)
             emitUiEffect(DetailUiEffect.ShowMessage(UiText.Resource(messageRes)))
         }
     }

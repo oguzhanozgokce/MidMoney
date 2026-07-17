@@ -10,11 +10,13 @@ import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
+import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.FavoritesRepository
 import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.MarketRepository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
@@ -29,7 +31,7 @@ class MarketViewModelTest {
     private val analytics = FakeAnalytics()
 
     private fun viewModel(marketRepository: MarketRepository) = MarketViewModel(
-        marketClient = MarketClient(marketRepository),
+        marketClient = MarketClient(marketRepository, FakeFavoritesRepository()),
         navigator = navigator,
         analytics = analytics,
     )
@@ -107,6 +109,11 @@ private class FakeMarketRepository(
         Result.success(emptyList())
 
     override fun observePrice(symbol: String): Flow<Double> = emptyFlow()
+}
+
+private class FakeFavoritesRepository : FavoritesRepository {
+    override val favoriteSymbols: Flow<Set<String>> = flowOf(emptySet())
+    override suspend fun toggle(symbol: String) = Unit
 }
 
 private class FakeNavigator : Navigator {

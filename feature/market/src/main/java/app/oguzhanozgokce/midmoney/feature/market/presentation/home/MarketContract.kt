@@ -1,8 +1,8 @@
 package app.oguzhanozgokce.midmoney.feature.market.presentation.home
 
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.QuoteUi
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
+import app.oguzhanozgokce.midmoney.plugin.market.ui.QuoteUi
 
 data class MarketUiState(
     val quotes: List<QuoteUi> = emptyList(),

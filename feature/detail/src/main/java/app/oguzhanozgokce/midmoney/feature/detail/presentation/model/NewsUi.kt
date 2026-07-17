@@ -7,22 +7,23 @@ import java.time.format.DateTimeFormatter
 
 data class NewsUi(
     val headline: String,
-    val source: String,
-    val dateText: String,
+    val metaText: String,
     val imageUrl: String,
     val url: String,
 )
 
 private val dateFormatter = DateTimeFormatter.ofPattern("dd MMM")
 
-fun NewsArticle.toUi(): NewsUi = NewsUi(
-    headline = headline,
-    source = source,
-    dateText = if (publishedEpochSeconds > 0) {
+fun NewsArticle.toUi(): NewsUi {
+    val dateText = if (publishedEpochSeconds > 0) {
         Instant.ofEpochSecond(publishedEpochSeconds).atZone(ZoneId.systemDefault()).format(dateFormatter)
     } else {
         ""
-    },
-    imageUrl = imageUrl,
-    url = url,
-)
+    }
+    return NewsUi(
+        headline = headline,
+        metaText = listOf(source, dateText).filter { it.isNotBlank() }.joinToString(" · "),
+        imageUrl = imageUrl,
+        url = url,
+    )
+}

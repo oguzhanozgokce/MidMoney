@@ -8,9 +8,7 @@ import androidx.compose.ui.graphics.Color
 
 // Brand — Midas-style blue.
 val Blue40 = Color(0xFF4959EA)
-val Blue80 = Color(0xFFBAC3FF)
 val OnBlueLight = Color(0xFFFFFFFF)
-val OnBlueDark = Color(0xFF001A72)
 val BlueGrey40 = Color(0xFF565E71)
 val BlueGrey80 = Color(0xFFBEC6DC)
 
@@ -19,10 +17,10 @@ val LightOnBackground = Color(0xFF1A1B20)
 val LightSurfaceVariant = Color(0xFFE2E1EC)
 val LightOnSurfaceVariant = Color(0xFF45464F)
 
-val DarkBackground = Color(0xFF08090C)
+val DarkBackground = Color(0xFF030304)
 val DarkOnBackground = Color(0xFFE3E1E9)
-val DarkSurface = Color(0xFF121317)
-val DarkSurfaceVariant = Color(0xFF1E1F25)
+val DarkSurface = Color(0xFF0C0D10)
+val DarkSurfaceVariant = Color(0xFF17181D)
 val DarkOnSurfaceVariant = Color(0xFF9DA0AC)
 
 val PriceUpLight = Color(0xFF1B8E3D)

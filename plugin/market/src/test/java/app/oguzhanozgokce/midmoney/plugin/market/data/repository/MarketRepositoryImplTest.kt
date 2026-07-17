@@ -2,6 +2,7 @@ package app.oguzhanozgokce.midmoney.plugin.market.data.repository
 
 import app.cash.turbine.test
 import app.oguzhanozgokce.midmoney.common.coroutines.DispatcherProvider
+import app.oguzhanozgokce.midmoney.error.ErrorHandler
 import app.oguzhanozgokce.midmoney.plugin.market.data.remote.FinnhubApi
 import app.oguzhanozgokce.midmoney.plugin.market.data.remote.FinnhubTradeStream
 import app.oguzhanozgokce.midmoney.plugin.market.data.remote.dto.QuoteDto
@@ -30,7 +31,7 @@ class MarketRepositoryImplTest {
     ) = MarketRepositoryImpl(
         api = api,
         tradeStream = FinnhubTradeStream(webSocketClient, json),
-        dispatchers = dispatchers,
+        errorHandler = ErrorHandler(dispatchers, emptySet()),
     )
 
     @Test

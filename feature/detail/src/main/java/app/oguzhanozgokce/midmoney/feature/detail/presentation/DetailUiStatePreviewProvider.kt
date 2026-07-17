@@ -25,15 +25,13 @@ class DetailUiStatePreviewProvider : PreviewParameterProvider<DetailUiState> {
             news = listOf(
                 NewsUi(
                     headline = "Apple unveils new lineup at fall event",
-                    source = "Reuters",
-                    dateText = "12 Jul",
+                    metaText = "Reuters · 12 Jul",
                     imageUrl = "",
                     url = "https://example.com/a",
                 ),
                 NewsUi(
                     headline = "Analysts raise price targets after strong quarter",
-                    source = "Bloomberg",
-                    dateText = "11 Jul",
+                    metaText = "Bloomberg · 11 Jul",
                     imageUrl = "",
                     url = "https://example.com/b",
                 ),

@@ -2,7 +2,7 @@ package app.oguzhanozgokce.midmoney.feature.market.presentation.home
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.QuoteUi
+import app.oguzhanozgokce.midmoney.plugin.market.ui.QuoteUi
 
 class MarketUiStatePreviewProvider : PreviewParameterProvider<MarketUiState> {
     override val values = sequenceOf(

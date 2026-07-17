@@ -1,6 +1,8 @@
 package app.oguzhanozgokce.midmoney.plugin.user.data
 
-import app.oguzhanozgokce.midmoney.common.coroutines.DispatcherProvider
+import app.oguzhanozgokce.midmoney.error.ErrorHandler
+import app.oguzhanozgokce.midmoney.plugin.user.domain.model.AuthError
+import app.oguzhanozgokce.midmoney.plugin.user.domain.model.AuthException
 import app.oguzhanozgokce.midmoney.plugin.user.domain.repository.AuthRepository
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
@@ -12,12 +14,11 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class FirebaseAuthRepository @Inject constructor(
     private val auth: FirebaseAuth,
-    private val dispatchers: DispatcherProvider,
+    private val errorHandler: ErrorHandler,
 ) : AuthRepository {
 
     override val currentUserId: Flow<String?> = callbackFlow {
@@ -39,19 +40,15 @@ class FirebaseAuthRepository @Inject constructor(
     override fun isCurrentlyLoggedIn(): Boolean = auth.currentUser != null
 
     override suspend fun login(email: String, password: String): Result<Unit> =
-        withContext(dispatchers.io) {
-            runCatching {
-                auth.signInWithEmailAndPassword(email, password).await()
-                Unit
-            }.toFriendlyResult()
+        errorHandler.call(transform = ::toAuthException) {
+            auth.signInWithEmailAndPassword(email, password).await()
+            Unit
         }
 
     override suspend fun register(email: String, password: String): Result<Unit> =
-        withContext(dispatchers.io) {
-            runCatching {
-                auth.createUserWithEmailAndPassword(email, password).await()
-                Unit
-            }.toFriendlyResult()
+        errorHandler.call(transform = ::toAuthException) {
+            auth.createUserWithEmailAndPassword(email, password).await()
+            Unit
         }
 
     override fun logout() {
@@ -59,17 +56,13 @@ class FirebaseAuthRepository @Inject constructor(
     }
 }
 
-/** Replaces raw Firebase exceptions with short, user-facing messages. */
-private fun <T> Result<T>.toFriendlyResult(): Result<T> =
-    recoverCatching { throw AuthException(it.toAuthMessage()) }
-
-private fun Throwable.toAuthMessage(): String = when (this) {
-    is FirebaseAuthWeakPasswordException -> "Password must be at least 6 characters."
-    is FirebaseAuthUserCollisionException -> "Incorrect password for this account."
-    is FirebaseAuthInvalidCredentialsException -> "Incorrect email or password."
-    is FirebaseAuthInvalidUserException -> "No account found for this email."
-    is FirebaseNetworkException -> "No internet connection. Check your network and try again."
-    else -> "Something went wrong. Please try again."
-}
-
-private class AuthException(message: String) : Exception(message)
+private fun toAuthException(throwable: Throwable): Throwable = AuthException(
+    when (throwable) {
+        is FirebaseAuthWeakPasswordException -> AuthError.WeakPassword
+        is FirebaseAuthUserCollisionException -> AuthError.InvalidCredentials
+        is FirebaseAuthInvalidCredentialsException -> AuthError.InvalidCredentials
+        is FirebaseAuthInvalidUserException -> AuthError.NoAccount
+        is FirebaseNetworkException -> AuthError.Network
+        else -> AuthError.Unknown
+    },
+)

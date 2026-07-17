@@ -1,5 +1,6 @@
 package app.oguzhanozgokce.midmoney.feature.profile.presentation
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,21 +11,28 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.Language
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material.icons.outlined.QuestionAnswer
+import androidx.compose.material.icons.outlined.ReceiptLong
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,6 +52,16 @@ import app.oguzhanozgokce.midmoney.feature.profile.R
 @Composable
 fun ProfileRoute(viewModel: ProfileViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEffect.collect { effect ->
+            when (effect) {
+                is ProfileUiEffect.ShowMessage -> context.showToast(effect.message.asString(context))
+            }
+        }
+    }
+
     ProfileScreen(uiState = uiState, onAction = viewModel::onAction)
 }
 
@@ -52,62 +70,73 @@ private fun ProfileScreen(
     uiState: ProfileUiState,
     onAction: (ProfileUiAction) -> Unit,
 ) {
-    val context = LocalContext.current
-    val comingSoon = stringResource(R.string.profile_coming_soon)
-    val versionName = remember {
-        runCatching {
-            context.packageManager.getPackageInfo(context.packageName, 0).versionName
-        }.getOrNull().orEmpty()
-    }
+    val groups = remember { profileMenuGroups() }
 
     MidMoneyScaffold { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding),
+                .padding(padding)
+                .verticalScroll(rememberScrollState()),
         ) {
             MidMoneyScreenHeader(title = stringResource(R.string.profile_title))
             UserHeader(email = uiState.email)
-            HorizontalDivider()
 
-            MidMoneyMenuRow(
-                icon = Icons.Outlined.Notifications,
-                title = stringResource(R.string.profile_notifications),
-                onClick = { context.showToast(comingSoon) },
-            )
-            MidMoneyMenuRow(
-                icon = Icons.Outlined.DarkMode,
-                title = stringResource(R.string.profile_appearance),
-                onClick = { context.showToast(comingSoon) },
-            )
-            MidMoneyMenuRow(
-                icon = Icons.AutoMirrored.Outlined.HelpOutline,
-                title = stringResource(R.string.profile_help),
-                onClick = { context.showToast(comingSoon) },
-            )
+            groups.forEachIndexed { groupIndex, group ->
+                Spacer(modifier = Modifier.size(16.dp))
+                val isLastGroup = groupIndex == groups.lastIndex
+                group.forEachIndexed { index, item ->
+                    val showDivider = index < group.lastIndex || isLastGroup
+                    MidMoneyMenuRow(
+                        icon = item.icon,
+                        title = stringResource(item.titleRes),
+                        onClick = { onAction(ProfileUiAction.ComingSoonClicked) },
+                        showDivider = showDivider,
+                    )
+                }
+            }
 
-            Spacer(modifier = Modifier.weight(1f))
-
-            HorizontalDivider()
             MidMoneyMenuRow(
                 icon = Icons.AutoMirrored.Outlined.Logout,
                 title = stringResource(R.string.profile_logout),
                 onClick = { onAction(ProfileUiAction.Logout) },
                 tint = MaterialTheme.colorScheme.error,
                 showChevron = false,
+                showDivider = false,
             )
             Text(
-                text = stringResource(R.string.profile_version, versionName),
+                text = stringResource(R.string.profile_version, uiState.versionName),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp),
+                    .padding(vertical = 16.dp),
             )
         }
     }
 }
+
+private data class MenuItem(
+    val icon: ImageVector,
+    @StringRes val titleRes: Int,
+)
+
+private fun profileMenuGroups(): List<List<MenuItem>> = listOf(
+    listOf(
+        MenuItem(Icons.Outlined.ReceiptLong, R.string.profile_transactions),
+        MenuItem(Icons.Outlined.Notifications, R.string.profile_notifications),
+    ),
+    listOf(
+        MenuItem(Icons.Outlined.DarkMode, R.string.profile_appearance),
+        MenuItem(Icons.Outlined.Language, R.string.profile_language),
+        MenuItem(Icons.Outlined.Lock, R.string.profile_security),
+    ),
+    listOf(
+        MenuItem(Icons.AutoMirrored.Outlined.HelpOutline, R.string.profile_help),
+        MenuItem(Icons.Outlined.QuestionAnswer, R.string.profile_faq),
+    ),
+)
 
 @Composable
 private fun UserHeader(email: String?) {
