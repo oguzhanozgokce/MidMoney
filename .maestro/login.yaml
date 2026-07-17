@@ -1,0 +1,20 @@
+appId: app.oguzhanozgokce.midmoney
+name: Login - sign in with demo account
+---
+- launchApp:
+    clearState: true
+- assertVisible:
+    id: "login.screen"
+- tapOn:
+    id: "login.email"
+- inputText: "oguzhanozgokce@gmail.com"
+- tapOn:
+    id: "login.password"
+- inputText: "1234567"
+- hideKeyboard
+- tapOn:
+    id: "login.submit"
+- extendedWaitUntil:
+    notVisible:
+      id: "login.screen"
+    timeout: 20000

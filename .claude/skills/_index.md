@@ -11,7 +11,7 @@
 | Add a Gradle module (library / plugin / feature) | `creating-a-module` | `best-practices` |
 | Modify build-logic / convention plugins / flavors | `creating-a-module` | — |
 | Build or change a Compose screen | `composing-screens` | `best-practices` |
-| Add test tags for Maestro | `composing-screens` | `best-practices` |
+| Write a Maestro UI flow / add test tags | `writing-maestro-tests` | `composing-screens` |
 | Create an API endpoint / network call | `integrating-network` | `best-practices`, `creating-a-module` |
 | Add error mapping / new failure type | `integrating-network` | `best-practices` |
 | Add an analytics event | `best-practices` | — |
@@ -24,6 +24,7 @@
 | [[creating-a-module]] | `creating-a-module/` | Module type choice, Gradle wiring, convention plugins, dependency rules, order |
 | [[composing-screens]] | `composing-screens/` | Route/Screen split, design system reuse, UiText, test tags, previews |
 | [[integrating-network]] | `integrating-network/` | Retrofit API, DTO, mappers, repository via ErrorHandler, DI, ErrorMapper |
+| [[writing-maestro-tests]] | `writing-maestro-tests/` | Test-tag convention, testTagsAsResourceId hook, Maestro flow structure, id selectors |
 
 ## Module Map
 

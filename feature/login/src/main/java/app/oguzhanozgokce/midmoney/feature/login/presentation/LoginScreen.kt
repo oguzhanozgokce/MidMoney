@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -67,6 +68,7 @@ private fun LoginScreen(
     MidMoneyScaffold { padding ->
         Column(
             modifier = Modifier
+                .testTag(LoginTestTags.SCREEN)
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
@@ -79,6 +81,7 @@ private fun LoginScreen(
                 painter = painterResource(DesignR.drawable.midmoney_logo),
                 contentDescription = null,
                 modifier = Modifier
+                    .testTag(LoginTestTags.LOGO)
                     .size(88.dp)
                     .clip(RoundedCornerShape(22.dp)),
             )
@@ -89,12 +92,14 @@ private fun LoginScreen(
                 fontFamily = DisplayFontFamily,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier.testTag(LoginTestTags.TITLE),
             )
             Spacer(Modifier.height(8.dp))
             Text(
                 text = stringResource(R.string.login_subtitle),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.testTag(LoginTestTags.SUBTITLE),
             )
             Spacer(Modifier.height(40.dp))
             MidMoneyTextField(
@@ -103,7 +108,9 @@ private fun LoginScreen(
                 label = stringResource(R.string.login_email_label),
                 placeholder = stringResource(R.string.login_email_placeholder),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag(LoginTestTags.EMAIL),
             )
             Spacer(Modifier.height(12.dp))
             MidMoneyTextField(
@@ -112,7 +119,9 @@ private fun LoginScreen(
                 label = stringResource(R.string.login_password_label),
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag(LoginTestTags.PASSWORD),
             )
             Spacer(Modifier.height(28.dp))
             MidMoneyButton(
@@ -120,7 +129,9 @@ private fun LoginScreen(
                 onClick = { onAction(LoginUiAction.LoginClicked) },
                 size = MidMoneyButtonSize.Large,
                 loading = uiState.isLoading,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag(LoginTestTags.SUBMIT),
             )
         }
     }
