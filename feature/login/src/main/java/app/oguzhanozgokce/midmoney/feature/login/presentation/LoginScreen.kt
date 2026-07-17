@@ -15,13 +15,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,6 +33,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import app.oguzhanozgokce.midmoney.common.extensions.showToast
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonSize
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScaffold
@@ -48,33 +46,25 @@ import app.oguzhanozgokce.midmoney.designsystem.R as DesignR
 @Composable
 fun LoginRoute(viewModel: LoginViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.uiEffect.collect { effect ->
             when (effect) {
-                is LoginUiEffect.ShowMessage -> snackbarHostState.showSnackbar(effect.text.asString(context))
+                is LoginUiEffect.ShowMessage -> context.showToast(effect.text.asString(context))
             }
         }
     }
 
-    LoginScreen(
-        uiState = uiState,
-        onAction = viewModel::onAction,
-        snackbarHostState = snackbarHostState,
-    )
+    LoginScreen(uiState = uiState, onAction = viewModel::onAction)
 }
 
 @Composable
 private fun LoginScreen(
     uiState: LoginUiState,
     onAction: (LoginUiAction) -> Unit,
-    snackbarHostState: SnackbarHostState,
 ) {
-    MidMoneyScaffold(
-        snackbarHost = { SnackbarHost(snackbarHostState) },
-    ) { padding ->
+    MidMoneyScaffold { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -142,10 +132,6 @@ private fun LoginScreenPreview(
     @PreviewParameter(LoginUiStatePreviewProvider::class) state: LoginUiState,
 ) {
     MidMoneyTheme {
-        LoginScreen(
-            uiState = state,
-            onAction = {},
-            snackbarHostState = remember { SnackbarHostState() },
-        )
+        LoginScreen(uiState = state, onAction = {})
     }
 }
