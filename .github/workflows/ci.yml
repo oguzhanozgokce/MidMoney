@@ -10,10 +10,15 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Lint, test & build
     runs-on: ubuntu-latest
+    env:
+      FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,5 +38,12 @@ jobs:
       - name: Unit tests
         run: ./gradlew test --stacktrace
 
-      - name: Assemble debug APK
-        run: ./gradlew assembleDebug --stacktrace
+      - name: Assemble prod debug APK
+        run: ./gradlew :app:assembleProdDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-prod-debug
+          path: app/build/outputs/apk/prod/debug/*.apk
+          if-no-files-found: error
