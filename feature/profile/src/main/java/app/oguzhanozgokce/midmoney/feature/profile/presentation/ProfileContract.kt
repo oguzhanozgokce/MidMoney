@@ -5,6 +5,7 @@ import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 data class ProfileUiState(
     val email: String? = null,
     val versionName: String = "",
+    val environmentLabel: String? = null,
 )
 
 sealed interface ProfileUiAction {

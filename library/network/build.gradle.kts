@@ -17,7 +17,6 @@ android {
     namespace = "app.oguzhanozgokce.midmoney.network"
 
     defaultConfig {
-        buildConfigField("String", "FINNHUB_BASE_URL", "\"https://finnhub.io/api/v1/\"")
         buildConfigField("String", "FINNHUB_API_KEY", "\"$finnhubApiKey\"")
     }
 }
@@ -25,6 +24,7 @@ android {
 dependencies {
     implementation(project(":library:logger"))
     implementation(project(":library:error"))
+    implementation(project(":library:common"))
 
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlinx.serialization.converter)

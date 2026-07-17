@@ -28,7 +28,10 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
                 buildFeatures {
                     buildConfig = true
+                    resValues = true
                 }
+
+                configureFlavors(this)
             }
 
             tasks.withType(KotlinJvmCompile::class.java).configureEach {

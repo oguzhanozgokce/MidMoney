@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">MidMoney</string>
     <string name="nav_home">Home</string>
     <string name="nav_watchlist">Watchlist</string>
     <string name="nav_profile">Profile</string>

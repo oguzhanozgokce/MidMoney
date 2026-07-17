@@ -1,5 +1,6 @@
 package app.oguzhanozgokce.midmoney.network.di
 
+import app.oguzhanozgokce.midmoney.common.config.AppConfig
 import app.oguzhanozgokce.midmoney.logger.MidMoneyLogger
 import app.oguzhanozgokce.midmoney.network.BuildConfig
 import app.oguzhanozgokce.midmoney.network.interceptor.ApiKeyInterceptor
@@ -44,8 +45,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(json: Json, client: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl(BuildConfig.FINNHUB_BASE_URL)
+    fun provideRetrofit(json: Json, client: OkHttpClient, appConfig: AppConfig): Retrofit = Retrofit.Builder()
+        .baseUrl(appConfig.baseUrl)
         .client(client)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
