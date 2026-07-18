@@ -8,6 +8,8 @@ class FirebaseAnalyticsTracker @Inject constructor(
     private val firebaseAnalytics: FirebaseAnalytics,
 ) : AnalyticsTracker {
 
+    override val supplier: EventSupplier = EventSupplier.Firebase
+
     override fun track(event: AnalyticsEvent) {
         firebaseAnalytics.logEvent(event.name, event.params.toBundle())
     }

@@ -3,14 +3,22 @@ package app.oguzhanozgokce.midmoney.event
 import javax.inject.Inject
 
 class CompositeAnalytics @Inject constructor(
-    private val trackers: Set<@JvmSuppressWildcards AnalyticsTracker>,
+    trackers: Set<@JvmSuppressWildcards AnalyticsTracker>,
 ) : Analytics {
 
-    override fun track(event: AnalyticsEvent) {
-        trackers.forEach { it.track(event) }
+    private val trackersBySupplier: Map<EventSupplier, AnalyticsTracker> =
+        trackers.associateBy { it.supplier }
+
+    override fun track(event: AnalyticsEvent, vararg suppliers: EventSupplier) {
+        val targets = if (suppliers.isEmpty()) DEFAULT_SUPPLIERS else suppliers.asList()
+        targets.forEach { supplier -> trackersBySupplier[supplier]?.track(event) }
     }
 
     override fun setUserId(id: String?) {
-        trackers.forEach { it.setUserId(id) }
+        trackersBySupplier.values.forEach { it.setUserId(id) }
+    }
+
+    private companion object {
+        val DEFAULT_SUPPLIERS = listOf(EventSupplier.Firebase)
     }
 }

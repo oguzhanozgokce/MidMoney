@@ -83,9 +83,11 @@ object LoginTestTags {
 - Events implement `AnalyticsEvent` in `feature/<name>/analytics/`. Track via injected `Analytics`.
 - Event names and param keys are `private const val`, not inline string literals.
 - The same rule applies to any repeated magic string (categories, keys, tags).
-- `Analytics` is a composite that fans out to every `AnalyticsTracker` (Firebase, Logcat, …).
-  Add a backend (Superset, Amplitude, …) with one `AnalyticsTracker` + `@Binds @IntoSet` — no
-  caller changes. Same multibinding pattern as `ErrorMapper`.
+- `Analytics.track(event, vararg suppliers)` routes per call: `track(event, EventSupplier.Firebase)`
+  hits only Firebase; omitting suppliers defaults to Firebase. Each backend is an `AnalyticsTracker`
+  that declares its `EventSupplier` and is registered with `@Binds @IntoSet`; `CompositeAnalytics`
+  dispatches by supplier. Add Superset/Amplitude with one tracker + a new `EventSupplier` — no
+  caller changes.
 
 ## Design system
 

@@ -2,6 +2,7 @@ package app.oguzhanozgokce.midmoney.feature.market.presentation
 
 import app.oguzhanozgokce.midmoney.event.Analytics
 import app.oguzhanozgokce.midmoney.event.AnalyticsEvent
+import app.oguzhanozgokce.midmoney.event.EventSupplier
 import app.oguzhanozgokce.midmoney.feature.market.analytics.MarketAnalyticsEvent
 import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.NavigationCommand
@@ -136,7 +137,7 @@ private class FakeNavigator : Navigator {
 private class FakeAnalytics : Analytics {
     val trackedEvents: MutableList<AnalyticsEvent> = mutableListOf()
 
-    override fun track(event: AnalyticsEvent) {
+    override fun track(event: AnalyticsEvent, vararg suppliers: EventSupplier) {
         trackedEvents += event
     }
 
