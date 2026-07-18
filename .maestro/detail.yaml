@@ -1,0 +1,32 @@
+appId: app.oguzhanozgokce.midmoney
+name: Detail - open a quote, buy/sell, save and go back
+---
+- runFlow: login.yaml
+- extendedWaitUntil:
+    visible:
+      id: "market.quote.AAPL"
+    timeout: 20000
+- tapOn:
+    id: "market.quote.AAPL"
+- assertVisible:
+    id: "detail.screen"
+- extendedWaitUntil:
+    visible:
+      id: "detail.price"
+    timeout: 20000
+- tapOn:
+    id: "detail.buy"
+- assertVisible:
+    id: "detail.screen"
+- tapOn:
+    id: "detail.sell"
+- assertVisible:
+    id: "detail.screen"
+- tapOn:
+    id: "detail.save"
+- tapOn:
+    id: "detail.save"
+- tapOn:
+    id: "detail.back"
+- assertVisible:
+    id: "market.screen"

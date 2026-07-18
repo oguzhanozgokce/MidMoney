@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -92,6 +93,7 @@ private fun DetailScreen(
     ) { padding ->
         Box(
             modifier = Modifier
+                .testTag(DetailTestTags.SCREEN)
                 .fillMaxSize()
                 .padding(padding),
         ) {
@@ -141,7 +143,10 @@ private fun DetailTopBar(
             }
         },
         navigationIcon = {
-            IconButton(onClick = { onAction(DetailUiAction.BackClicked) }) {
+            IconButton(
+                onClick = { onAction(DetailUiAction.BackClicked) },
+                modifier = Modifier.testTag(DetailTestTags.BACK),
+            ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.detail_back),
@@ -149,7 +154,10 @@ private fun DetailTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { onAction(DetailUiAction.ToggleSave) }) {
+            IconButton(
+                onClick = { onAction(DetailUiAction.ToggleSave) },
+                modifier = Modifier.testTag(DetailTestTags.SAVE),
+            ) {
                 Icon(
                     imageVector = if (uiState.isSaved) Icons.Filled.Bookmark else Icons.Outlined.BookmarkBorder,
                     contentDescription = stringResource(R.string.detail_save),
@@ -210,7 +218,9 @@ private fun Header(uiState: DetailUiState, quote: QuoteDetailUi) {
             style = MaterialTheme.typography.displaySmall,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(top = 8.dp),
+            modifier = Modifier
+                .testTag(DetailTestTags.PRICE)
+                .padding(top = 8.dp),
         )
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
@@ -283,13 +293,17 @@ private fun DetailActions(onAction: (DetailUiAction) -> Unit) {
             text = stringResource(R.string.detail_sell),
             onClick = { onAction(DetailUiAction.SellClicked) },
             size = MidMoneyButtonSize.Large,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .testTag(DetailTestTags.SELL),
         )
         MidMoneyButton(
             text = stringResource(R.string.detail_buy),
             onClick = { onAction(DetailUiAction.BuyClicked) },
             size = MidMoneyButtonSize.Large,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .testTag(DetailTestTags.BUY),
         )
     }
 }
