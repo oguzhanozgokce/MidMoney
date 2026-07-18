@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
@@ -27,6 +28,7 @@ fun MidMoneyFilterChips(
     selectedIndex: Int,
     onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    optionTestTags: List<String> = emptyList(),
 ) {
     Row(
         modifier = modifier
@@ -48,6 +50,7 @@ fun MidMoneyFilterChips(
                     selectedContainerColor = MaterialTheme.colorScheme.primary,
                     selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
                 ),
+                modifier = optionTestTags.getOrNull(index)?.let { Modifier.testTag(it) } ?: Modifier,
             )
         }
     }

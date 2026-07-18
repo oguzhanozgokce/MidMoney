@@ -1,0 +1,13 @@
+appId: app.oguzhanozgokce.midmoney
+name: Market - open see all and go back
+---
+- runFlow: login.yaml
+- assertVisible:
+    id: "market.screen"
+- tapOn:
+    id: "market.see_all"
+- assertVisible:
+    id: "marketlist.screen"
+- back
+- assertVisible:
+    id: "market.screen"

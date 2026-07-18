@@ -1,0 +1,22 @@
+appId: app.oguzhanozgokce.midmoney
+name: Market - loads quotes and switches filters
+---
+- runFlow: login.yaml
+- assertVisible:
+    id: "market.screen"
+- extendedWaitUntil:
+    visible:
+      id: "market.quote.AAPL"
+    timeout: 20000
+- tapOn:
+    id: "market.filter.gainers"
+- assertVisible:
+    id: "market.screen"
+- tapOn:
+    id: "market.filter.losers"
+- assertVisible:
+    id: "market.screen"
+- tapOn:
+    id: "market.filter.popular"
+- assertVisible:
+    id: "market.quote.AAPL"

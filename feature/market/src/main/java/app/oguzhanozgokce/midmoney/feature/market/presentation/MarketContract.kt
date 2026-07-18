@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation.home
+package app.oguzhanozgokce.midmoney.feature.market.presentation
 
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter

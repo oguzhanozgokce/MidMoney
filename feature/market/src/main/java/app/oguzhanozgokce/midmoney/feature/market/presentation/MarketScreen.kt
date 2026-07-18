@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation.home
+package app.oguzhanozgokce.midmoney.feature.market.presentation
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -64,6 +65,7 @@ private fun MarketScreen(
     MidMoneyScaffold { padding ->
         Column(
             modifier = Modifier
+                .testTag(MarketTestTags.SCREEN)
                 .fillMaxSize()
                 .padding(padding),
         ) {
@@ -76,7 +78,9 @@ private fun MarketScreen(
                     HomeBannerPager(
                         banners = HomeBannerUi.defaults,
                         onActionClick = { onOpenWatchlist() },
-                        modifier = Modifier.padding(vertical = 8.dp),
+                        modifier = Modifier
+                            .testTag(MarketTestTags.BANNER)
+                            .padding(vertical = 8.dp),
                     )
                 }
                 item {
@@ -90,6 +94,7 @@ private fun MarketScreen(
                         options = MarketFilter.entries.map { stringResource(it.labelRes()) },
                         selectedIndex = uiState.selectedFilter.ordinal,
                         onSelect = { onAction(MarketUiAction.SelectFilter(MarketFilter.entries[it])) },
+                        optionTestTags = MarketFilter.entries.map { MarketTestTags.filter(it) },
                     )
                 }
 
@@ -97,6 +102,7 @@ private fun MarketScreen(
                     uiState.isLoading -> item {
                         Box(
                             modifier = Modifier
+                                .testTag(MarketTestTags.LOADING)
                                 .fillMaxWidth()
                                 .height(240.dp),
                         ) {
@@ -119,6 +125,7 @@ private fun MarketScreen(
                             changeText = quote.changePercentText,
                             isPositive = quote.isPositive,
                             onClick = { onAction(MarketUiAction.OpenDetail(quote.symbol)) },
+                            modifier = Modifier.testTag(MarketTestTags.quote(quote.symbol)),
                         )
                     }
                 }
@@ -142,7 +149,7 @@ private fun SectionHeader(title: String, onSeeAll: () -> Unit) {
             color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.weight(1f),
         )
-        TextButton(onClick = onSeeAll) {
+        TextButton(onClick = onSeeAll, modifier = Modifier.testTag(MarketTestTags.SEE_ALL)) {
             Text(text = stringResource(R.string.market_see_all))
         }
     }
@@ -174,6 +181,7 @@ private fun ErrorContent(errorText: UiText, onRetry: () -> Unit) {
             text = stringResource(R.string.market_retry),
             onClick = onRetry,
             style = MidMoneyButtonStyle.Outlined,
+            modifier = Modifier.testTag(MarketTestTags.RETRY),
         )
     }
 }

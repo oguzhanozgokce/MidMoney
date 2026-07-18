@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -64,6 +65,7 @@ private fun MarketListScreen(
     ) { padding ->
         Column(
             modifier = Modifier
+                .testTag(MarketListTestTags.SCREEN)
                 .fillMaxSize()
                 .padding(padding)
                 .imePadding(),
@@ -74,6 +76,7 @@ private fun MarketListScreen(
                 onQueryChange = { onAction(MarketListUiAction.QueryChanged(it)) },
                 placeholder = stringResource(R.string.markets_search_hint),
                 modifier = Modifier
+                    .testTag(MarketListTestTags.SEARCH)
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
             )

@@ -26,19 +26,19 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import app.oguzhanozgokce.midmoney.R
-import app.oguzhanozgokce.midmoney.feature.market.presentation.home.MarketRoute
+import app.oguzhanozgokce.midmoney.feature.market.presentation.MarketRoute
 import app.oguzhanozgokce.midmoney.feature.profile.presentation.ProfileRoute
 import app.oguzhanozgokce.midmoney.feature.watchlist.presentation.WatchlistRoute
 
-private enum class HomeTab(@StringRes val labelRes: Int, val icon: ImageVector) {
-    Market(R.string.nav_home, Icons.AutoMirrored.Outlined.ShowChart),
+private enum class MainTab(@StringRes val labelRes: Int, val icon: ImageVector) {
+    Market(R.string.nav_market, Icons.AutoMirrored.Outlined.ShowChart),
     Watchlist(R.string.nav_watchlist, Icons.Outlined.Star),
     Profile(R.string.nav_profile, Icons.Outlined.Person),
 }
 
 @Composable
 fun MidMoneyBottomNav() {
-    var selectedTab by rememberSaveable { mutableStateOf(HomeTab.Market) }
+    var selectedTab by rememberSaveable { mutableStateOf(MainTab.Market) }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -47,7 +47,7 @@ fun MidMoneyBottomNav() {
                 containerColor = MaterialTheme.colorScheme.background,
                 tonalElevation = 0.dp,
             ) {
-                HomeTab.entries.forEach { tab ->
+                MainTab.entries.forEach { tab ->
                     val label = stringResource(tab.labelRes)
                     NavigationBarItem(
                         selected = selectedTab == tab,
@@ -73,9 +73,9 @@ fun MidMoneyBottomNav() {
                 .consumeWindowInsets(innerPadding),
         ) {
             when (selectedTab) {
-                HomeTab.Market -> MarketRoute(onOpenWatchlist = { selectedTab = HomeTab.Watchlist })
-                HomeTab.Watchlist -> WatchlistRoute()
-                HomeTab.Profile -> ProfileRoute()
+                MainTab.Market -> MarketRoute(onOpenWatchlist = { selectedTab = MainTab.Watchlist })
+                MainTab.Watchlist -> WatchlistRoute()
+                MainTab.Profile -> ProfileRoute()
             }
         }
     }

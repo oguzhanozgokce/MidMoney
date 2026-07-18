@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation.home
+package app.oguzhanozgokce.midmoney.feature.market.presentation
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText

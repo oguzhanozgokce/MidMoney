@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.feature.market.presentation.home
+package app.oguzhanozgokce.midmoney.feature.market.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
