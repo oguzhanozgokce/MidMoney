@@ -66,6 +66,33 @@ class MarketViewModelTest {
     }
 
     @Test
+    fun `tracks the viewed event on init`() = runTest {
+        viewModel(FakeMarketRepository())
+
+        assertThat(analytics.trackedEvents).contains(MarketAnalyticsEvent.Viewed)
+    }
+
+    @Test
+    fun `selecting a filter tracks the filter event`() = runTest {
+        val viewModel = viewModel(FakeMarketRepository())
+
+        viewModel.onAction(MarketUiAction.SelectFilter(MarketFilter.Gainers))
+
+        assertThat(analytics.trackedEvents)
+            .contains(MarketAnalyticsEvent.FilterSelected(MarketFilter.Gainers.name))
+    }
+
+    @Test
+    fun `open all navigates to the list and tracks see all`() = runTest {
+        val viewModel = viewModel(FakeMarketRepository())
+
+        viewModel.onAction(MarketUiAction.OpenAll)
+
+        assertThat(navigator.commandsLog).contains(NavigationCommand.Navigate(Destination.MarketList))
+        assertThat(analytics.trackedEvents).contains(MarketAnalyticsEvent.SeeAllClicked)
+    }
+
+    @Test
     fun `gainers filter sorts quotes by daily change descending`() = runTest {
         val viewModel = viewModel(
             FakeMarketRepository(
