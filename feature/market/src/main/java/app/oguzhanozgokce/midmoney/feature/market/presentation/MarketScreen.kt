@@ -37,7 +37,8 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyScreenHeader
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 import app.oguzhanozgokce.midmoney.feature.market.R
-import app.oguzhanozgokce.midmoney.feature.market.presentation.component.HomeBannerPager
+import app.oguzhanozgokce.midmoney.feature.market.presentation.component.MarketBannerPager
+import app.oguzhanozgokce.midmoney.feature.market.presentation.model.MarketBannerAction
 import app.oguzhanozgokce.midmoney.feature.market.presentation.model.MarketBannerUi
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 
@@ -75,9 +76,14 @@ private fun MarketScreen(
                 contentPadding = PaddingValues(bottom = 16.dp),
             ) {
                 item {
-                    HomeBannerPager(
+                    MarketBannerPager(
                         banners = MarketBannerUi.defaults,
-                        onActionClick = { onOpenWatchlist() },
+                        onActionClick = { banner ->
+                            when (banner.action) {
+                                MarketBannerAction.OpenMarketList -> onAction(MarketUiAction.OpenAll)
+                                MarketBannerAction.OpenWatchlist -> onOpenWatchlist()
+                            }
+                        },
                         modifier = Modifier
                             .testTag(MarketTestTags.BANNER)
                             .padding(vertical = 8.dp),

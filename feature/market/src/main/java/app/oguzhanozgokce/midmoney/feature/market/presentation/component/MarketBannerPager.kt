@@ -36,7 +36,7 @@ import kotlin.time.Duration.Companion.milliseconds
 private const val AUTO_SCROLL_DELAY_MS = 4000L
 
 @Composable
-fun HomeBannerPager(
+fun MarketBannerPager(
     banners: List<MarketBannerUi>,
     onActionClick: (MarketBannerUi) -> Unit,
     modifier: Modifier = Modifier,
