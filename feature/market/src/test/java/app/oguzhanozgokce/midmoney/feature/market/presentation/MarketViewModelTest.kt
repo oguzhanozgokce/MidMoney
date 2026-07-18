@@ -13,6 +13,7 @@ import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
 import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.FavoritesRepository
 import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.MarketRepository
+import app.oguzhanozgokce.midmoney.remoteconfig.RemoteConfig
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -35,6 +36,7 @@ class MarketViewModelTest {
         marketClient = MarketClient(marketRepository, FakeFavoritesRepository()),
         navigator = navigator,
         analytics = analytics,
+        remoteConfig = FakeRemoteConfig(),
     )
 
     @Test
@@ -142,6 +144,12 @@ private class FakeMarketRepository(
 private class FakeFavoritesRepository : FavoritesRepository {
     override val favoriteSymbols: Flow<Set<String>> = flowOf(emptySet())
     override suspend fun toggle(symbol: String) = Unit
+}
+
+private class FakeRemoteConfig : RemoteConfig {
+    override suspend fun activate() = Unit
+    override fun getBoolean(key: String, default: Boolean): Boolean = default
+    override fun getString(key: String, default: String): String = default
 }
 
 private class FakeNavigator : Navigator {

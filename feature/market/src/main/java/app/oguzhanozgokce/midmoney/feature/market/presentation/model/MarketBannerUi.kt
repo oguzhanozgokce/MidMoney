@@ -19,6 +19,7 @@ data class MarketBannerUi(
     @StringRes val subtitleRes: Int,
     @StringRes val actionTextRes: Int,
     val action: MarketBannerAction,
+    val remoteConfigKey: String,
 ) {
     companion object {
         val defaults: List<MarketBannerUi> = listOf(
@@ -28,6 +29,7 @@ data class MarketBannerUi(
                 subtitleRes = R.string.banner_markets_subtitle,
                 actionTextRes = R.string.banner_markets_action,
                 action = MarketBannerAction.OpenMarketList,
+                remoteConfigKey = "banner_markets_enabled",
             ),
             MarketBannerUi(
                 icon = Icons.Outlined.Star,
@@ -35,6 +37,7 @@ data class MarketBannerUi(
                 subtitleRes = R.string.banner_watchlist_subtitle,
                 actionTextRes = R.string.banner_watchlist_action,
                 action = MarketBannerAction.OpenWatchlist,
+                remoteConfigKey = "banner_watchlist_enabled",
             ),
             MarketBannerUi(
                 icon = Icons.Outlined.Notifications,
@@ -42,6 +45,7 @@ data class MarketBannerUi(
                 subtitleRes = R.string.banner_updates_subtitle,
                 actionTextRes = R.string.banner_updates_action,
                 action = MarketBannerAction.OpenMarketList,
+                remoteConfigKey = "banner_updates_enabled",
             ),
         )
     }

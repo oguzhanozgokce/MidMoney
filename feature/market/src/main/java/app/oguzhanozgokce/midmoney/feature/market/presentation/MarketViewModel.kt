@@ -7,6 +7,7 @@ import app.oguzhanozgokce.midmoney.error.errorMessageRes
 import app.oguzhanozgokce.midmoney.event.Analytics
 import app.oguzhanozgokce.midmoney.event.EventSupplier
 import app.oguzhanozgokce.midmoney.feature.market.analytics.MarketAnalyticsEvent
+import app.oguzhanozgokce.midmoney.feature.market.presentation.model.MarketBannerUi
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
@@ -17,6 +18,7 @@ import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 import app.oguzhanozgokce.midmoney.plugin.market.ui.QuoteUi
 import app.oguzhanozgokce.midmoney.plugin.market.ui.toUi
+import app.oguzhanozgokce.midmoney.remoteconfig.RemoteConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +28,7 @@ class MarketViewModel @Inject constructor(
     private val marketClient: MarketClient,
     private val navigator: Navigator,
     private val analytics: Analytics,
+    private val remoteConfig: RemoteConfig,
 ) : ViewModel(),
     MVI<MarketUiState, MarketUiAction, MarketUiEffect> by mvi(MarketUiState()) {
 
@@ -33,8 +36,20 @@ class MarketViewModel @Inject constructor(
 
     init {
         analytics.track(MarketAnalyticsEvent.Viewed, EventSupplier.All)
+        updateUiState { copy(banners = visibleBanners()) }
+        refreshBanners()
         loadQuotes()
     }
+
+    private fun refreshBanners() {
+        viewModelScope.launch {
+            remoteConfig.activate()
+            updateUiState { copy(banners = visibleBanners()) }
+        }
+    }
+
+    private fun visibleBanners(): List<MarketBannerUi> =
+        MarketBannerUi.defaults.filter { remoteConfig.getBoolean(it.remoteConfigKey, default = true) }
 
     override fun onAction(uiAction: MarketUiAction) {
         when (uiAction) {

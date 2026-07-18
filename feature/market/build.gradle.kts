@@ -9,4 +9,5 @@ android {
 dependencies {
     implementation(project(":plugin:market"))
     implementation(project(":library:error"))
+    implementation(project(":library:remoteconfig"))
 }

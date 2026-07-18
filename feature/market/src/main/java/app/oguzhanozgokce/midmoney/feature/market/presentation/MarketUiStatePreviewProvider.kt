@@ -2,12 +2,14 @@ package app.oguzhanozgokce.midmoney.feature.market.presentation
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
+import app.oguzhanozgokce.midmoney.feature.market.presentation.model.MarketBannerUi
 import app.oguzhanozgokce.midmoney.plugin.market.ui.QuoteUi
 
 class MarketUiStatePreviewProvider : PreviewParameterProvider<MarketUiState> {
     override val values = sequenceOf(
-        MarketUiState(isLoading = true),
+        MarketUiState(isLoading = true, banners = MarketBannerUi.defaults),
         MarketUiState(
+            banners = MarketBannerUi.defaults,
             quotes = listOf(
                 QuoteUi(
                     symbol = "AAPL",
