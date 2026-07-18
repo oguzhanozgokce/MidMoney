@@ -42,11 +42,12 @@ class ProfileViewModel @Inject constructor(
     override fun onAction(uiAction: ProfileUiAction) {
         when (uiAction) {
             ProfileUiAction.Logout -> logout()
-            ProfileUiAction.ComingSoonClicked -> showComingSoon()
+            is ProfileUiAction.ComingSoonClicked -> showComingSoon(uiAction.item)
         }
     }
 
-    private fun showComingSoon() {
+    private fun showComingSoon(item: String) {
+        analytics.track(ProfileAnalyticsEvent.MenuClicked(item), EventSupplier.All)
         viewModelScope.launch {
             emitUiEffect(ProfileUiEffect.ShowMessage(UiText.Resource(R.string.profile_coming_soon)))
         }

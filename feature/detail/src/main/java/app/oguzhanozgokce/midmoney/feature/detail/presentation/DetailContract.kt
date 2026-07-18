@@ -23,8 +23,10 @@ sealed interface DetailUiAction {
     data object BuyClicked : DetailUiAction
     data object SellClicked : DetailUiAction
     data object ToggleSave : DetailUiAction
+    data class NewsClicked(val url: String) : DetailUiAction
 }
 
 sealed interface DetailUiEffect {
     data class ShowMessage(val text: UiText) : DetailUiEffect
+    data class OpenUrl(val url: String) : DetailUiEffect
 }

@@ -10,7 +10,7 @@ data class ProfileUiState(
 
 sealed interface ProfileUiAction {
     data object Logout : ProfileUiAction
-    data object ComingSoonClicked : ProfileUiAction
+    data class ComingSoonClicked(val item: String) : ProfileUiAction
 }
 
 sealed interface ProfileUiEffect {

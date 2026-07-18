@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.error.errorMessageRes
+import app.oguzhanozgokce.midmoney.event.Analytics
+import app.oguzhanozgokce.midmoney.event.EventSupplier
+import app.oguzhanozgokce.midmoney.feature.marketlist.analytics.MarketListAnalyticsEvent
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
@@ -27,6 +30,7 @@ private const val SEARCH_DEBOUNCE_MS = 350L
 class MarketListViewModel @Inject constructor(
     private val marketClient: MarketClient,
     private val navigator: Navigator,
+    private val analytics: Analytics,
 ) : ViewModel(),
     MVI<MarketListUiState, MarketListUiAction, MarketListUiEffect> by mvi(MarketListUiState()) {
 
@@ -34,13 +38,18 @@ class MarketListViewModel @Inject constructor(
     private var searchJob: Job? = null
 
     init {
+        analytics.track(MarketListAnalyticsEvent.Viewed, EventSupplier.All)
         loadQuotes()
     }
 
     override fun onAction(uiAction: MarketListUiAction) {
         when (uiAction) {
-            is MarketListUiAction.OpenDetail -> navigator.navigate(Destination.Detail(uiAction.symbol))
+            is MarketListUiAction.OpenDetail -> {
+                analytics.track(MarketListAnalyticsEvent.OpenDetail(uiAction.symbol), EventSupplier.All)
+                navigator.navigate(Destination.Detail(uiAction.symbol))
+            }
             is MarketListUiAction.SelectFilter -> {
+                analytics.track(MarketListAnalyticsEvent.FilterSelected(uiAction.filter.name), EventSupplier.All)
                 updateUiState { copy(selectedFilter = uiAction.filter, quotes = displayed(uiAction.filter)) }
             }
             is MarketListUiAction.QueryChanged -> onQueryChanged(uiAction.query)
@@ -58,6 +67,7 @@ class MarketListViewModel @Inject constructor(
         }
         searchJob = viewModelScope.launch {
             delay(SEARCH_DEBOUNCE_MS.milliseconds)
+            analytics.track(MarketListAnalyticsEvent.Searched(query), EventSupplier.All)
             updateUiState { copy(isSearching = true) }
             marketClient.search(query)
                 .onSuccess { matches -> updateUiState { copy(results = matches, isSearching = false) } }

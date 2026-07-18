@@ -31,7 +31,6 @@ class MainViewModel @Inject constructor(
         updateUiState { copy(startDestination = startDestination) }
     }
 
-    // Keep the analytics user id in sync with the auth state (set on login/session, cleared on logout).
     private fun syncAnalyticsUserId() {
         viewModelScope.launch {
             userClient.currentUserId.collect { userId -> analytics.setUserId(userId) }

@@ -34,7 +34,10 @@ class WatchlistViewModel @Inject constructor(
 
     override fun onAction(uiAction: WatchlistUiAction) {
         when (uiAction) {
-            is WatchlistUiAction.OpenDetail -> navigator.navigate(Destination.Detail(uiAction.symbol))
+            is WatchlistUiAction.OpenDetail -> {
+                analytics.track(WatchlistAnalyticsEvent.OpenDetail(uiAction.symbol), EventSupplier.All)
+                navigator.navigate(Destination.Detail(uiAction.symbol))
+            }
             WatchlistUiAction.Retry -> fetchQuotes()
         }
     }

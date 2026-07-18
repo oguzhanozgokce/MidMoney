@@ -32,6 +32,7 @@ class MarketViewModel @Inject constructor(
     private var loadedQuotes: List<Quote> = emptyList()
 
     init {
+        analytics.track(MarketAnalyticsEvent.Viewed, EventSupplier.All)
         loadQuotes()
     }
 
@@ -42,11 +43,15 @@ class MarketViewModel @Inject constructor(
                 navigator.navigate(Destination.Detail(uiAction.symbol))
             }
             is MarketUiAction.SelectFilter -> {
+                analytics.track(MarketAnalyticsEvent.FilterSelected(uiAction.filter.name), EventSupplier.All)
                 updateUiState {
                     copy(selectedFilter = uiAction.filter, quotes = displayed(uiAction.filter))
                 }
             }
-            MarketUiAction.OpenAll -> navigator.navigate(Destination.MarketList)
+            MarketUiAction.OpenAll -> {
+                analytics.track(MarketAnalyticsEvent.SeeAllClicked, EventSupplier.All)
+                navigator.navigate(Destination.MarketList)
+            }
             MarketUiAction.Retry -> loadQuotes()
         }
     }

@@ -62,6 +62,7 @@ fun DetailRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
 
     LaunchedEffect(symbol) {
         viewModel.onAction(DetailUiAction.Load(symbol))
@@ -70,6 +71,7 @@ fun DetailRoute(
         viewModel.uiEffect.collect { effect ->
             when (effect) {
                 is DetailUiEffect.ShowMessage -> context.showToast(effect.text.asString(context))
+                is DetailUiEffect.OpenUrl -> uriHandler.openUri(effect.url)
             }
         }
     }
@@ -108,7 +110,11 @@ private fun DetailScreen(
                     onActionClick = { onAction(DetailUiAction.Retry) },
                 )
 
-                uiState.quote != null -> DetailContent(uiState = uiState, scrollState = scrollState)
+                uiState.quote != null -> DetailContent(
+                    uiState = uiState,
+                    scrollState = scrollState,
+                    onNewsClick = { url -> onAction(DetailUiAction.NewsClicked(url)) },
+                )
             }
         }
     }
@@ -174,9 +180,9 @@ private fun DetailTopBar(
 private fun DetailContent(
     uiState: DetailUiState,
     scrollState: androidx.compose.foundation.ScrollState,
+    onNewsClick: (String) -> Unit,
 ) {
     val quote = uiState.quote ?: return
-    val uriHandler = LocalUriHandler.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -189,7 +195,7 @@ private fun DetailContent(
         NewsSection(
             news = uiState.news,
             isLoading = uiState.isNewsLoading,
-            onOpen = { url -> uriHandler.openUri(url) },
+            onOpen = onNewsClick,
         )
     }
 }

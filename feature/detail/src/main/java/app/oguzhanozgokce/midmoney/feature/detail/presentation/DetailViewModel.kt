@@ -34,11 +34,25 @@ class DetailViewModel @Inject constructor(
     override fun onAction(uiAction: DetailUiAction) {
         when (uiAction) {
             is DetailUiAction.Load -> load(uiAction.symbol)
-            DetailUiAction.Retry -> load(currentUiState.symbol)
+            DetailUiAction.Retry -> retry()
             DetailUiAction.BackClicked -> navigator.goBack()
             DetailUiAction.BuyClicked -> trade(isBuy = true)
             DetailUiAction.SellClicked -> trade(isBuy = false)
             DetailUiAction.ToggleSave -> toggleSave()
+            is DetailUiAction.NewsClicked -> openNews(uiAction.url)
+        }
+    }
+
+    private fun retry() {
+        val symbol = currentUiState.symbol
+        analytics.track(DetailAnalyticsEvent.Retry(symbol), EventSupplier.All)
+        load(symbol)
+    }
+
+    private fun openNews(url: String) {
+        analytics.track(DetailAnalyticsEvent.NewsOpened(currentUiState.symbol), EventSupplier.All)
+        viewModelScope.launch {
+            emitUiEffect(DetailUiEffect.OpenUrl(url))
         }
     }
 

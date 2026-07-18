@@ -104,7 +104,7 @@ private fun ProfileScreen(
                     MidMoneyMenuRow(
                         icon = item.icon,
                         title = stringResource(item.titleRes),
-                        onClick = { onAction(ProfileUiAction.ComingSoonClicked) },
+                        onClick = { onAction(ProfileUiAction.ComingSoonClicked(item.key)) },
                         showDivider = showDivider,
                     )
                 }
@@ -134,21 +134,22 @@ private fun ProfileScreen(
 private data class MenuItem(
     val icon: ImageVector,
     @StringRes val titleRes: Int,
+    val key: String,
 )
 
 private fun profileMenuGroups(): List<List<MenuItem>> = listOf(
     listOf(
-        MenuItem(Icons.Outlined.ReceiptLong, R.string.profile_transactions),
-        MenuItem(Icons.Outlined.Notifications, R.string.profile_notifications),
+        MenuItem(Icons.Outlined.ReceiptLong, R.string.profile_transactions, "transactions"),
+        MenuItem(Icons.Outlined.Notifications, R.string.profile_notifications, "notifications"),
     ),
     listOf(
-        MenuItem(Icons.Outlined.DarkMode, R.string.profile_appearance),
-        MenuItem(Icons.Outlined.Language, R.string.profile_language),
-        MenuItem(Icons.Outlined.Lock, R.string.profile_security),
+        MenuItem(Icons.Outlined.DarkMode, R.string.profile_appearance, "appearance"),
+        MenuItem(Icons.Outlined.Language, R.string.profile_language, "language"),
+        MenuItem(Icons.Outlined.Lock, R.string.profile_security, "security"),
     ),
     listOf(
-        MenuItem(Icons.AutoMirrored.Outlined.HelpOutline, R.string.profile_help),
-        MenuItem(Icons.Outlined.QuestionAnswer, R.string.profile_faq),
+        MenuItem(Icons.AutoMirrored.Outlined.HelpOutline, R.string.profile_help, "help"),
+        MenuItem(Icons.Outlined.QuestionAnswer, R.string.profile_faq, "faq"),
     ),
 )
 
