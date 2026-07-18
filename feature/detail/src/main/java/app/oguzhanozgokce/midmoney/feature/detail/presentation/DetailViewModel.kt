@@ -6,6 +6,7 @@ import app.oguzhanozgokce.midmoney.common.extensions.formatPrice
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.error.errorMessageRes
 import app.oguzhanozgokce.midmoney.event.Analytics
+import app.oguzhanozgokce.midmoney.event.EventSupplier
 import app.oguzhanozgokce.midmoney.feature.detail.R
 import app.oguzhanozgokce.midmoney.feature.detail.analytics.DetailAnalyticsEvent
 import app.oguzhanozgokce.midmoney.feature.detail.presentation.model.toDetailUi
@@ -42,7 +43,7 @@ class DetailViewModel @Inject constructor(
     }
 
     private fun load(symbol: String) {
-        analytics.track(DetailAnalyticsEvent.Viewed(symbol))
+        analytics.track(DetailAnalyticsEvent.Viewed(symbol), EventSupplier.All)
         updateUiState {
             copy(symbol = symbol, name = CompanyNames.of(symbol), isLoading = true, errorMessage = null)
         }
@@ -95,7 +96,7 @@ class DetailViewModel @Inject constructor(
         val state = currentUiState
         val name = state.name.ifBlank { state.symbol }
         val event = if (isBuy) DetailAnalyticsEvent.Buy(state.symbol) else DetailAnalyticsEvent.Sell(state.symbol)
-        analytics.track(event)
+        analytics.track(event, EventSupplier.All)
         val messageRes = if (isBuy) R.string.detail_redirect_buy else R.string.detail_redirect_sell
         viewModelScope.launch {
             emitUiEffect(DetailUiEffect.ShowMessage(UiText.Resource(messageRes, name)))
@@ -106,7 +107,7 @@ class DetailViewModel @Inject constructor(
         val symbol = currentUiState.symbol
         if (symbol.isBlank()) return
         val willSave = !currentUiState.isSaved
-        analytics.track(DetailAnalyticsEvent.Save(symbol, willSave))
+        analytics.track(DetailAnalyticsEvent.Save(symbol, willSave), EventSupplier.All)
         val messageRes = if (willSave) R.string.detail_saved else R.string.detail_unsaved
         viewModelScope.launch {
             marketClient.toggleFavorite(symbol)

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.error.errorMessageRes
 import app.oguzhanozgokce.midmoney.event.Analytics
+import app.oguzhanozgokce.midmoney.event.EventSupplier
 import app.oguzhanozgokce.midmoney.feature.market.analytics.MarketAnalyticsEvent
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
@@ -37,7 +38,7 @@ class MarketViewModel @Inject constructor(
     override fun onAction(uiAction: MarketUiAction) {
         when (uiAction) {
             is MarketUiAction.OpenDetail -> {
-                analytics.track(MarketAnalyticsEvent.OpenDetail(uiAction.symbol))
+                analytics.track(MarketAnalyticsEvent.OpenDetail(uiAction.symbol), EventSupplier.All)
                 navigator.navigate(Destination.Detail(uiAction.symbol))
             }
             is MarketUiAction.SelectFilter -> {

@@ -10,15 +10,16 @@ class CompositeAnalytics @Inject constructor(
         trackers.associateBy { it.supplier }
 
     override fun track(event: AnalyticsEvent, vararg suppliers: EventSupplier) {
-        val targets = if (suppliers.isEmpty()) DEFAULT_SUPPLIERS else suppliers.asList()
-        targets.forEach { supplier -> trackersBySupplier[supplier]?.track(event) }
+        targetsFor(suppliers).forEach { it.track(event) }
     }
 
     override fun setUserId(id: String?) {
         trackersBySupplier.values.forEach { it.setUserId(id) }
     }
 
-    private companion object {
-        val DEFAULT_SUPPLIERS = listOf(EventSupplier.Firebase)
+    private fun targetsFor(suppliers: Array<out EventSupplier>): Collection<AnalyticsTracker> = when {
+        suppliers.isEmpty() -> listOfNotNull(trackersBySupplier[EventSupplier.Firebase])
+        EventSupplier.All in suppliers -> trackersBySupplier.values
+        else -> suppliers.toSet().mapNotNull { trackersBySupplier[it] }
     }
 }

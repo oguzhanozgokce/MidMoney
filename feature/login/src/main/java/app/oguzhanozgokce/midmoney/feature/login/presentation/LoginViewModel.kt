@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.event.Analytics
+import app.oguzhanozgokce.midmoney.event.EventSupplier
 import app.oguzhanozgokce.midmoney.feature.login.R
 import app.oguzhanozgokce.midmoney.feature.login.analytics.LoginAnalyticsEvent
 import app.oguzhanozgokce.midmoney.mvi.MVI
@@ -42,17 +43,17 @@ class LoginViewModel @Inject constructor(
             return
         }
         updateUiState { copy(isLoading = true) }
-        analytics.track(LoginAnalyticsEvent.LoginClicked)
+        analytics.track(LoginAnalyticsEvent.LoginClicked, EventSupplier.All)
         viewModelScope.launch {
             userClient.loginOrRegister(state.email, state.password)
                 .onSuccess {
-                    analytics.track(LoginAnalyticsEvent.LoginSucceeded)
+                    analytics.track(LoginAnalyticsEvent.LoginSucceeded, EventSupplier.All)
                     navigator.navigateAndClearBackStack(Destination.Home)
                 }
                 .onFailure { throwable ->
                     updateUiState { copy(isLoading = false) }
                     val error = (throwable as? AuthException)?.error ?: AuthError.Unknown
-                    analytics.track(LoginAnalyticsEvent.LoginFailed(error.name))
+                    analytics.track(LoginAnalyticsEvent.LoginFailed(error.name), EventSupplier.All)
                     emitUiEffect(LoginUiEffect.ShowMessage(UiText.Resource(error.toMessageRes())))
                 }
         }

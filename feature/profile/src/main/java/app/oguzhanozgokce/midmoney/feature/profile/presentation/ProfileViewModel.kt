@@ -6,6 +6,7 @@ import app.oguzhanozgokce.midmoney.common.appinfo.AppInfoProvider
 import app.oguzhanozgokce.midmoney.common.config.AppConfig
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.event.Analytics
+import app.oguzhanozgokce.midmoney.event.EventSupplier
 import app.oguzhanozgokce.midmoney.feature.profile.R
 import app.oguzhanozgokce.midmoney.feature.profile.analytics.ProfileAnalyticsEvent
 import app.oguzhanozgokce.midmoney.mvi.MVI
@@ -28,7 +29,7 @@ class ProfileViewModel @Inject constructor(
     MVI<ProfileUiState, ProfileUiAction, ProfileUiEffect> by mvi(ProfileUiState()) {
 
     init {
-        analytics.track(ProfileAnalyticsEvent.Viewed)
+        analytics.track(ProfileAnalyticsEvent.Viewed, EventSupplier.All)
         updateUiState {
             copy(
                 versionName = appInfo.versionName,
@@ -58,7 +59,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun logout() {
-        analytics.track(ProfileAnalyticsEvent.Logout)
+        analytics.track(ProfileAnalyticsEvent.Logout, EventSupplier.All)
         userClient.logout()
         navigator.navigateAndClearBackStack(Destination.Login)
     }

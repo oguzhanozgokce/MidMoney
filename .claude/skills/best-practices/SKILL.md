@@ -84,10 +84,11 @@ object LoginTestTags {
 - Event names and param keys are `private const val`, not inline string literals.
 - The same rule applies to any repeated magic string (categories, keys, tags).
 - `Analytics.track(event, vararg suppliers)` routes per call: `track(event, EventSupplier.Firebase)`
-  hits only Firebase; omitting suppliers defaults to Firebase. Each backend is an `AnalyticsTracker`
-  that declares its `EventSupplier` and is registered with `@Binds @IntoSet`; `CompositeAnalytics`
-  dispatches by supplier. Add Superset/Amplitude with one tracker + a new `EventSupplier` — no
-  caller changes.
+  hits only Firebase; `EventSupplier.All` hits every registered tracker; omitting suppliers defaults
+  to Firebase. Each backend is an `AnalyticsTracker` that declares its `EventSupplier` and is
+  registered with `@Binds @IntoSet`; `CompositeAnalytics` dispatches by supplier and resolves `All`
+  to the whole set. Add Superset/Amplitude with one tracker + a new `EventSupplier` — no caller
+  changes, and it joins `All` automatically.
 
 ## Design system
 
