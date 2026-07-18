@@ -5,13 +5,8 @@ import kotlinx.coroutines.flow.Flow
 interface Navigator {
     val commands: Flow<NavigationCommand>
 
-    /** Push a destination onto the back stack. */
     fun navigate(destination: Destination)
-
-    /** Replace the whole back stack with a single destination (e.g. after login/logout). */
     fun navigateAndClearBackStack(destination: Destination)
-
-    /** Pop the top destination. */
     fun goBack()
 }
 
