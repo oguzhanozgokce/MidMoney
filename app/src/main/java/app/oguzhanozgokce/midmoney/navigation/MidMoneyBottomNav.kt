@@ -1,5 +1,6 @@
 package app.oguzhanozgokce.midmoney.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -39,6 +40,10 @@ private enum class MainTab(@StringRes val labelRes: Int, val icon: ImageVector) 
 @Composable
 fun MidMoneyBottomNav() {
     var selectedTab by rememberSaveable { mutableStateOf(MainTab.Market) }
+
+    BackHandler(enabled = selectedTab != MainTab.Market) {
+        selectedTab = MainTab.Market
+    }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
