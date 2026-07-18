@@ -4,9 +4,9 @@ import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import javax.inject.Inject
 
-class FirebaseAnalyticsClient @Inject constructor(
+class FirebaseAnalyticsTracker @Inject constructor(
     private val firebaseAnalytics: FirebaseAnalytics,
-) : Analytics {
+) : AnalyticsTracker {
 
     override fun track(event: AnalyticsEvent) {
         firebaseAnalytics.logEvent(event.name, event.params.toBundle())

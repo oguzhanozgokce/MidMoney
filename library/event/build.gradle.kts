@@ -8,6 +8,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":library:logger"))
+
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
 }

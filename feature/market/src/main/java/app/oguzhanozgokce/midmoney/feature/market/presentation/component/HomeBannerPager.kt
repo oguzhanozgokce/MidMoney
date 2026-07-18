@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.HomeBannerUi
+import app.oguzhanozgokce.midmoney.feature.market.presentation.model.MarketBannerUi
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -37,8 +37,8 @@ private const val AUTO_SCROLL_DELAY_MS = 4000L
 
 @Composable
 fun HomeBannerPager(
-    banners: List<HomeBannerUi>,
-    onActionClick: (HomeBannerUi) -> Unit,
+    banners: List<MarketBannerUi>,
+    onActionClick: (MarketBannerUi) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     if (banners.isEmpty()) return
@@ -68,7 +68,7 @@ fun HomeBannerPager(
 
 @Composable
 private fun BannerContent(
-    banner: HomeBannerUi,
+    banner: MarketBannerUi,
     onActionClick: () -> Unit,
 ) {
     Column(

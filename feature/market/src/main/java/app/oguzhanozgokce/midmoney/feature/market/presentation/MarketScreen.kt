@@ -38,7 +38,7 @@ import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 import app.oguzhanozgokce.midmoney.feature.market.R
 import app.oguzhanozgokce.midmoney.feature.market.presentation.component.HomeBannerPager
-import app.oguzhanozgokce.midmoney.feature.market.presentation.model.HomeBannerUi
+import app.oguzhanozgokce.midmoney.feature.market.presentation.model.MarketBannerUi
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 
 private const val HOME_PREVIEW_COUNT = 6
@@ -76,7 +76,7 @@ private fun MarketScreen(
             ) {
                 item {
                     HomeBannerPager(
-                        banners = HomeBannerUi.defaults,
+                        banners = MarketBannerUi.defaults,
                         onActionClick = { onOpenWatchlist() },
                         modifier = Modifier
                             .testTag(MarketTestTags.BANNER)
