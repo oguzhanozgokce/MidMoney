@@ -28,7 +28,6 @@ workflows:
   # Ortak adımlar (DRY): kalite kapısı → assemble → artifact
   _verify_and_build:
     steps:
-      - activate-ssh-key@4: {}
       - git-clone@8: {}
       - install-missing-android-tools@3:
           inputs:
