@@ -40,5 +40,4 @@ local.properties
 *.tmp
 *.temp
 
-# Kişisel mülakat hazırlık notları (repoya girmez)
 interview-prep/
