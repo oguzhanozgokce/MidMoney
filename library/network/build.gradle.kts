@@ -22,9 +22,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":library:logger"))
-    implementation(project(":library:error"))
-    implementation(project(":library:common"))
+    implementation(projects.library.logger)
+    implementation(projects.library.error)
+    implementation(projects.library.common)
 
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlinx.serialization.converter)

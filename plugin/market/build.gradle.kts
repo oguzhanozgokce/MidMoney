@@ -9,11 +9,11 @@ android {
 }
 
 dependencies {
-    implementation(project(":library:network"))
-    implementation(project(":library:common"))
-    implementation(project(":library:error"))
-    implementation(project(":library:websocket"))
-    implementation(project(":library:datastore"))
+    implementation(projects.library.network)
+    implementation(projects.library.common)
+    implementation(projects.library.error)
+    implementation(projects.library.websocket)
+    implementation(projects.library.datastore)
 
     implementation(libs.retrofit.core)
     implementation(libs.kotlinx.serialization.json)

@@ -39,3 +39,6 @@ local.properties
 # Temporary files
 *.tmp
 *.temp
+
+# Kişisel mülakat hazırlık notları (repoya girmez)
+interview-prep/

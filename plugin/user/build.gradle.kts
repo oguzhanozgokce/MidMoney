@@ -8,8 +8,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":library:common"))
-    implementation(project(":library:error"))
+    implementation(projects.library.common)
+    implementation(projects.library.error)
 
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)

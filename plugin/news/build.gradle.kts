@@ -9,9 +9,9 @@ android {
 }
 
 dependencies {
-    implementation(project(":library:network"))
-    implementation(project(":library:common"))
-    implementation(project(":library:error"))
+    implementation(projects.library.network)
+    implementation(projects.library.common)
+    implementation(projects.library.error)
 
     implementation(libs.retrofit.core)
     implementation(libs.kotlinx.serialization.json)

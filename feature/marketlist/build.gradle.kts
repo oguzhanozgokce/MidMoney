@@ -7,6 +7,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":plugin:market"))
-    implementation(project(":library:error"))
+    implementation(projects.plugin.market)
+    implementation(projects.library.error)
 }

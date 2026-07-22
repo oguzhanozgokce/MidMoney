@@ -7,7 +7,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":plugin:market"))
-    implementation(project(":library:error"))
-    implementation(project(":plugin:news"))
+    implementation(projects.plugin.market)
+    implementation(projects.library.error)
+    implementation(projects.plugin.news)
 }

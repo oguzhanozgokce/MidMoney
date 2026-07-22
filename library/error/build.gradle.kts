@@ -8,7 +8,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":library:common"))
+    implementation(projects.library.common)
     implementation(libs.kotlinx.coroutines.core)
 
     testImplementation(libs.junit)

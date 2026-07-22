@@ -7,5 +7,5 @@ android {
 }
 
 dependencies {
-    implementation(project(":plugin:user"))
+    implementation(projects.plugin.user)
 }
