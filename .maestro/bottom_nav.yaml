@@ -1,0 +1,26 @@
+appId: app.oguzhanozgokce.midmoney
+name: Bottom nav - switch tabs and back returns to market
+---
+- runFlow: login.yaml
+- assertVisible:
+    id: "market.screen"
+- tapOn:
+    id: "nav.tab.watchlist"
+- assertVisible:
+    id: "watchlist.screen"
+- tapOn:
+    id: "nav.tab.profile"
+- assertVisible:
+    id: "profile.screen"
+- tapOn:
+    id: "nav.tab.market"
+- assertVisible:
+    id: "market.screen"
+# BackHandler: from a non-market tab, back returns to the Market tab
+- tapOn:
+    id: "nav.tab.profile"
+- assertVisible:
+    id: "profile.screen"
+- back
+- assertVisible:
+    id: "market.screen"

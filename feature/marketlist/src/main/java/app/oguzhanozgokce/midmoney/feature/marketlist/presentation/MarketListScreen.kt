@@ -88,6 +88,7 @@ private fun MarketListScreen(
                     options = MarketFilter.entries.map { stringResource(it.labelRes()) },
                     selectedIndex = uiState.selectedFilter.ordinal,
                     onSelect = { onAction(MarketListUiAction.SelectFilter(MarketFilter.entries[it])) },
+                    optionTestTags = MarketFilter.entries.map { MarketListTestTags.filter(it) },
                 )
                 QuoteList(uiState = uiState, onAction = onAction)
             }
@@ -118,6 +119,7 @@ private fun QuoteList(
                     changeText = quote.changePercentText,
                     isPositive = quote.isPositive,
                     onClick = { onAction(MarketListUiAction.OpenDetail(quote.symbol)) },
+                    modifier = Modifier.testTag(MarketListTestTags.quote(quote.symbol)),
                 )
             }
         }
@@ -135,6 +137,7 @@ private fun SearchResults(
             icon = Icons.Outlined.Search,
             title = stringResource(R.string.markets_no_results_title),
             description = stringResource(R.string.markets_no_results_description, uiState.query),
+            modifier = Modifier.testTag(MarketListTestTags.EMPTY),
         )
         else -> LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -144,6 +147,7 @@ private fun SearchResults(
                 SearchResultItem(
                     match = match,
                     onClick = { onAction(MarketListUiAction.OpenDetail(match.symbol)) },
+                    modifier = Modifier.testTag(MarketListTestTags.result(match.symbol)),
                 )
             }
         }
@@ -151,9 +155,9 @@ private fun SearchResults(
 }
 
 @Composable
-private fun SearchResultItem(match: SymbolMatch, onClick: () -> Unit) {
+private fun SearchResultItem(match: SymbolMatch, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 12.dp),
@@ -189,6 +193,7 @@ private fun ErrorContent(errorText: UiText, onRetry: () -> Unit) {
         description = errorText.asString(),
         actionText = stringResource(R.string.markets_retry),
         onActionClick = onRetry,
+        actionTestTag = MarketListTestTags.RETRY,
     )
 }
 

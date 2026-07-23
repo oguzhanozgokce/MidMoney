@@ -1,0 +1,11 @@
+appId: app.oguzhanozgokce.midmoney
+name: Login - empty fields keep the user on the login screen
+---
+- launchApp:
+    clearState: true
+- assertVisible:
+    id: "login.screen"
+- tapOn:
+    id: "login.submit"
+- assertVisible:
+    id: "login.screen"
