@@ -1,7 +1,7 @@
 appId: app.oguzhanozgokce.midmoney
 name: Market list - search a symbol and open the result
 ---
-- runFlow: login.yaml
+- runFlow: ../common/login.yaml
 - extendedWaitUntil:
     visible:
       id: "market.quote.AAPL"

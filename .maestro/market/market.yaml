@@ -1,7 +1,7 @@
 appId: app.oguzhanozgokce.midmoney
 name: Market - loads quotes and switches filters
 ---
-- runFlow: login.yaml
+- runFlow: ../common/login.yaml
 - assertVisible:
     id: "market.screen"
 - extendedWaitUntil:

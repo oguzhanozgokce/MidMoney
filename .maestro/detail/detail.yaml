@@ -1,7 +1,7 @@
 appId: app.oguzhanozgokce.midmoney
 name: Detail - open a quote, buy/sell, save and go back
 ---
-- runFlow: login.yaml
+- runFlow: ../common/login.yaml
 - extendedWaitUntil:
     visible:
       id: "market.quote.AAPL"

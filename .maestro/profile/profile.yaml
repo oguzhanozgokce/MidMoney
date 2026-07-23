@@ -1,7 +1,7 @@
 appId: app.oguzhanozgokce.midmoney
 name: Profile - menu tap, version and sign out
 ---
-- runFlow: login.yaml
+- runFlow: ../common/login.yaml
 - tapOn:
     id: "nav.tab.profile"
 - assertVisible:

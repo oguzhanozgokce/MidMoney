@@ -1,7 +1,7 @@
 appId: app.oguzhanozgokce.midmoney
 name: Bottom nav - switch tabs and back returns to market
 ---
-- runFlow: login.yaml
+- runFlow: ../common/login.yaml
 - assertVisible:
     id: "market.screen"
 - tapOn:
