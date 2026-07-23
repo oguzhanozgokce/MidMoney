@@ -87,7 +87,9 @@ private fun DetailScreen(
 ) {
     val scrollState = rememberScrollState()
     val thresholdPx = with(LocalDensity.current) { COLLAPSE_THRESHOLD.toPx() }
-    val titleVisible by remember { derivedStateOf { scrollState.value > thresholdPx } }
+    val titleVisible by remember(scrollState, thresholdPx) {
+        derivedStateOf { scrollState.value > thresholdPx }
+    }
 
     MidMoneyScaffold(
         topBar = { DetailTopBar(uiState = uiState, titleVisible = titleVisible, onAction = onAction) },
