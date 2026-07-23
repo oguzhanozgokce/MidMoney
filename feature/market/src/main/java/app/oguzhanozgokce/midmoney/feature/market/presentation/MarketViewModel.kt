@@ -53,22 +53,26 @@ class MarketViewModel @Inject constructor(
 
     override fun onAction(uiAction: MarketUiAction) {
         when (uiAction) {
-            is MarketUiAction.OpenDetail -> {
-                analytics.track(MarketAnalyticsEvent.OpenDetail(uiAction.symbol), EventSupplier.All)
-                navigator.navigate(Destination.Detail(uiAction.symbol))
-            }
-            is MarketUiAction.SelectFilter -> {
-                analytics.track(MarketAnalyticsEvent.FilterSelected(uiAction.filter.name), EventSupplier.All)
-                updateUiState {
-                    copy(selectedFilter = uiAction.filter, quotes = displayed(uiAction.filter))
-                }
-            }
-            MarketUiAction.OpenAll -> {
-                analytics.track(MarketAnalyticsEvent.SeeAllClicked, EventSupplier.All)
-                navigator.navigate(Destination.MarketList)
-            }
+            is MarketUiAction.OpenDetail -> openDetailHandle(uiAction.symbol)
+            is MarketUiAction.SelectFilter -> selectFilterHandle(uiAction.filter)
+            MarketUiAction.OpenAll -> openAllHandle()
             MarketUiAction.Retry -> loadQuotes()
         }
+    }
+
+    private fun openDetailHandle(symbol: String) {
+        analytics.track(MarketAnalyticsEvent.OpenDetail(symbol), EventSupplier.All)
+        navigator.navigate(Destination.Detail(symbol))
+    }
+
+    private fun selectFilterHandle(filter: MarketFilter) {
+        analytics.track(MarketAnalyticsEvent.FilterSelected(filter.name), EventSupplier.All)
+        updateUiState { copy(selectedFilter = filter, quotes = displayed(filter)) }
+    }
+
+    private fun openAllHandle() {
+        analytics.track(MarketAnalyticsEvent.SeeAllClicked, EventSupplier.All)
+        navigator.navigate(Destination.MarketList)
     }
 
     private fun loadQuotes() {

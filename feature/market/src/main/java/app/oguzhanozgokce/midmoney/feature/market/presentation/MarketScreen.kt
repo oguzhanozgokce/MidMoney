@@ -29,6 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButton
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyButtonStyle
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyFilterChip
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyFilterChips
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyQuoteRow
@@ -96,10 +97,14 @@ private fun MarketScreen(
                 }
                 item {
                     MidMoneyFilterChips(
-                        options = MarketFilter.entries.map { stringResource(it.labelRes()) },
+                        chips = MarketFilter.entries.map {
+                            MidMoneyFilterChip(
+                                label = stringResource(it.labelRes()),
+                                testTag = MarketTestTags.filter(it),
+                            )
+                        },
                         selectedIndex = uiState.selectedFilter.ordinal,
                         onSelect = { onAction(MarketUiAction.SelectFilter(MarketFilter.entries[it])) },
-                        optionTestTags = MarketFilter.entries.map { MarketTestTags.filter(it) },
                     )
                 }
 

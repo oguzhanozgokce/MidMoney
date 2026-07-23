@@ -44,18 +44,22 @@ class MarketListViewModel @Inject constructor(
 
     override fun onAction(uiAction: MarketListUiAction) {
         when (uiAction) {
-            is MarketListUiAction.OpenDetail -> {
-                analytics.track(MarketListAnalyticsEvent.OpenDetail(uiAction.symbol), EventSupplier.All)
-                navigator.navigate(Destination.Detail(uiAction.symbol))
-            }
-            is MarketListUiAction.SelectFilter -> {
-                analytics.track(MarketListAnalyticsEvent.FilterSelected(uiAction.filter.name), EventSupplier.All)
-                updateUiState { copy(selectedFilter = uiAction.filter, quotes = displayed(uiAction.filter)) }
-            }
+            is MarketListUiAction.OpenDetail -> openDetailHandle(uiAction.symbol)
+            is MarketListUiAction.SelectFilter -> selectFilterHandle(uiAction.filter)
             is MarketListUiAction.QueryChanged -> onQueryChanged(uiAction.query)
             MarketListUiAction.BackClicked -> navigator.goBack()
             MarketListUiAction.Retry -> loadQuotes()
         }
+    }
+
+    private fun openDetailHandle(symbol: String) {
+        analytics.track(MarketListAnalyticsEvent.OpenDetail(symbol), EventSupplier.All)
+        navigator.navigate(Destination.Detail(symbol))
+    }
+
+    private fun selectFilterHandle(filter: MarketFilter) {
+        analytics.track(MarketListAnalyticsEvent.FilterSelected(filter.name), EventSupplier.All)
+        updateUiState { copy(selectedFilter = filter, quotes = displayed(filter)) }
     }
 
     private fun onQueryChanged(query: String) {

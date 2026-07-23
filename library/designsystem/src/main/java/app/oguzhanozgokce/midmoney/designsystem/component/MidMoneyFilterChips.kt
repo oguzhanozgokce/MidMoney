@@ -18,17 +18,12 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 
-/**
- * A horizontally scrollable row of single-choice filter chips styled as filled pills (primary when
- * selected). Generic over string labels so any screen can reuse it.
- */
 @Composable
 fun MidMoneyFilterChips(
-    options: List<String>,
+    chips: List<MidMoneyFilterChip>,
     selectedIndex: Int,
     onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    optionTestTags: List<String> = emptyList(),
 ) {
     Row(
         modifier = modifier
@@ -37,11 +32,11 @@ fun MidMoneyFilterChips(
             .padding(horizontal = 16.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        options.forEachIndexed { index, label ->
+        chips.forEachIndexed { index, chip ->
             FilterChip(
                 selected = index == selectedIndex,
                 onClick = { onSelect(index) },
-                label = { Text(text = label) },
+                label = { Text(text = chip.label) },
                 shape = CircleShape,
                 border = null,
                 colors = FilterChipDefaults.filterChipColors(
@@ -50,7 +45,7 @@ fun MidMoneyFilterChips(
                     selectedContainerColor = MaterialTheme.colorScheme.primary,
                     selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
                 ),
-                modifier = optionTestTags.getOrNull(index)?.let { Modifier.testTag(it) } ?: Modifier,
+                modifier = chip.testTag?.let { Modifier.testTag(it) } ?: Modifier,
             )
         }
     }
@@ -61,7 +56,11 @@ fun MidMoneyFilterChips(
 private fun MidMoneyFilterChipsPreview() {
     MidMoneyTheme {
         MidMoneyFilterChips(
-            options = listOf("Popular", "Gainers", "Losers"),
+            chips = listOf(
+                MidMoneyFilterChip("Popular"),
+                MidMoneyFilterChip("Gainers"),
+                MidMoneyFilterChip("Losers"),
+            ),
             selectedIndex = 0,
             onSelect = {},
         )

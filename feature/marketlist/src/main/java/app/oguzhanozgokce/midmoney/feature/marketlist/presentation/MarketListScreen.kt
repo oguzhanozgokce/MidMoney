@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyEmptyState
+import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyFilterChip
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyFilterChips
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyLoading
 import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyQuoteRow
@@ -85,10 +86,14 @@ private fun MarketListScreen(
                 SearchResults(uiState = uiState, onAction = onAction)
             } else {
                 MidMoneyFilterChips(
-                    options = MarketFilter.entries.map { stringResource(it.labelRes()) },
+                    chips = MarketFilter.entries.map {
+                        MidMoneyFilterChip(
+                            label = stringResource(it.labelRes()),
+                            testTag = MarketListTestTags.filter(it),
+                        )
+                    },
                     selectedIndex = uiState.selectedFilter.ordinal,
                     onSelect = { onAction(MarketListUiAction.SelectFilter(MarketFilter.entries[it])) },
-                    optionTestTags = MarketFilter.entries.map { MarketListTestTags.filter(it) },
                 )
                 QuoteList(uiState = uiState, onAction = onAction)
             }
