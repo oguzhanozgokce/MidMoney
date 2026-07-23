@@ -15,7 +15,26 @@ allowed-tools:
 
 # Writing Maestro Tests
 
-Flows live in `.maestro/`. They select composables by `id:`, which maps to a Compose `testTag`.
+Flows live in `.maestro/`, organized into feature-named folders. Each flow selects composables
+by `id:`, which maps to a Compose `testTag`.
+
+```
+.maestro/
+  common/       login.yaml            # shared helper flow, reused via runFlow
+  login/        login_validation.yaml
+  market/       market.yaml, market_see_all.yaml
+  marketlist/   marketlist_search.yaml
+  detail/       detail.yaml
+  watchlist/    watchlist.yaml
+  profile/      profile.yaml
+  navigation/   bottom_nav.yaml       # cross-feature tab navigation
+```
+
+- One folder per feature module; `common/` holds reusable helper flows (login), `navigation/`
+  holds cross-feature journeys.
+- Reuse the shared login with a folder-relative `runFlow`: from any feature flow,
+  `- runFlow: ../common/login.yaml`.
+- `maestro test .maestro/` discovers flows recursively across all folders.
 
 ## Prerequisite: the resource-id hook
 
@@ -92,7 +111,8 @@ name: Login - sign in with demo account
 
 ```bash
 ./gradlew :app:installProdDebug
-maestro test .maestro/login.yaml
+maestro test .maestro/common/login.yaml   # a single flow
+maestro test .maestro/                     # all flows, recursively
 ```
 
 Needs a running emulator or device. The login uses "sign in or auto-register", so the demo

@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -76,6 +77,7 @@ private fun ProfileScreen(
     MidMoneyScaffold { padding ->
         Column(
             modifier = Modifier
+                .testTag(ProfileTestTags.SCREEN)
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(rememberScrollState()),
@@ -88,6 +90,7 @@ private fun ProfileScreen(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
+                        .testTag(ProfileTestTags.ENV_BADGE)
                         .padding(start = 16.dp)
                         .clip(RoundedCornerShape(6.dp))
                         .background(MaterialTheme.colorScheme.primary)
@@ -106,6 +109,7 @@ private fun ProfileScreen(
                         title = stringResource(item.titleRes),
                         onClick = { onAction(ProfileUiAction.ComingSoonClicked(item.key)) },
                         showDivider = showDivider,
+                        modifier = Modifier.testTag(ProfileTestTags.menu(item.key)),
                     )
                 }
             }
@@ -117,6 +121,7 @@ private fun ProfileScreen(
                 tint = MaterialTheme.colorScheme.error,
                 showChevron = false,
                 showDivider = false,
+                modifier = Modifier.testTag(ProfileTestTags.LOGOUT),
             )
             Text(
                 text = stringResource(R.string.profile_version, uiState.versionName),
@@ -124,6 +129,7 @@ private fun ProfileScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
+                    .testTag(ProfileTestTags.VERSION)
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
             )

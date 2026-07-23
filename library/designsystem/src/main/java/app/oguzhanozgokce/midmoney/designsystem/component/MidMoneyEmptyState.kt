@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,7 @@ fun MidMoneyEmptyState(
     modifier: Modifier = Modifier,
     actionText: String? = null,
     onActionClick: (() -> Unit)? = null,
+    actionTestTag: String? = null,
 ) {
     Column(
         modifier = modifier
@@ -60,7 +62,9 @@ fun MidMoneyEmptyState(
             MidMoneyButton(
                 text = actionText,
                 onClick = onActionClick,
-                modifier = Modifier.padding(top = 24.dp),
+                modifier = Modifier
+                    .padding(top = 24.dp)
+                    .then(if (actionTestTag != null) Modifier.testTag(actionTestTag) else Modifier),
                 size = MidMoneyButtonSize.Small,
             )
         }

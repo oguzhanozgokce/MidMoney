@@ -1,0 +1,39 @@
+appId: app.oguzhanozgokce.midmoney
+name: Watchlist - save from detail, then open the saved item
+---
+- runFlow: ../common/login.yaml
+# Fresh state (login clears app data) -> no favorites yet
+- tapOn:
+    id: "nav.tab.watchlist"
+- assertVisible:
+    id: "watchlist.empty"
+# Save AAPL from its detail screen
+- tapOn:
+    id: "nav.tab.market"
+- extendedWaitUntil:
+    visible:
+      id: "market.quote.AAPL"
+    timeout: 20000
+- tapOn:
+    id: "market.quote.AAPL"
+- assertVisible:
+    id: "detail.screen"
+- tapOn:
+    id: "detail.save"
+- tapOn:
+    id: "detail.back"
+# AAPL now appears in the watchlist
+- tapOn:
+    id: "nav.tab.watchlist"
+- extendedWaitUntil:
+    visible:
+      id: "watchlist.quote.AAPL"
+    timeout: 20000
+- tapOn:
+    id: "watchlist.quote.AAPL"
+- assertVisible:
+    id: "detail.screen"
+- tapOn:
+    id: "detail.back"
+- assertVisible:
+    id: "watchlist.screen"

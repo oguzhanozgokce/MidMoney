@@ -1,0 +1,27 @@
+appId: app.oguzhanozgokce.midmoney
+name: Market list - search a symbol and open the result
+---
+- runFlow: ../common/login.yaml
+- extendedWaitUntil:
+    visible:
+      id: "market.quote.AAPL"
+    timeout: 20000
+- tapOn:
+    id: "market.see_all"
+- assertVisible:
+    id: "marketlist.screen"
+- tapOn:
+    id: "marketlist.search"
+- inputText: "AAPL"
+- extendedWaitUntil:
+    visible:
+      id: "marketlist.result.AAPL"
+    timeout: 20000
+- tapOn:
+    id: "marketlist.result.AAPL"
+- assertVisible:
+    id: "detail.screen"
+- tapOn:
+    id: "detail.back"
+- assertVisible:
+    id: "marketlist.screen"
