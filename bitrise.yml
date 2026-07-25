@@ -11,7 +11,7 @@ app:
 workflows:
   # Developer bunu seçer → QA (preprod) APK
   build_qa:
-    summary: QA build — preprodDebug APK (ktlint + detekt gate)
+    summary: QA build — preprodDebug APK (ktlint + detekt + unit test gate)
     envs:
       - VARIANT: preprodDebug
     after_run:
@@ -19,13 +19,14 @@ workflows:
 
   # Developer bunu seçer → PROD APK
   build_prod:
-    summary: Prod build — prodDebug APK (ktlint + detekt gate)
+    summary: Prod build — prodDebug APK (ktlint + detekt + unit test gate)
     envs:
       - VARIANT: prodDebug
     after_run:
       - _verify_and_build
 
-  # Ortak adımlar (DRY): kalite kapısı → assemble → artifact
+  # Ortak adımlar (DRY): statik analiz → unit test → assemble → artifact.
+  # Kapılar assemble'dan ÖNCE koşar: testler kırmızıysa APK hiç üretilmez.
   _verify_and_build:
     steps:
       - git-clone@8: {}
@@ -39,6 +40,20 @@ workflows:
                 #!/usr/bin/env bash
                 set -euo pipefail
                 ./gradlew ktlintCheck detekt --stacktrace
+      - script@1:
+          title: Unit tests
+          inputs:
+            - content: |-
+                #!/usr/bin/env bash
+                set -euo pipefail
+
+                if ! ./gradlew test --stacktrace; then
+                  # Ship the HTML reports as an artifact so a red build is diagnosable
+                  # from the Bitrise UI instead of only from the log.
+                  tar -czf "${BITRISE_DEPLOY_DIR:-.}/unit-test-reports.tgz" \
+                    $(find . -type d -path '*/build/reports/tests') || true
+                  exit 1
+                fi
       - android-build@1:
           title: Assemble $VARIANT
           inputs:
