@@ -112,10 +112,6 @@ class LoginViewModelTest {
     }
 }
 
-/**
- * [UserClient.loginOrRegister] falls back to `register` when `login` fails, so a single [error]
- * makes both legs fail — which is what the failure tests need.
- */
 private class FakeAuthRepository(
     private val error: Throwable? = null,
 ) : AuthRepository {
