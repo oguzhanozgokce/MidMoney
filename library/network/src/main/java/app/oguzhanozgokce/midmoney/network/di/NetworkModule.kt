@@ -20,13 +20,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    // DTOs declare every field nullable and let the mapper normalize, so an omitted or explicitly
+    // null field decodes to null instead of failing the response — no value coercion needed here.
     @Provides
     @Singleton
     fun provideJson(): Json = Json {
         ignoreUnknownKeys = true
         isLenient = true
         explicitNulls = false
-        coerceInputValues = true
     }
 
     @Provides

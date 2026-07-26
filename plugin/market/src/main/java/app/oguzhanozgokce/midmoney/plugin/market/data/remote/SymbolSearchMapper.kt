@@ -10,9 +10,9 @@ private const val MAX_RESULTS = 25
  * free /quote endpoint does not price. Capped so the list stays manageable.
  */
 fun SymbolSearchResponseDto.toDomain(): List<SymbolMatch> =
-    result.asSequence()
+    result.orEmpty().asSequence()
+        .map { SymbolMatch(symbol = it.symbol.orEmpty(), description = it.description.orEmpty()) }
         .filter { it.symbol.isNotBlank() && it.description.isNotBlank() && !it.symbol.contains('.') }
-        .map { SymbolMatch(symbol = it.symbol, description = it.description) }
         .distinctBy { it.symbol }
         .take(MAX_RESULTS)
         .toList()
