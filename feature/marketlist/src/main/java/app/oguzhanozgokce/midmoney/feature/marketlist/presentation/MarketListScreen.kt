@@ -109,11 +109,6 @@ private fun QuoteList(
     onAction: (MarketListUiAction) -> Unit,
 ) {
     val listState = rememberLazyListState()
-
-    // A filter only reorders the same symbols, and the items are keyed — so LazyColumn would keep
-    // the previously visible symbol anchored and leave the user stranded mid-list. The filter chips
-    // sit above the list (they do not scroll away), so switching filters while scrolled down is easy
-    // to do. Reset to the top instead: new ordering, fresh start.
     LaunchedEffect(uiState.selectedFilter) {
         listState.scrollToItem(0)
     }
