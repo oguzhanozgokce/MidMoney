@@ -39,8 +39,6 @@ class FirebaseAuthRepository @Inject constructor(
 
     override fun isCurrentlyLoggedIn(): Boolean = auth.currentUser != null
 
-    // The AuthResult is not needed — only whether the call succeeded. `T` is fixed to Unit by the
-    // declared return type, so the lambda coerces to Unit without an explicit `Unit` statement.
     override suspend fun login(email: String, password: String): Result<Unit> =
         errorHandler.call(transform = ::toAuthException) {
             auth.signInWithEmailAndPassword(email, password).await()

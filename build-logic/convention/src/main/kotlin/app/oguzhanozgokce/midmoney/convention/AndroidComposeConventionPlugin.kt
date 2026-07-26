@@ -29,18 +29,10 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
                 .getOrElse("false").toBoolean()
 
             extensions.configure<ComposeCompilerGradlePluginExtension> {
-                // Declares types the compiler cannot infer as stable because they live in modules
-                // without the Compose plugin (the plugin layer stays Compose-free by design).
-                // Always applied — it affects code generation, unlike the reports below.
                 stabilityConfigurationFiles.add(
                     rootProject.layout.projectDirectory.file("config/compose/stability.conf"),
                 )
 
-                // Opt-in stability/skippability report:
-                // `./gradlew <task> -PcomposeMetrics=true --rerun-tasks`
-                // writes per-module reports to build/compose_compiler. Off by default because the
-                // extra compiler output slows the build; used to decide whether a @Stable/@Immutable
-                // annotation is actually needed instead of guessing.
                 if (metricsEnabled) {
                     val dir = layout.buildDirectory.dir("compose_compiler")
                     reportsDestination.set(dir)
