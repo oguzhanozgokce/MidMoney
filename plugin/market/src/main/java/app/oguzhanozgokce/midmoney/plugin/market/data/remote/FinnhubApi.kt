@@ -5,7 +5,7 @@ import app.oguzhanozgokce.midmoney.plugin.market.data.remote.dto.SymbolSearchRes
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface FinnhubApi {
+internal interface FinnhubApi {
 
     @GET("quote")
     suspend fun getQuote(@Query("symbol") symbol: String): QuoteDto

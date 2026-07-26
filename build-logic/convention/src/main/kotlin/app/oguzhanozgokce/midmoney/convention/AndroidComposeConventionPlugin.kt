@@ -4,7 +4,9 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginExtension
 
 /**
  * Enables Jetpack Compose for the module: applies the Compose compiler plugin,
@@ -21,6 +23,21 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
             }
             extensions.findByType(LibraryExtension::class.java)?.apply {
                 buildFeatures.compose = true
+            }
+
+            val metricsEnabled = providers.gradleProperty("composeMetrics")
+                .getOrElse("false").toBoolean()
+
+            extensions.configure<ComposeCompilerGradlePluginExtension> {
+                stabilityConfigurationFiles.add(
+                    rootProject.layout.projectDirectory.file("config/compose/stability.conf"),
+                )
+
+                if (metricsEnabled) {
+                    val dir = layout.buildDirectory.dir("compose_compiler")
+                    reportsDestination.set(dir)
+                    metricsDestination.set(dir)
+                }
             }
 
             val bom = libs.findLibrary("androidx-compose-bom").get()

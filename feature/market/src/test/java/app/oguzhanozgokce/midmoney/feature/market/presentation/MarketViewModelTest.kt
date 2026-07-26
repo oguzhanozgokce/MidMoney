@@ -1,12 +1,8 @@
 package app.oguzhanozgokce.midmoney.feature.market.presentation
 
-import app.oguzhanozgokce.midmoney.event.Analytics
-import app.oguzhanozgokce.midmoney.event.AnalyticsEvent
-import app.oguzhanozgokce.midmoney.event.EventSupplier
 import app.oguzhanozgokce.midmoney.feature.market.analytics.MarketAnalyticsEvent
 import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.NavigationCommand
-import app.oguzhanozgokce.midmoney.navigation.Navigator
 import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
@@ -14,6 +10,9 @@ import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
 import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.FavoritesRepository
 import app.oguzhanozgokce.midmoney.plugin.market.domain.repository.MarketRepository
 import app.oguzhanozgokce.midmoney.remoteconfig.RemoteConfig
+import app.oguzhanozgokce.midmoney.testing.FakeAnalytics
+import app.oguzhanozgokce.midmoney.testing.FakeNavigator
+import app.oguzhanozgokce.midmoney.testing.MainDispatcherRule
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -150,31 +149,4 @@ private class FakeRemoteConfig : RemoteConfig {
     override suspend fun activate() = Unit
     override fun getBoolean(key: String, default: Boolean): Boolean = default
     override fun getString(key: String, default: String): String = default
-}
-
-private class FakeNavigator : Navigator {
-    val commandsLog: MutableList<NavigationCommand> = mutableListOf()
-
-    override val commands: Flow<NavigationCommand> = emptyFlow()
-    override fun navigate(destination: Destination) {
-        commandsLog += NavigationCommand.Navigate(destination)
-    }
-
-    override fun navigateAndClearBackStack(destination: Destination) {
-        commandsLog += NavigationCommand.NavigateAndClearBackStack(destination)
-    }
-
-    override fun goBack() {
-        commandsLog += NavigationCommand.Back
-    }
-}
-
-private class FakeAnalytics : Analytics {
-    val trackedEvents: MutableList<AnalyticsEvent> = mutableListOf()
-
-    override fun track(event: AnalyticsEvent, vararg suppliers: EventSupplier) {
-        trackedEvents += event
-    }
-
-    override fun setUserId(id: String?) = Unit
 }

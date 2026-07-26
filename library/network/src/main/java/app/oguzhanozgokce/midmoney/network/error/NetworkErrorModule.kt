@@ -9,7 +9,7 @@ import dagger.multibindings.IntoSet
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class NetworkErrorModule {
+internal abstract class NetworkErrorModule {
 
     @Binds
     @IntoSet

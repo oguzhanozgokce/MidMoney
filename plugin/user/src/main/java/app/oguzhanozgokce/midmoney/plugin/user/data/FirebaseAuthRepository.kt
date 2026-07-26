@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class FirebaseAuthRepository @Inject constructor(
+internal class FirebaseAuthRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val errorHandler: ErrorHandler,
 ) : AuthRepository {
@@ -42,13 +42,11 @@ class FirebaseAuthRepository @Inject constructor(
     override suspend fun login(email: String, password: String): Result<Unit> =
         errorHandler.call(transform = ::toAuthException) {
             auth.signInWithEmailAndPassword(email, password).await()
-            Unit
         }
 
     override suspend fun register(email: String, password: String): Result<Unit> =
         errorHandler.call(transform = ::toAuthException) {
             auth.createUserWithEmailAndPassword(email, password).await()
-            Unit
         }
 
     override fun logout() {

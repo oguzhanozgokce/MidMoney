@@ -21,7 +21,7 @@ object FirebaseModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AuthRepositoryModule {
+internal abstract class AuthRepositoryModule {
 
     @Binds
     @Singleton

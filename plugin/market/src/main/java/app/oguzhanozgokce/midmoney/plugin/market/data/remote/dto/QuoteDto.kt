@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
  * unknown symbols or when rate-limited.
  */
 @Serializable
-data class QuoteDto(
+internal data class QuoteDto(
     @SerialName("c") val current: Double? = null,
     @SerialName("d") val change: Double? = null,
     @SerialName("dp") val percentChange: Double? = null,

@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NewsDataModule {
+internal object NewsDataModule {
 
     @Provides
     @Singleton
@@ -22,7 +22,7 @@ object NewsDataModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class NewsRepositoryModule {
+internal abstract class NewsRepositoryModule {
 
     @Binds
     @Singleton

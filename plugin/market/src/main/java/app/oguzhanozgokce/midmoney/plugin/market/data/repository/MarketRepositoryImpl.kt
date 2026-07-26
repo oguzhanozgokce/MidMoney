@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class MarketRepositoryImpl @Inject constructor(
+internal class MarketRepositoryImpl @Inject constructor(
     private val api: FinnhubApi,
     private val tradeStream: FinnhubTradeStream,
     private val errorHandler: ErrorHandler,

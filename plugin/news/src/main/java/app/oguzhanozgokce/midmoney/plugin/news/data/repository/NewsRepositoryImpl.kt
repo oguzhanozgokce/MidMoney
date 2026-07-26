@@ -12,7 +12,7 @@ import javax.inject.Inject
 private const val NEWS_WINDOW_DAYS = 7L
 private const val GENERAL_CATEGORY = "general"
 
-class NewsRepositoryImpl @Inject constructor(
+internal class NewsRepositoryImpl @Inject constructor(
     private val api: NewsApi,
     private val errorHandler: ErrorHandler,
 ) : NewsRepository {

@@ -4,7 +4,7 @@ import app.oguzhanozgokce.midmoney.common.extensions.orZero
 import app.oguzhanozgokce.midmoney.plugin.market.data.remote.dto.QuoteDto
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
 
-fun QuoteDto.toDomain(symbol: String): Quote = Quote(
+internal fun QuoteDto.toDomain(symbol: String): Quote = Quote(
     symbol = symbol,
     current = current.orZero(),
     change = change.orZero(),

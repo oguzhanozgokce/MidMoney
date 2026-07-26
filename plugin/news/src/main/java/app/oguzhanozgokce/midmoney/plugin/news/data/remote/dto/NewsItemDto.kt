@@ -3,11 +3,11 @@ package app.oguzhanozgokce.midmoney.plugin.news.data.remote.dto
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NewsItemDto(
-    val headline: String = "",
-    val summary: String = "",
-    val source: String = "",
-    val url: String = "",
-    val image: String = "",
-    val datetime: Long = 0,
+internal data class NewsItemDto(
+    val headline: String? = null,
+    val summary: String? = null,
+    val source: String? = null,
+    val url: String? = null,
+    val image: String? = null,
+    val datetime: Long? = null,
 )

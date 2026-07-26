@@ -4,7 +4,7 @@ import app.oguzhanozgokce.midmoney.plugin.news.data.remote.dto.NewsItemDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface NewsApi {
+internal interface NewsApi {
 
     @GET("company-news")
     suspend fun companyNews(

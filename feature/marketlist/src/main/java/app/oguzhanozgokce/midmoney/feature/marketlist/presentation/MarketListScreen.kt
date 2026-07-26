@@ -13,12 +13,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CloudOff
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -106,6 +108,11 @@ private fun QuoteList(
     uiState: MarketListUiState,
     onAction: (MarketListUiAction) -> Unit,
 ) {
+    val listState = rememberLazyListState()
+    LaunchedEffect(uiState.selectedFilter) {
+        listState.scrollToItem(0)
+    }
+
     when {
         uiState.isLoading -> CenteredLoading()
         uiState.errorMessage != null -> ErrorContent(
@@ -113,6 +120,7 @@ private fun QuoteList(
             onRetry = { onAction(MarketListUiAction.Retry) },
         )
         else -> LazyColumn(
+            state = listState,
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(top = 8.dp, bottom = 16.dp),
         ) {

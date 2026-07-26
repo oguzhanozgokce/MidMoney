@@ -8,7 +8,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class NetworkErrorMapper @Inject constructor() : ErrorMapper {
+internal class NetworkErrorMapper @Inject constructor() : ErrorMapper {
 
     override fun map(throwable: Throwable): AppError? = when (throwable) {
         is SocketTimeoutException -> AppError.Timeout

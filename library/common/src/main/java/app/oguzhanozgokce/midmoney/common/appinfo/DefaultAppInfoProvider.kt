@@ -4,7 +4,7 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class DefaultAppInfoProvider @Inject constructor(
+internal class DefaultAppInfoProvider @Inject constructor(
     @ApplicationContext private val context: Context,
 ) : AppInfoProvider {
     override val versionName: String = runCatching {
