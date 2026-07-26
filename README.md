@@ -42,9 +42,8 @@ password: 123456
 
 ### Option 2 — build it yourself
 
-See [Build from source](#build-from-source) below. Beyond a Finnhub API key you will need to register
-your machine's debug signing certificate with Firebase, otherwise login fails — the details are in
-that section.
+See [Build from source](#build-from-source) below. A free Finnhub API key is the only thing you need
+to add.
 
 ---
 
@@ -84,24 +83,7 @@ source file. Without a key the app builds and runs, but every request comes back
 > is one request per symbol — scrolling aggressively can hit the limit, which the app surfaces as a
 > retryable error.
 
-### 3. Register your debug signing certificate
-
-**This step is required, or login will fail.** The Firebase API key is restricted to registered
-signing certificates, and every machine generates its own debug keystore — so a build made on your
-machine is rejected until its fingerprint is known. The failure looks like a generic network error,
-not an auth error, which makes it easy to misdiagnose.
-
-Print your fingerprint:
-
-```bash
-keytool -list -v -keystore ~/.android/debug.keystore \
-  -alias androiddebugkey -storepass android -keypass android
-```
-
-Send the `SHA1` line to the repository owner to have it added to the Firebase project — or skip this
-by installing the released APK instead, which is already signed with a registered certificate.
-
-### 4. Run
+### 3. Run
 
 ```bash
 ./gradlew :app:installProdDebug
@@ -113,8 +95,7 @@ by installing the released APK instead, which is already signed with a registere
 
 | | Needed? |
 |---|---|
-| Finnhub API key in `local.properties` | **yes** |
-| Debug SHA-1 registered in Firebase | **yes** (or install the APK instead) |
+| Finnhub API key in `local.properties` | **yes** — the only thing you add |
 | `sdk.dir` in `local.properties` | written automatically when Android Studio opens the project |
 | `google-services.json` | already in the repo |
 | Firebase project / account | no |
