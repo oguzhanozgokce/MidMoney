@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AppInfoModule {
+internal abstract class AppInfoModule {
 
     @Binds
     @Singleton

@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object MarketDataModule {
+internal object MarketDataModule {
 
     @Provides
     @Singleton
@@ -25,7 +25,7 @@ object MarketDataModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class MarketRepositoryModule {
+internal abstract class MarketRepositoryModule {
 
     @Binds
     @Singleton

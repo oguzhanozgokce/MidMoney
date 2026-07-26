@@ -6,7 +6,7 @@ import app.oguzhanozgokce.midmoney.plugin.news.domain.model.NewsArticle
 
 private const val MAX_NEWS = 20
 
-fun List<NewsItemDto>.toNewsArticles(): List<NewsArticle> =
+internal fun List<NewsItemDto>.toNewsArticles(): List<NewsArticle> =
     asSequence()
         .map {
             NewsArticle(

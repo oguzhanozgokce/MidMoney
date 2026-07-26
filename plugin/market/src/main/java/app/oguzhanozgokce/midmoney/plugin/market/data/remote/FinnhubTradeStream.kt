@@ -15,7 +15,7 @@ import javax.inject.Inject
  * symbols; incoming `trade` messages are parsed into [TradePrice]s. The auth token is added to the
  * handshake by the shared OkHttp interceptor, so only the bare URL is needed here.
  */
-class FinnhubTradeStream @Inject constructor(
+internal class FinnhubTradeStream @Inject constructor(
     private val webSocketClient: WebSocketClient,
     private val json: Json,
 ) {

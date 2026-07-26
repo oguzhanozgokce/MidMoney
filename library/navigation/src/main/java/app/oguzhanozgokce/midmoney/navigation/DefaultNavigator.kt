@@ -11,7 +11,7 @@ import javax.inject.Singleton
  * app layer collects them on the main thread and mutates the back stack.
  */
 @Singleton
-class DefaultNavigator @Inject constructor() : Navigator {
+internal class DefaultNavigator @Inject constructor() : Navigator {
 
     private val channel = Channel<NavigationCommand>(Channel.BUFFERED)
 
