@@ -18,12 +18,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.HelpOutline
 import androidx.compose.material.icons.automirrored.outlined.Logout
+import androidx.compose.material.icons.automirrored.outlined.ReceiptLong
 import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.QuestionAnswer
-import androidx.compose.material.icons.outlined.ReceiptLong
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -145,7 +145,7 @@ private data class MenuItem(
 
 private fun profileMenuGroups(): List<List<MenuItem>> = listOf(
     listOf(
-        MenuItem(Icons.Outlined.ReceiptLong, R.string.profile_transactions, "transactions"),
+        MenuItem(Icons.AutoMirrored.Outlined.ReceiptLong, R.string.profile_transactions, "transactions"),
         MenuItem(Icons.Outlined.Notifications, R.string.profile_notifications, "notifications"),
     ),
     listOf(
