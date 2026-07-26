@@ -140,7 +140,7 @@ repository directly.
 |---|---|
 | `feature` | login, market, marketlist, detail, watchlist, profile |
 | `plugin` | market, news, user |
-| `library` | common, designsystem, error, event, logger, mvi, navigation, network, datastore, remoteconfig, websocket, testing |
+| `library` | common, designsystem, error, event, logger, mvi, navigation, network, remoteconfig, websocket, testing |
 
 ### Key decisions
 
