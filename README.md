@@ -12,23 +12,39 @@ locally persisted watchlist.
 Kotlin · Jetpack Compose · Navigation 3 · Hilt · Coroutines & Flow · Retrofit · OkHttp WebSocket ·
 DataStore · Firebase (Auth / Analytics / Remote Config) · Coil
 
+| Market | Detail | Watchlist | Profile |
+|---|---|---|---|
+| <img src="docs/screenshots/market.png" width="200" alt="Market screen"/> | <img src="docs/screenshots/detail.png" width="200" alt="Detail screen"/> | <img src="docs/screenshots/watchlist.png" width="200" alt="Watchlist screen"/> | <img src="docs/screenshots/profile.png" width="200" alt="Profile screen"/> |
+
+The UI is localized in English and Turkish and follows the system locale; the screenshots above are
+in Turkish. Dark theme only, by design.
+
 ---
 
 ## Try it
 
-**Install the APK** — see the [Releases](../../releases) page for the latest build.
+### Option 1 — install the APK (nothing else needed)
 
-No test account is needed. The login screen signs in or registers automatically, so any email plus a
-password of at least 6 characters works:
+Grab the latest build from the [Releases](../../releases) page. The API key is compiled into the
+build, so there is **no configuration to do** — install and open.
+
+No test account is needed either. The login screen signs in or registers automatically, so any email
+plus a password of at least 6 characters works:
 
 ```
 email:    tester@example.com
 password: 123456
 ```
 
-> The published APK is debug-signed. On some devices Play Protect shows an "unknown app" warning —
-> choose *Install anyway*. Uninstall any earlier MidMoney build first: all variants share one
-> application id, so they replace each other rather than installing side by side.
+> The APK is debug-signed, so Play Protect may warn about an "unknown app" — choose *Install anyway*.
+> Uninstall any earlier MidMoney build first: all variants share one application id, so they replace
+> each other rather than installing side by side.
+
+### Option 2 — build it yourself
+
+See [Build from source](#build-from-source) below. Beyond a Finnhub API key you will need to register
+your machine's debug signing certificate with Firebase, otherwise login fails — the details are in
+that section.
 
 ---
 
@@ -68,21 +84,41 @@ source file. Without a key the app builds and runs, but every request comes back
 > is one request per symbol — scrolling aggressively can hit the limit, which the app surfaces as a
 > retryable error.
 
-### 3. Run
+### 3. Register your debug signing certificate
+
+**This step is required, or login will fail.** The Firebase API key is restricted to registered
+signing certificates, and every machine generates its own debug keystore — so a build made on your
+machine is rejected until its fingerprint is known. The failure looks like a generic network error,
+not an auth error, which makes it easy to misdiagnose.
+
+Print your fingerprint:
+
+```bash
+keytool -list -v -keystore ~/.android/debug.keystore \
+  -alias androiddebugkey -storepass android -keypass android
+```
+
+Send the `SHA1` line to the repository owner to have it added to the Firebase project — or skip this
+by installing the released APK instead, which is already signed with a registered certificate.
+
+### 4. Run
 
 ```bash
 ./gradlew :app:installProdDebug
 ```
 
-Firebase is already configured (`app/google-services.json` is committed), so no Firebase setup is
-required.
+`app/google-services.json` is committed, so there is no Firebase project setup to do.
 
-> **Login failing on your own build?** Firebase restricts the API key to registered signing
-> certificates, and every machine has a different debug keystore. Either install the released APK
-> instead, or add your debug SHA-1 to the Firebase project:
-> ```bash
-> keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
-> ```
+### What you need, in short
+
+| | Needed? |
+|---|---|
+| Finnhub API key in `local.properties` | **yes** |
+| Debug SHA-1 registered in Firebase | **yes** (or install the APK instead) |
+| `sdk.dir` in `local.properties` | written automatically when Android Studio opens the project |
+| `google-services.json` | already in the repo |
+| Firebase project / account | no |
+| Test account | no — login auto-registers |
 
 ---
 
