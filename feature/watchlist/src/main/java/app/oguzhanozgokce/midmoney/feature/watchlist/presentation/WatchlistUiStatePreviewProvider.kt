@@ -2,7 +2,7 @@ package app.oguzhanozgokce.midmoney.feature.watchlist.presentation
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
-import app.oguzhanozgokce.midmoney.plugin.market.ui.QuoteUi
+import app.oguzhanozgokce.midmoney.feature.watchlist.presentation.model.QuoteUi
 
 class WatchlistUiStatePreviewProvider : PreviewParameterProvider<WatchlistUiState> {
     override val values = sequenceOf(

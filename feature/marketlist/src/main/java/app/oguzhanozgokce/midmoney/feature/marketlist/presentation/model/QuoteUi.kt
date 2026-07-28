@@ -1,4 +1,4 @@
-package app.oguzhanozgokce.midmoney.plugin.market.ui
+package app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model
 
 import app.oguzhanozgokce.midmoney.common.extensions.formatPrice
 import app.oguzhanozgokce.midmoney.common.extensions.formatSignedPercent

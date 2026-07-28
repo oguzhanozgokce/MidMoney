@@ -28,12 +28,13 @@ class AndroidComposeConventionPlugin : Plugin<Project> {
             val metricsEnabled = providers.gradleProperty("composeMetrics")
                 .getOrElse("false").toBoolean()
 
-            extensions.configure<ComposeCompilerGradlePluginExtension> {
-                stabilityConfigurationFiles.add(
-                    rootProject.layout.projectDirectory.file("config/compose/stability.conf"),
-                )
-
-                if (metricsEnabled) {
+            // Opt-in stability/skippability report:
+            // `./gradlew <task> -PcomposeMetrics=true --rerun-tasks` writes per-module reports to
+            // build/compose_compiler. Off by default because the extra compiler output slows the
+            // build; used to decide whether a @Stable/@Immutable annotation is actually needed
+            // instead of guessing.
+            if (metricsEnabled) {
+                extensions.configure<ComposeCompilerGradlePluginExtension> {
                     val dir = layout.buildDirectory.dir("compose_compiler")
                     reportsDestination.set(dir)
                     metricsDestination.set(dir)

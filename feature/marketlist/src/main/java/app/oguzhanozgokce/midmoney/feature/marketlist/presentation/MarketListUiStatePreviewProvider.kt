@@ -2,8 +2,8 @@ package app.oguzhanozgokce.midmoney.feature.marketlist.presentation
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
-import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
-import app.oguzhanozgokce.midmoney.plugin.market.ui.QuoteUi
+import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.QuoteUi
+import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.SearchResultUi
 
 class MarketListUiStatePreviewProvider : PreviewParameterProvider<MarketListUiState> {
     override val values = sequenceOf(
@@ -30,8 +30,8 @@ class MarketListUiStatePreviewProvider : PreviewParameterProvider<MarketListUiSt
         MarketListUiState(
             query = "app",
             results = listOf(
-                SymbolMatch(symbol = "AAPL", description = "Apple Inc."),
-                SymbolMatch(symbol = "APP", description = "AppLovin Corp."),
+                SearchResultUi(symbol = "AAPL", description = "Apple Inc."),
+                SearchResultUi(symbol = "APP", description = "AppLovin Corp."),
             ),
         ),
         MarketListUiState(query = "zzzz", results = emptyList()),

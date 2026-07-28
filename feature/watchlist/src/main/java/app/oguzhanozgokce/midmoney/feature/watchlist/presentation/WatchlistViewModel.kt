@@ -7,12 +7,12 @@ import app.oguzhanozgokce.midmoney.error.errorMessageRes
 import app.oguzhanozgokce.midmoney.event.Analytics
 import app.oguzhanozgokce.midmoney.event.EventSupplier
 import app.oguzhanozgokce.midmoney.feature.watchlist.analytics.WatchlistAnalyticsEvent
+import app.oguzhanozgokce.midmoney.feature.watchlist.presentation.model.toUi
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
 import app.oguzhanozgokce.midmoney.navigation.Navigator
 import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
-import app.oguzhanozgokce.midmoney.plugin.market.ui.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -1,7 +1,7 @@
 package app.oguzhanozgokce.midmoney.feature.watchlist.presentation
 
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
-import app.oguzhanozgokce.midmoney.plugin.market.ui.QuoteUi
+import app.oguzhanozgokce.midmoney.feature.watchlist.presentation.model.QuoteUi
 
 data class WatchlistUiState(
     val items: List<QuoteUi> = emptyList(),

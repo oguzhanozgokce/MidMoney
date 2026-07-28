@@ -44,8 +44,8 @@ import app.oguzhanozgokce.midmoney.designsystem.component.MidMoneyTopAppBar
 import app.oguzhanozgokce.midmoney.designsystem.text.UiText
 import app.oguzhanozgokce.midmoney.designsystem.theme.MidMoneyTheme
 import app.oguzhanozgokce.midmoney.feature.marketlist.R
+import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.SearchResultUi
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
-import app.oguzhanozgokce.midmoney.plugin.market.domain.model.SymbolMatch
 
 @Composable
 fun MarketListRoute(viewModel: MarketListViewModel = hiltViewModel()) {
@@ -156,11 +156,11 @@ private fun SearchResults(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(top = 8.dp, bottom = 16.dp),
         ) {
-            items(uiState.results, key = { it.symbol }) { match ->
+            items(uiState.results, key = { it.symbol }) { result ->
                 SearchResultItem(
-                    match = match,
-                    onClick = { onAction(MarketListUiAction.OpenDetail(match.symbol)) },
-                    modifier = Modifier.testTag(MarketListTestTags.result(match.symbol)),
+                    result = result,
+                    onClick = { onAction(MarketListUiAction.OpenDetail(result.symbol)) },
+                    modifier = Modifier.testTag(MarketListTestTags.result(result.symbol)),
                 )
             }
         }
@@ -168,7 +168,7 @@ private fun SearchResults(
 }
 
 @Composable
-private fun SearchResultItem(match: SymbolMatch, onClick: () -> Unit, modifier: Modifier = Modifier) {
+private fun SearchResultItem(result: SearchResultUi, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -176,13 +176,13 @@ private fun SearchResultItem(match: SymbolMatch, onClick: () -> Unit, modifier: 
             .padding(horizontal = 16.dp, vertical = 12.dp),
     ) {
         Text(
-            text = match.symbol,
+            text = result.symbol,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.onSurface,
         )
         Text(
-            text = match.description,
+            text = result.description,
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 1,

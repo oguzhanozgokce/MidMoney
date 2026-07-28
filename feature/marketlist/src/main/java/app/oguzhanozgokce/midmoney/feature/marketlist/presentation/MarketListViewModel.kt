@@ -7,6 +7,8 @@ import app.oguzhanozgokce.midmoney.error.errorMessageRes
 import app.oguzhanozgokce.midmoney.event.Analytics
 import app.oguzhanozgokce.midmoney.event.EventSupplier
 import app.oguzhanozgokce.midmoney.feature.marketlist.analytics.MarketListAnalyticsEvent
+import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.QuoteUi
+import app.oguzhanozgokce.midmoney.feature.marketlist.presentation.model.toUi
 import app.oguzhanozgokce.midmoney.mvi.MVI
 import app.oguzhanozgokce.midmoney.mvi.mvi
 import app.oguzhanozgokce.midmoney.navigation.Destination
@@ -15,8 +17,6 @@ import app.oguzhanozgokce.midmoney.plugin.market.MarketClient
 import app.oguzhanozgokce.midmoney.plugin.market.domain.applyFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.MarketFilter
 import app.oguzhanozgokce.midmoney.plugin.market.domain.model.Quote
-import app.oguzhanozgokce.midmoney.plugin.market.ui.QuoteUi
-import app.oguzhanozgokce.midmoney.plugin.market.ui.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -74,7 +74,9 @@ class MarketListViewModel @Inject constructor(
             analytics.track(MarketListAnalyticsEvent.Searched(query), EventSupplier.All)
             updateUiState { copy(isSearching = true) }
             marketClient.search(query)
-                .onSuccess { matches -> updateUiState { copy(results = matches, isSearching = false) } }
+                .onSuccess { matches ->
+                    updateUiState { copy(results = matches.map { it.toUi() }, isSearching = false) }
+                }
                 .onFailure { updateUiState { copy(results = emptyList(), isSearching = false) } }
         }
     }
